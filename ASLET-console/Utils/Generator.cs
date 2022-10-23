@@ -20,6 +20,32 @@ namespace ASLET.Utils
             // lessonsCount = 0;
         }
 
+        public void GenerateForWeek()
+        {
+            schedule.Clear();
+            GenerateForDay();
+            Timetable.AddScheduleForDay(DaysOfWeek.MONDAY, schedule);
+            schedule.Clear();
+            GenerateForDay();
+            Timetable.AddScheduleForDay(DaysOfWeek.TUESDAY, schedule);
+            schedule.Clear();
+            GenerateForDay();
+            Timetable.AddScheduleForDay(DaysOfWeek.WEDNESDAY, schedule);
+            schedule.Clear();
+            GenerateForDay();
+            Timetable.AddScheduleForDay(DaysOfWeek.THURSDAY, schedule);
+            schedule.Clear();
+            GenerateForDay();
+            Timetable.AddScheduleForDay(DaysOfWeek.FRIDAY, schedule);
+            schedule.Clear();
+            GenerateForDay();
+            Timetable.AddScheduleForDay(DaysOfWeek.SATURDAY, schedule);
+            schedule.Clear();
+            GenerateForDay();
+            Timetable.AddScheduleForDay(DaysOfWeek.SUNDAY, schedule);
+            schedule.Clear();
+        }
+
         public void GenerateForDay()
         {
             for (byte i = 1; i <= 8; i++){

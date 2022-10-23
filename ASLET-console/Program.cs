@@ -14,11 +14,12 @@ namespace ASLET
             FillTeachers();
             Generator generator = new Generator(_lessons, _teachers);
 
-            generator.GenerateForDay();
+            //generator.GenerateForDay();
+            generator.GenerateForWeek();
 
             //$ FIRST DEBUG OUTPUT
             //Console.WriteLine("Hello? SiR");
-            foreach (Tuple<Lesson, Teacher> currentLesson in generator.schedule)
+            /* foreach (Tuple<Lesson, Teacher> currentLesson in generator.schedule)
             {
                 Console.Write(currentLesson.Item1.displayName.PadRight(60));
                 Console.Write(currentLesson.Item2.name.PadRight(30));
@@ -27,6 +28,21 @@ namespace ASLET
                 foreach (bool lesson in currentLesson.Item2.freeLessons)
                     if (lesson) freeLessonsCount++;
                 Console.WriteLine(freeLessonsCount);
+            } */
+            foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable.Values)
+            {
+                Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------------------------");
+                foreach (Tuple<Lesson,Teacher> currentLesson in currentDay)
+                {
+                    Console.Write(currentLesson.Item1.displayName.PadRight(60));
+                    Console.Write(currentLesson.Item2.name.PadRight(30));
+                    Console.Write(String.Join(", ", currentLesson.Item2.freeLessons).PadRight(60));
+                    int freeLessonsCount = 0;
+                    foreach (bool lesson in currentLesson.Item2.freeLessons)
+                        if (lesson) freeLessonsCount++;
+                    Console.WriteLine(freeLessonsCount);
+                }
+                Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------------------------");
             }
         }
 
