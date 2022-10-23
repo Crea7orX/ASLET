@@ -1,2 +1,2 @@
 # ASLET
-Automated System for Large Educational Timetable
+Automated System for Large Educational Timetables
