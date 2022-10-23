@@ -18,8 +18,15 @@ namespace ASLET
 
             //$ FIRST DEBUG OUTPUT
             //Console.WriteLine("Hello? SiR");
-            foreach (Tuple<Lesson, Teacher> currentLesson in generator.schedule){
-                Console.WriteLine("{0} {1}",currentLesson.Item1.displayName, currentLesson.Item2.name);
+            foreach (Tuple<Lesson, Teacher> currentLesson in generator.schedule)
+            {
+                Console.Write(currentLesson.Item1.displayName.PadRight(60));
+                Console.Write(currentLesson.Item2.name.PadRight(30));
+                Console.Write(String.Join(", ", currentLesson.Item2.freeLessons).PadRight(60));
+                int freeLessonsCount = 0;
+                foreach (bool lesson in currentLesson.Item2.freeLessons)
+                    if (lesson) freeLessonsCount++;
+                Console.WriteLine(freeLessonsCount);
             }
         }
 
