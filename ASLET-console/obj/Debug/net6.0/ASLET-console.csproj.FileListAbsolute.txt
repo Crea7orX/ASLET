@@ -1,0 +1,15 @@
+/home/ivo/Developmemt/ASLET/ASLET-console/bin/Debug/net6.0/ASLET-console
+/home/ivo/Developmemt/ASLET/ASLET-console/bin/Debug/net6.0/ASLET-console.deps.json
+/home/ivo/Developmemt/ASLET/ASLET-console/bin/Debug/net6.0/ASLET-console.runtimeconfig.json
+/home/ivo/Developmemt/ASLET/ASLET-console/bin/Debug/net6.0/ASLET-console.dll
+/home/ivo/Developmemt/ASLET/ASLET-console/bin/Debug/net6.0/ASLET-console.pdb
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/ASLET-console.csproj.AssemblyReference.cache
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/ASLET-console.GeneratedMSBuildEditorConfig.editorconfig
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/ASLET-console.AssemblyInfoInputs.cache
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/ASLET-console.AssemblyInfo.cs
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/ASLET-console.csproj.CoreCompileInputs.cache
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/ASLET-console.dll
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/refint/ASLET-console.dll
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/ASLET-console.pdb
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/ASLET-console.genruntimeconfig.cache
+/home/ivo/Developmemt/ASLET/ASLET-console/obj/Debug/net6.0/ref/ASLET-console.dll
