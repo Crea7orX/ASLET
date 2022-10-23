@@ -5,7 +5,7 @@ namespace ASLET.Utils
 {
     public class Generator
     {
-        public readonly List<Tuple<Lesson, Teacher>> schedule;
+        public List<Tuple<Lesson, Teacher>> schedule;
         private readonly List<Lesson> _lessons;
         private readonly List<Teacher> _teachers;
         private readonly Random _random;
@@ -22,28 +22,28 @@ namespace ASLET.Utils
 
         public void GenerateForWeek()
         {
-            schedule.Clear();
+            schedule = new List<Tuple<Lesson, Teacher>>();
             GenerateForDay();
             Timetable.AddScheduleForDay(DaysOfWeek.MONDAY, schedule);
-            schedule.Clear();
+            schedule = new List<Tuple<Lesson, Teacher>>();
             GenerateForDay();
             Timetable.AddScheduleForDay(DaysOfWeek.TUESDAY, schedule);
-            schedule.Clear();
+            schedule = new List<Tuple<Lesson, Teacher>>();
             GenerateForDay();
             Timetable.AddScheduleForDay(DaysOfWeek.WEDNESDAY, schedule);
-            schedule.Clear();
+            schedule = new List<Tuple<Lesson, Teacher>>();
             GenerateForDay();
             Timetable.AddScheduleForDay(DaysOfWeek.THURSDAY, schedule);
-            schedule.Clear();
+            schedule = new List<Tuple<Lesson, Teacher>>();
             GenerateForDay();
             Timetable.AddScheduleForDay(DaysOfWeek.FRIDAY, schedule);
-            schedule.Clear();
+            schedule = new List<Tuple<Lesson, Teacher>>();
             GenerateForDay();
             Timetable.AddScheduleForDay(DaysOfWeek.SATURDAY, schedule);
-            schedule.Clear();
+            schedule = new List<Tuple<Lesson, Teacher>>();
             GenerateForDay();
             Timetable.AddScheduleForDay(DaysOfWeek.SUNDAY, schedule);
-            schedule.Clear();
+            schedule = new List<Tuple<Lesson, Teacher>>();
         }
 
         public void GenerateForDay()
