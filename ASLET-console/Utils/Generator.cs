@@ -5,59 +5,59 @@ namespace ASLET.Utils
 {
     public class Generator
     {
-        public List<Tuple<Lesson, Teacher>> schedule;
-        private List<Lesson> lessons;
-        private List<Teacher> teachers;
-        private readonly Random random;
+        public readonly List<Tuple<Lesson, Teacher>> schedule;
+        private readonly List<Lesson> _lessons;
+        private readonly List<Teacher> _teachers;
+        private readonly Random _random;
         // private byte lessonsCount;
 
         public Generator(List<Lesson> lessons, List<Teacher> teachers)
         {
-            this.schedule = new List<Tuple<Lesson, Teacher>>();
-            this.lessons = lessons;
-            this.teachers = teachers;
-            this.random = new Random();
+            schedule = new List<Tuple<Lesson, Teacher>>();
+            _lessons = lessons;
+            _teachers = teachers;
+            _random = new Random();
             // lessonsCount = 0;
         }
 
-        public void generateForDay()
+        public void GenerateForDay()
         {
             for (byte i = 1; i <= 8; i++){
-                this.schedule.Add(generateNextLesson(i));
+                schedule.Add(GenerateNextLesson(i));
                 // lessonsCount++;
             }
         }
 
-        private Tuple<Lesson, Teacher> generateNextLesson(byte hour)
+        private Tuple<Lesson, Teacher> GenerateNextLesson(byte hour)
         {
             do {
-                byte index = (byte) random.Next(0, lessons.Count);
-                Lesson currentLesson = lessons[index];
-                byte lessonsCount = getLessonCount(currentLesson);
+                byte index = (byte) _random.Next(0, _lessons.Count);
+                Lesson currentLesson = _lessons[index];
+                byte lessonsCount = GetLessonCount(currentLesson);
                 if (lessonsCount >= currentLesson.maxADay) continue;
-                Teacher currentTeacher = getFreeTeacher(currentLesson.subject, hour);
+                Teacher currentTeacher = GetFreeTeacher(currentLesson.subject, hour);
                 if (currentTeacher != null)
                     return Tuple.Create(currentLesson, currentTeacher);
             } while(true);
         }
 
-        private Teacher getFreeTeacher(string subject, byte hour)
+        private Teacher GetFreeTeacher(string subject, byte hour)
         {
-            for(int i = 0; i < teachers.Count; i++)
+            foreach (var teacher in _teachers)
             {
-                if (teachers[i].subject == subject && teachers[i].freeLessons[hour - 1])
-                {
-                    teachers[i].freeLessons[hour - 1] = false;
-                    return teachers[i];
-                }
+                if (teacher.subject != subject || !teacher.freeLessons[hour - 1]) continue;
+                teacher.freeLessons[hour - 1] = false;
+                return teacher;
             }
+
             return null!;
         }
 
-        private byte getLessonCount(Lesson lesson) {
+        private byte GetLessonCount(Lesson lesson) {
             byte count = 0;
-            for(int i = 0; i < schedule.Count; i++){
-                if (schedule[i].Item1.subject == lesson.subject)
+            foreach (var scheduleLesson in schedule)
+            {
+                if (scheduleLesson.Item1.subject == lesson.subject)
                     count++;
             }
 

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using ASLET.Objects;
 
 namespace ASLET.Objects
@@ -19,9 +14,9 @@ namespace ASLET.Objects
     
     public class Timetable
     {
-        public static Dictionary<DaysOfWeek, List<Lesson>> timetable = new Dictionary<DaysOfWeek, List<Lesson>>();
+        public static readonly Dictionary<DaysOfWeek, List<Lesson>> timetable = new();
 
-        public static void addScheduleForDay(DaysOfWeek day, List<Lesson> lessons) {
+        public static void AddScheduleForDay(DaysOfWeek day, List<Lesson> lessons) {
             timetable.Add(day, lessons);
         }
     }

@@ -18,12 +18,12 @@ namespace ASLET.Objects
     
     public class Lesson
     {
-        public string displayName;
-        public LessonType type;
-        public string subject;
-        public Complexity complexity;
-        public byte maxADay;
-        public byte maxAWeek;
+        public readonly string displayName;
+        public readonly LessonType type;
+        public readonly string subject;
+        public readonly Complexity complexity;
+        public readonly byte maxADay;
+        public readonly byte maxAWeek;
 
         public Lesson(string displayName, LessonType type, string subject, Complexity complexity, byte maxADay, byte maxAWeek)
         {

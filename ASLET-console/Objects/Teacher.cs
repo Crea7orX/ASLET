@@ -2,23 +2,23 @@ namespace ASLET.Objects
 {
     public class Teacher
     {
-        public string name;
-        public string subject;
-        public bool[] freeLessons;
+        public readonly string name;
+        public readonly string subject;
+        public readonly bool[] freeLessons;
         
         
         public Teacher(string name, string subject)
         {
             this.name = name;
             this.subject = subject;
-            this.freeLessons = new bool[8];
-            setFreeLessons();
+            freeLessons = new bool[8];
+            SetFreeLessons();
         }
 
-        private void setFreeLessons()
+        private void SetFreeLessons()
         {
             for(int i = 0; i < freeLessons.Length; i++){
-                this.freeLessons[i] = true;
+                freeLessons[i] = true;
             }
         }
     }
