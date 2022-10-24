@@ -15,7 +15,7 @@ namespace ASLET.Objects
         ALGORITHMIC = 3,
         SCIENCE = 4
     }
-    
+
     public class Lesson
     {
         public readonly string displayName;
@@ -25,7 +25,8 @@ namespace ASLET.Objects
         public readonly byte maxADay;
         public readonly byte maxAWeek;
 
-        public Lesson(string displayName, LessonType type, string subject, Complexity complexity, byte maxADay, byte maxAWeek)
+        public Lesson(string displayName, LessonType type, string subject, Complexity complexity, byte maxADay,
+            byte maxAWeek)
         {
             this.displayName = displayName;
             this.type = type;

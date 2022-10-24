@@ -5,8 +5,8 @@ namespace ASLET.Objects
         public readonly string name;
         public readonly string subject;
         public readonly bool[] freeLessons;
-        
-        
+
+
         public Teacher(string name, string subject)
         {
             this.name = name;
@@ -17,7 +17,8 @@ namespace ASLET.Objects
 
         public void SetFreeLessons()
         {
-            for(int i = 0; i < freeLessons.Length; i++){
+            for (int i = 0; i < freeLessons.Length; i++)
+            {
                 freeLessons[i] = true;
             }
         }

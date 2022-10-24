@@ -8,6 +8,7 @@ namespace ASLET.Utils
         public List<Tuple<Lesson, Teacher>> schedule;
         private readonly List<Lesson> _lessons;
         private readonly List<Teacher> _teachers;
+
         private readonly Random _random;
         // private byte lessonsCount;
 
