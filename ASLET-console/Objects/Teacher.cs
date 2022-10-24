@@ -15,7 +15,7 @@ namespace ASLET.Objects
             SetFreeLessons();
         }
 
-        private void SetFreeLessons()
+        public void SetFreeLessons()
         {
             for(int i = 0; i < freeLessons.Length; i++){
                 freeLessons[i] = true;

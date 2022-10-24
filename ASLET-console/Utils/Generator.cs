@@ -22,49 +22,43 @@ namespace ASLET.Utils
 
         public void GenerateForWeek()
         {
-            schedule = new List<Tuple<Lesson, Teacher>>();
-            GenerateForDay();
-            Timetable.AddScheduleForDay(DaysOfWeek.MONDAY, schedule);
-            schedule = new List<Tuple<Lesson, Teacher>>();
-            GenerateForDay();
-            Timetable.AddScheduleForDay(DaysOfWeek.TUESDAY, schedule);
-            schedule = new List<Tuple<Lesson, Teacher>>();
-            GenerateForDay();
-            Timetable.AddScheduleForDay(DaysOfWeek.WEDNESDAY, schedule);
-            schedule = new List<Tuple<Lesson, Teacher>>();
-            GenerateForDay();
-            Timetable.AddScheduleForDay(DaysOfWeek.THURSDAY, schedule);
-            schedule = new List<Tuple<Lesson, Teacher>>();
-            GenerateForDay();
-            Timetable.AddScheduleForDay(DaysOfWeek.FRIDAY, schedule);
-            schedule = new List<Tuple<Lesson, Teacher>>();
-            GenerateForDay();
-            Timetable.AddScheduleForDay(DaysOfWeek.SATURDAY, schedule);
-            schedule = new List<Tuple<Lesson, Teacher>>();
-            GenerateForDay();
-            Timetable.AddScheduleForDay(DaysOfWeek.SUNDAY, schedule);
-            schedule = new List<Tuple<Lesson, Teacher>>();
+            foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
+            {
+                Console.WriteLine(day);
+                GenerateForDay();
+                Timetable.AddScheduleForDay(day, schedule);
+                schedule = new List<Tuple<Lesson, Teacher>>();
+                foreach (Teacher teacher in _teachers)
+                {
+                    teacher.SetFreeLessons();
+                }
+            }
         }
 
         public void GenerateForDay()
         {
-            for (byte i = 1; i <= 8; i++){
+            for (byte i = 1; i <= 8; i++)
+            {
                 schedule.Add(GenerateNextLesson(i));
+                Console.WriteLine(i);
                 // lessonsCount++;
             }
         }
 
         private Tuple<Lesson, Teacher> GenerateNextLesson(byte hour)
         {
-            do {
-                byte index = (byte) _random.Next(0, _lessons.Count);
+            do
+            {
+                byte index = (byte)_random.Next(0, _lessons.Count);
                 Lesson currentLesson = _lessons[index];
-                byte lessonsCount = GetLessonCount(currentLesson);
+                byte lessonsCount = GetLessonCountDay(currentLesson);
                 if (lessonsCount >= currentLesson.maxADay) continue;
+                lessonsCount = GetLessonCountWeek(currentLesson);
+                if (lessonsCount >= currentLesson.maxAWeek) continue;
                 Teacher currentTeacher = GetFreeTeacher(currentLesson.subject, hour);
                 if (currentTeacher != null)
                     return Tuple.Create(currentLesson, currentTeacher);
-            } while(true);
+            } while (true);
         }
 
         private Teacher GetFreeTeacher(string subject, byte hour)
@@ -79,12 +73,28 @@ namespace ASLET.Utils
             return null!;
         }
 
-        private byte GetLessonCount(Lesson lesson) {
+        private byte GetLessonCountDay(Lesson lesson)
+        {
             byte count = 0;
             foreach (var scheduleLesson in schedule)
             {
                 if (scheduleLesson.Item1.subject == lesson.subject)
                     count++;
+            }
+
+            return count;
+        }
+
+        private byte GetLessonCountWeek(Lesson lesson)
+        {
+            byte count = 0;
+            foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable.Values)
+            {
+                foreach (Tuple<Lesson, Teacher> currentLesson in currentDay)
+                {
+                    if (currentLesson.Item1.subject == lesson.subject)
+                        count++;
+                }
             }
 
             return count;
