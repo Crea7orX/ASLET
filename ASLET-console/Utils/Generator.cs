@@ -23,6 +23,11 @@ namespace ASLET.Utils
 
         public void GenerateForWeek()
         {
+            if (!Checkers.CanTimetableBeGenerated(_lessons))
+            {
+                Console.WriteLine("Не може да бъде генерирана програма! ПРИЧИНА: НЯМА ДОСТАТЪЧНО СЕДМИЧНИ ЧАСОВЕ!");
+                return;
+            }
             foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
             {
                 GenerateForDay(GetLessonsForADay());
@@ -100,7 +105,7 @@ namespace ASLET.Utils
 
         private short findTotalHourDiff()
         {
-            return (short) (Lesson.totalCount - 7 * 5);
+            return (short)(Lesson.totalCount - 7 * 5);
         }
 
         private byte GetLessonsForADay()
@@ -127,7 +132,7 @@ namespace ASLET.Utils
                 }
                 else count = 7;
             }
-            
+
             return count;
         }
     }
