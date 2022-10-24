@@ -14,11 +14,17 @@ namespace ASLET.Objects
 
     public class Timetable
     {
-        public static Dictionary<DaysOfWeek, List<Tuple<Lesson, Teacher>>> timetable = new();
+        public static Dictionary<Class, Dictionary<DaysOfWeek, List<Tuple<Lesson, Teacher>>>> timetable = new();
 
-        public static void AddScheduleForDay(DaysOfWeek day, List<Tuple<Lesson, Teacher>> lessons)
+        public static void AddScheduleForDay(Class schoolClass, DaysOfWeek day, List<Tuple<Lesson, Teacher>> lessons)
         {
-            timetable.Add(day, lessons);
+            Console.WriteLine(schoolClass.className + " " + timetable.ContainsKey(schoolClass));
+            if (!timetable.ContainsKey(schoolClass))
+            {
+                Dictionary<DaysOfWeek, List<Tuple<Lesson, Teacher>>> dictionary = new() { { day, lessons } };
+                timetable.Add(schoolClass, dictionary);
+            }
+            else timetable[schoolClass].Add(day, lessons);
         }
     }
 }

@@ -7,12 +7,14 @@ namespace ASLET
     {
         private static readonly List<Lesson> Lessons = new();
         private static readonly List<Teacher> Teachers = new();
+        private static readonly List<Class> Classes = new();
 
         public static void Main(string[] args)
         {
             FillLessons();
             FillTeachers();
-            Generator generator = new Generator(Lessons, Teachers);
+            FillClasses();
+            Generator generator = new Generator(Lessons, Teachers, Classes);
 
             generator.GenerateForWeek();
 
@@ -28,40 +30,49 @@ namespace ASLET
                     if (lesson) freeLessonsCount++;
                 Console.WriteLine(freeLessonsCount);
             } */
-            foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable.Values)
+            foreach (Class schoolClass in Classes)
             {
-                Console.WriteLine(
-                    "--------------------------------------------------------------------------------------------------------------------------------------------");
-                foreach (Tuple<Lesson, Teacher> currentLesson in currentDay)
+                Console.WriteLine(schoolClass.className);
+                foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable[schoolClass].Values)
                 {
-                    Console.Write(currentLesson.Item1.displayName.PadRight(60));
-                    Console.Write(currentLesson.Item2.name.PadRight(30));
-                    Console.Write(String.Join(", ", currentLesson.Item2.freeLessons).PadRight(60));
-                    int freeLessonsCount = 0;
-                    foreach (bool lesson in currentLesson.Item2.freeLessons)
-                        if (lesson)
-                            freeLessonsCount++;
-                    Console.WriteLine(freeLessonsCount);
-                }
+                    Console.WriteLine(
+                        "--------------------------------------------------------------------------------------------------------------------------------------------");
+                    foreach (Tuple<Lesson, Teacher> currentLesson in currentDay)
+                    {
+                        Console.Write(currentLesson.Item1.displayName.PadRight(60));
+                        Console.Write(currentLesson.Item2.name.PadRight(30));
+                        Console.Write(String.Join(", ", currentLesson.Item2.freeLessons).PadRight(60));
+                        int freeLessonsCount = 0;
+                        foreach (bool lesson in currentLesson.Item2.freeLessons)
+                            if (lesson)
+                                freeLessonsCount++;
+                        Console.WriteLine(freeLessonsCount);
+                    }
 
-                Console.WriteLine(
-                    "--------------------------------------------------------------------------------------------------------------------------------------------");
+                    Console.WriteLine(
+                        "--------------------------------------------------------------------------------------------------------------------------------------------");
+                }
             }
         }
 
         private static void FillLessons()
         {
-            Lessons.Add(new Lesson("Български език и литература", LessonType.LANGUAGE, "bulgarian", Complexity.NORMAL, 2, 4));
+            Lessons.Add(new Lesson("Български език и литература", LessonType.LANGUAGE, "bulgarian", Complexity.NORMAL,
+                2, 4));
             Lessons.Add(new Lesson("Математика", LessonType.ALGORITHMIC, "math", Complexity.HARD, 2, 4));
             Lessons.Add(new Lesson("Философия", LessonType.NARRATIVE, "philosophy", Complexity.NORMAL, 1, 2));
-            Lessons.Add(new Lesson("География и икономика", LessonType.NARRATIVE, "geography", Complexity.NORMAL, 1, 2));
+            Lessons.Add(new Lesson("География и икономика", LessonType.NARRATIVE, "geography", Complexity.NORMAL, 1,
+                2));
             Lessons.Add(new Lesson("Физика и астрономия", LessonType.SCIENCE, "physics", Complexity.HARD, 1, 2));
-            Lessons.Add(new Lesson("Биология и здравно образование", LessonType.SCIENCE, "biology", Complexity.HARD, 1, 2));
-            Lessons.Add(new Lesson("Химия и опазване на околната среда", LessonType.SCIENCE, "chemistry", Complexity.HARD, 1, 2));
+            Lessons.Add(new Lesson("Биология и здравно образование", LessonType.SCIENCE, "biology", Complexity.HARD, 1,
+                2));
+            Lessons.Add(new Lesson("Химия и опазване на околната среда", LessonType.SCIENCE, "chemistry",
+                Complexity.HARD, 1, 2));
             Lessons.Add(new Lesson("Музика", LessonType.RELAXING, "music", Complexity.EASY, 0, 0));
             Lessons.Add(new Lesson("Изобразително изкуство", LessonType.ALGORITHMIC, "art", Complexity.EASY, 1, 1));
             Lessons.Add(new Lesson("Информационни технологии", LessonType.ALGORITHMIC, "it", Complexity.EASY, 0, 0));
-            Lessons.Add(new Lesson("Физическо възпитание и спорт", LessonType.ALGORITHMIC, "pe", Complexity.EASY, 1, 2));
+            Lessons.Add(new Lesson("Физическо възпитание и спорт", LessonType.ALGORITHMIC, "pe", Complexity.EASY, 1,
+                2));
             Lessons.Add(new Lesson("Английски език", LessonType.ALGORITHMIC, "english", Complexity.NORMAL, 2, 2));
             Lessons.Add(new Lesson("Немски език", LessonType.ALGORITHMIC, "german", Complexity.NORMAL, 2, 2));
             Lessons.Add(new Lesson("Час на класа", LessonType.ALGORITHMIC, "classhour", Complexity.EASY, 1, 1));
@@ -85,6 +96,12 @@ namespace ASLET
             Teachers.Add(new Teacher("Веселина Янкова", "german"));
             Teachers.Add(new Teacher("Павлина Й. Няголова", "classhour"));
             Teachers.Add(new Teacher("Кирил К. Димитров", "history"));
+        }
+
+        private static void FillClasses()
+        {
+            Classes.Add(new Class("8А"));
+            Classes.Add(new Class("8Б"));
         }
     }
 }

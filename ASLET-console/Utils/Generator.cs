@@ -8,16 +8,18 @@ namespace ASLET.Utils
         public List<Tuple<Lesson, Teacher>> schedule;
         private readonly List<Lesson> _lessons;
         private readonly List<Teacher> _teachers;
+        private readonly List<Class> _classes;
 
         private readonly Random _random;
-        private short _currentLessonsDiff = 0;
+        private short _currentLessonsDiff;
 
 
-        public Generator(List<Lesson> lessons, List<Teacher> teachers)
+        public Generator(List<Lesson> lessons, List<Teacher> teachers, List<Class> classes)
         {
             schedule = new List<Tuple<Lesson, Teacher>>();
             _lessons = lessons;
             _teachers = teachers;
+            _classes = classes;
             _random = new Random();
         }
 
@@ -28,27 +30,33 @@ namespace ASLET.Utils
                 Console.WriteLine("Не може да бъде генерирана програма! ПРИЧИНА: НЯМА ДОСТАТЪЧНО СЕДМИЧНИ ЧАСОВЕ!");
                 return;
             }
-            foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
+
+            foreach (Class schoolClass in _classes)
             {
-                GenerateForDay(GetLessonsForADay());
-                Timetable.AddScheduleForDay(day, schedule);
-                schedule = new List<Tuple<Lesson, Teacher>>();
-                foreach (Teacher teacher in _teachers)
+                foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
                 {
-                    teacher.SetFreeLessons();
+                    GenerateForDay(schoolClass, GetLessonsForADay());
+                    Timetable.AddScheduleForDay(schoolClass, day, schedule);
+                    schedule = new List<Tuple<Lesson, Teacher>>();
+                    foreach (Teacher teacher in _teachers)
+                    {
+                        teacher.SetFreeLessons();
+                    }
                 }
+
+                _currentLessonsDiff = 0;
             }
         }
 
-        public void GenerateForDay(byte hours)
+        public void GenerateForDay(Class schoolClass, byte hours)
         {
             for (byte i = 1; i <= hours; i++)
             {
-                schedule.Add(GenerateNextLesson(i));
+                schedule.Add(GenerateNextLesson(schoolClass, i));
             }
         }
 
-        private Tuple<Lesson, Teacher> GenerateNextLesson(byte hour)
+        private Tuple<Lesson, Teacher> GenerateNextLesson(Class schoolClass, byte hour)
         {
             do
             {
@@ -56,7 +64,7 @@ namespace ASLET.Utils
                 Lesson currentLesson = _lessons[index];
                 byte lessonsCount = GetLessonCountDay(currentLesson);
                 if (lessonsCount >= currentLesson.maxADay) continue;
-                lessonsCount = GetLessonCountWeek(currentLesson);
+                lessonsCount = GetLessonCountWeek(schoolClass, currentLesson);
                 if (lessonsCount >= currentLesson.maxAWeek) continue;
                 Teacher currentTeacher = GetFreeTeacher(currentLesson.subject, hour);
                 if (currentTeacher != null)
@@ -88,17 +96,21 @@ namespace ASLET.Utils
             return count;
         }
 
-        private byte GetLessonCountWeek(Lesson lesson)
+        private byte GetLessonCountWeek(Class schoolClass, Lesson lesson)
         {
             byte count = 0;
-            foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable.Values)
+            if (Timetable.timetable.ContainsKey(schoolClass))
             {
-                foreach (Tuple<Lesson, Teacher> currentLesson in currentDay)
+                foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable[schoolClass].Values)
                 {
-                    if (currentLesson.Item1.subject == lesson.subject)
-                        count++;
+                    foreach (Tuple<Lesson, Teacher> currentLesson in currentDay)
+                    {
+                        if (currentLesson.Item1.subject == lesson.subject)
+                            count++;
+                    }
                 }
             }
+            else return 0;
 
             return count;
         }
