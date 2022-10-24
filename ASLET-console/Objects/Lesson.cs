@@ -18,6 +18,7 @@ namespace ASLET.Objects
 
     public class Lesson
     {
+        public static byte totalCount;
         public readonly string displayName;
         public readonly LessonType type;
         public readonly string subject;
@@ -25,9 +26,9 @@ namespace ASLET.Objects
         public readonly byte maxADay;
         public readonly byte maxAWeek;
 
-        public Lesson(string displayName, LessonType type, string subject, Complexity complexity, byte maxADay,
-            byte maxAWeek)
+        public Lesson(string displayName, LessonType type, string subject, Complexity complexity, byte maxADay, byte maxAWeek)
         {
+            totalCount += maxAWeek;
             this.displayName = displayName;
             this.type = type;
             this.subject = subject;
