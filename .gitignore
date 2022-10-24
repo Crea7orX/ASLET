@@ -1,3 +1,6 @@
-/.idea/
+**/.idea/
+/.vscode/
+
+
 /ASLET-console/bin/
 /ASLET-console/obj/
