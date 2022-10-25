@@ -11,7 +11,7 @@ namespace ASLET.Utils
         private readonly List<Class> _classes;
 
         private readonly Random _random;
-        private short _currentLessonsDiff;
+        private readonly Dictionary<Class, short> _classLessonsDiff;
 
 
         public Generator(List<Lesson> lessons, List<Teacher> teachers, List<Class> classes)
@@ -21,6 +21,7 @@ namespace ASLET.Utils
             _teachers = teachers;
             _classes = classes;
             _random = new Random();
+            _classLessonsDiff = new();
         }
 
         public void GenerateForWeek()
@@ -31,11 +32,16 @@ namespace ASLET.Utils
                 return;
             }
 
+            foreach (Class schoolClass in _classes)
+            {
+                _classLessonsDiff.Add(schoolClass, (short)(Lesson.totalCount % 5));
+            }
+
             foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
             {
                 foreach (Class schoolClass in _classes)
                 {
-                    GenerateForDay(schoolClass, GetLessonsForADay());
+                    GenerateForDay(schoolClass, GetLessonsForADay(schoolClass));
                     Timetable.AddScheduleForDay(schoolClass, day, schedule);
                     schedule = new List<Tuple<Lesson, Teacher>>();
                 }
@@ -44,8 +50,6 @@ namespace ASLET.Utils
                 {
                     teacher.SetFreeLessons();
                 }
-                
-                _currentLessonsDiff = 0;
             }
         }
 
@@ -116,35 +120,17 @@ namespace ASLET.Utils
             return count;
         }
 
-        private short FindTotalHourDiff()
+        private byte GetLessonsForADay(Class schoolClass)
         {
-            return (short)(Lesson.totalCount - 7 * 5);
-        }
+            byte count;
 
-        private byte GetLessonsForADay()
-        {
-            byte count = 0;
-
-            if (Lesson.totalCount == 7 * 5)
-                count = 7;
-            else if (Lesson.totalCount > 7 * 5)
+            if (_classLessonsDiff[schoolClass] > 0)
             {
-                if (_currentLessonsDiff < FindTotalHourDiff())
-                {
-                    count = 8;
-                    _currentLessonsDiff++;
-                }
-                else count = 7;
+                count = (byte)(Lesson.totalCount / 5 + 1);
+                _classLessonsDiff[schoolClass]--;
             }
-            else if (Lesson.totalCount < 7 * 5)
-            {
-                if (_currentLessonsDiff > FindTotalHourDiff())
-                {
-                    count = 6;
-                    _currentLessonsDiff--;
-                }
-                else count = 7;
-            }
+            else
+                count = (byte)(Lesson.totalCount / 5);
 
             return count;
         }

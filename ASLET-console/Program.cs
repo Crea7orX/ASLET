@@ -70,9 +70,9 @@ namespace ASLET
                 2));
             Lessons.Add(new Lesson("Химия и опазване на околната среда", LessonType.SCIENCE, "chemistry",
                 Complexity.HARD, 1, 2));
-            Lessons.Add(new Lesson("Музика", LessonType.RELAXING, "music", Complexity.EASY, 0, 0));
+            Lessons.Add(new Lesson("Музика", LessonType.RELAXING, "music", Complexity.EASY, 2, 4));
             Lessons.Add(new Lesson("Изобразително изкуство", LessonType.ALGORITHMIC, "art", Complexity.EASY, 1, 1));
-            Lessons.Add(new Lesson("Информационни технологии", LessonType.ALGORITHMIC, "it", Complexity.EASY, 0, 0));
+            Lessons.Add(new Lesson("Информационни технологии", LessonType.ALGORITHMIC, "it", Complexity.EASY, 2, 4));
             Lessons.Add(new Lesson("Физическо възпитание и спорт", LessonType.ALGORITHMIC, "pe", Complexity.EASY, 1,
                 2));
             Lessons.Add(new Lesson("Английски език", LessonType.ALGORITHMIC, "english", Complexity.NORMAL, 2, 2));
