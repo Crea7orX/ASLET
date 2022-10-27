@@ -1,4 +1,3 @@
-using System;
 using ASLET.Objects;
 
 namespace ASLET.Utils
@@ -26,6 +25,7 @@ namespace ASLET.Utils
 
         public void GenerateForWeek()
         {
+            Console.WriteLine(Checkers.CanTimetableBeGenerated(_lessons));
             if (!Checkers.CanTimetableBeGenerated(_lessons))
             {
                 Console.WriteLine("Не може да бъде генерирана програма! ПРИЧИНА: НЯМА ДОСТАТЪЧНО СЕДМИЧНИ ЧАСОВЕ!");
@@ -68,16 +68,17 @@ namespace ASLET.Utils
                 byte index = (byte)_random.Next(0, _lessons.Count);
                 Lesson currentLesson = _lessons[index];
                 byte lessonsCount = GetLessonCountDay(currentLesson);
-                if (lessonsCount >= currentLesson.maxADay) continue;
+                byte lessonsComplexity = GetComplexityForADay();
+                if (lessonsCount >= currentLesson.maxADay && lessonsComplexity < 10) continue;
                 lessonsCount = GetLessonCountWeek(schoolClass, currentLesson);
                 if (lessonsCount >= currentLesson.maxAWeek) continue;
-                Teacher currentTeacher = GetFreeTeacher(currentLesson.subject, hour);
+                Teacher? currentTeacher = GetFreeTeacher(currentLesson.subject, hour);
                 if (currentTeacher != null)
                     return Tuple.Create(currentLesson, currentTeacher);
             } while (true);
         }
 
-        private Teacher GetFreeTeacher(string subject, byte hour)
+        private Teacher? GetFreeTeacher(string subject, byte hour)
         {
             foreach (Teacher teacher in _teachers)
             {
@@ -86,7 +87,7 @@ namespace ASLET.Utils
                 return teacher;
             }
 
-            return null!;
+            return null;
         }
 
         private byte GetLessonCountDay(Lesson lesson)
@@ -134,5 +135,16 @@ namespace ASLET.Utils
 
             return count;
         }
+
+		private byte GetComplexityForADay()
+		{
+            byte  totalComplexity = 0;
+            foreach (var scheduleLesson in schedule)
+            {
+                    totalComplexity += (byte)scheduleLesson.Item1.complexity;
+            }
+
+            return totalComplexity;
+		}
     }
 }

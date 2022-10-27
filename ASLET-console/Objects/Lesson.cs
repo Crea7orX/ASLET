@@ -2,18 +2,19 @@ namespace ASLET.Objects
 {
     public enum Complexity
     {
-        EASY = 1,
-        NORMAL = 2,
-        HARD = 3
+        Easy = 1,
+        Normal = 2,
+        Hard = 3
     }
 
     public enum LessonType
     {
-        RELAXING = 0,
-        NARRATIVE = 1,
-        LANGUAGE = 2,
-        ALGORITHMIC = 3,
-        SCIENCE = 4
+        Relaxing = 0,
+        Narrative = 1,
+        Language = 2,
+        Algorithmic = 3,
+        Science = 4,
+        Sport = 5
     }
 
     public class Lesson

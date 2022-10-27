@@ -59,26 +59,26 @@ namespace ASLET
 
         private static void FillLessons()
         {
-            Lessons.Add(new Lesson("Български език и литература", LessonType.LANGUAGE, "bulgarian", Complexity.NORMAL,
+            Lessons.Add(new Lesson("Български език и литература", LessonType.Language, "bulgarian", Complexity.Normal,
                 2, 4));
-            Lessons.Add(new Lesson("Математика", LessonType.ALGORITHMIC, "math", Complexity.HARD, 2, 4));
-            Lessons.Add(new Lesson("Философия", LessonType.NARRATIVE, "philosophy", Complexity.NORMAL, 1, 2));
-            Lessons.Add(new Lesson("География и икономика", LessonType.NARRATIVE, "geography", Complexity.NORMAL, 1,
+            Lessons.Add(new Lesson("Математика", LessonType.Algorithmic, "math", Complexity.Hard, 2, 4));
+            Lessons.Add(new Lesson("Философия", LessonType.Narrative, "philosophy", Complexity.Normal, 1, 2));
+            Lessons.Add(new Lesson("География и икономика", LessonType.Narrative, "geography", Complexity.Normal, 1,
                 2));
-            Lessons.Add(new Lesson("Физика и астрономия", LessonType.SCIENCE, "physics", Complexity.HARD, 1, 2));
-            Lessons.Add(new Lesson("Биология и здравно образование", LessonType.SCIENCE, "biology", Complexity.HARD, 1,
+            Lessons.Add(new Lesson("Физика и астрономия", LessonType.Science, "physics", Complexity.Hard, 1, 2));
+            Lessons.Add(new Lesson("Биология и здравно образование", LessonType.Science, "biology", Complexity.Hard, 1,
                 2));
-            Lessons.Add(new Lesson("Химия и опазване на околната среда", LessonType.SCIENCE, "chemistry",
-                Complexity.HARD, 1, 2));
-            Lessons.Add(new Lesson("Музика", LessonType.RELAXING, "music", Complexity.EASY, 2, 4));
-            Lessons.Add(new Lesson("Изобразително изкуство", LessonType.ALGORITHMIC, "art", Complexity.EASY, 1, 1));
-            Lessons.Add(new Lesson("Информационни технологии", LessonType.ALGORITHMIC, "it", Complexity.EASY, 2, 4));
-            Lessons.Add(new Lesson("Физическо възпитание и спорт", LessonType.ALGORITHMIC, "pe", Complexity.EASY, 1,
+            Lessons.Add(new Lesson("Химия и опазване на околната среда", LessonType.Science, "chemistry",
+                Complexity.Hard, 1, 2));
+            Lessons.Add(new Lesson("Музика", LessonType.Relaxing, "music", Complexity.Easy, 2, 4));
+            Lessons.Add(new Lesson("Изобразително изкуство", LessonType.Relaxing, "art", Complexity.Easy, 1, 1));
+            Lessons.Add(new Lesson("Информационни технологии", LessonType.Algorithmic, "it", Complexity.Easy, 2, 4));
+            Lessons.Add(new Lesson("Физическо възпитание и спорт", LessonType.Sport, "pe", Complexity.Easy, 1,
                 2));
-            Lessons.Add(new Lesson("Английски език", LessonType.ALGORITHMIC, "english", Complexity.NORMAL, 2, 2));
-            Lessons.Add(new Lesson("Немски език", LessonType.ALGORITHMIC, "german", Complexity.NORMAL, 2, 2));
-            Lessons.Add(new Lesson("Час на класа", LessonType.ALGORITHMIC, "classhour", Complexity.EASY, 1, 1));
-            Lessons.Add(new Lesson("История и цивилизации", LessonType.NARRATIVE, "history", Complexity.NORMAL, 1, 4));
+            Lessons.Add(new Lesson("Английски език", LessonType.Language, "english", Complexity.Normal, 2, 2));
+            Lessons.Add(new Lesson("Немски език", LessonType.Language, "german", Complexity.Normal, 2, 2));
+            Lessons.Add(new Lesson("Час на класа", LessonType.Relaxing, "classhour", Complexity.Easy, 1, 1));
+            Lessons.Add(new Lesson("История и цивилизации", LessonType.Narrative, "history", Complexity.Normal, 1, 4));
         }
 
         private static void FillTeachers()
