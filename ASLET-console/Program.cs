@@ -120,6 +120,8 @@ namespace ASLET
             Teachers.Add(new Teacher("Веселина Янкова2", "german", VIIIB));
             Teachers.Add(new Teacher("Павлина Й. Няголова2", "classhour", VIIIB));
             Teachers.Add(new Teacher("Кирил К. Димитров2", "history", VIIIB));
+            
+            Teachers.Add(new Teacher("НЯМА УТИТЕЛ", "nothing", new List<Class>()));
         }
 
         private static void FillClasses()

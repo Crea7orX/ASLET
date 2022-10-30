@@ -25,7 +25,6 @@ public class Debug
                 foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable[schoolClass].Values)
                 {
                     if (currentDay.Count - 1 < i) continue;
-                    if (currentDay[i].Item2 == null) continue;
                     writer.Write(currentDay[i].Item2.name.PadRight(40));
                 }
 

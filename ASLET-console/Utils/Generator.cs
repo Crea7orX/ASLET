@@ -108,7 +108,7 @@ namespace ASLET.Utils
                 failedAttempts++;
             } while (failedAttempts <= 60);
             Console.WriteLine("TOO MUCH ITERATIONS! " + schoolClass.className + " " + hour);
-            return Tuple.Create<Lesson, Teacher>(_lessons.Find(lesson => lesson.displayName == "ПРАЗНО"), null);
+            return Tuple.Create<Lesson, Teacher>(_lessons[^1], _teachers[^1]);
         }
 
         private Teacher? GetFreeTeacher(string subject, byte hour, Class schoolClass)
