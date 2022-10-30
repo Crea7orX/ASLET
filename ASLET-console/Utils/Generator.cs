@@ -90,7 +90,7 @@ namespace ASLET.Utils
                     failedAttempts++;
                     continue;
                 }
-                lessonsCount = GetLessonCountWeek(schoolClass, currentLesson);
+                lessonsCount = GetLessonCountForAWeek(schoolClass, currentLesson);
                 if (lessonsCount >= currentLesson.maxAWeek)
                 {
                     failedAttempts++;
@@ -135,7 +135,7 @@ namespace ASLET.Utils
             return count;
         }
 
-        private byte GetLessonCountWeek(Class schoolClass, Lesson lesson)
+        private byte GetLessonCountForAWeek(Class schoolClass, Lesson lesson)
         {
             byte count = 0;
             if (Timetable.timetable.ContainsKey(schoolClass))
