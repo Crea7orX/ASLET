@@ -26,7 +26,7 @@ namespace ASLET.Objects
 
         public bool TeachingSubject(string subject)
         {
-            string[] subjectsArr = subjects.Split(", ");
+            string[] subjectsArr = subjects.Split(",\\s+");
             return subjectsArr.Contains(subject);
         }
     }
