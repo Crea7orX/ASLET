@@ -3,14 +3,14 @@ namespace ASLET.Objects
     public class Teacher
     {
         public readonly string name;
-        public readonly string subject;
+        public readonly string subjects;
         public readonly bool[] freeLessons;
         public readonly List<Class> attachedClasses;
 
-        public Teacher(string name, string subject, List<Class> attachedClasses)
+        public Teacher(string name, string subjects, List<Class> attachedClasses)
         {
             this.name = name;
-            this.subject = subject;
+            this.subjects = subjects;
             freeLessons = new bool[8];
             this.attachedClasses = attachedClasses;
             SetFreeLessons();
@@ -22,6 +22,12 @@ namespace ASLET.Objects
             {
                 freeLessons[i] = true;
             }
+        }
+
+        public bool TeachingSubject(string subject)
+        {
+            string[] subjectsArr = subjects.Split(", ");
+            return subjectsArr.Contains(subject);
         }
     }
 }

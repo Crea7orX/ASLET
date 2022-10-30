@@ -25,8 +25,7 @@ namespace ASLET.Objects
 
         public static void RemoveScheduleForDay(Class schoolClass, DaysOfWeek day)
         {
-            Console.WriteLine(schoolClass.className + " " + timetable.ContainsKey(schoolClass));
-            if (!timetable.ContainsKey(schoolClass))
+            if (timetable.ContainsKey(schoolClass))
                 timetable[schoolClass].Remove(day);
         }
     }

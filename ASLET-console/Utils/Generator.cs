@@ -41,7 +41,7 @@ namespace ASLET.Utils
             {
                 foreach (Class schoolClass in _classes)
                 {
-                    GenerateForDay(schoolClass, GetLessonsForADay(schoolClass));
+                    GenerateForDay(schoolClass, day, GetLessonsForADay(schoolClass));
                     Timetable.AddScheduleForDay(schoolClass, day, _schedule);
                     _schedule = new List<Tuple<Lesson, Teacher>>();
                 }
@@ -53,26 +53,26 @@ namespace ASLET.Utils
             }
         }
 
-        private void GenerateForDay(Class schoolClass, byte hours, int times = 0)
+        private void GenerateForDay(Class schoolClass, DaysOfWeek day, byte hours, byte times = 0)
         {
             for (byte i = 1; i <= hours; i++)
             {
                 _schedule.Add(GenerateNextLesson(schoolClass, i));
             }
 
-            if (_schedule.Contains(Tuple.Create<Lesson, Teacher>(_lessons.Find(lesson => lesson.displayName == "ПРАЗНО"), null)))
+            if (_schedule.Contains(Tuple.Create(_lessons[^1], _teachers[^1])))
             {
                 if (times < 2)
                 {
-                    Console.WriteLine("RECURSIVE " + schoolClass.className + " " + hours);
                     times++;
                     _schedule.Clear();
-                    GenerateForDay(schoolClass, hours, times);
+                    GenerateForDay(schoolClass, day, hours, times);
                 }
                 else
                 {
-                    // TODO
-                    Console.WriteLine("TOO MUCH RECURSIVE " + schoolClass.className + " " + hours);
+                    _schedule.Clear();
+                    Timetable.RemoveScheduleForDay(schoolClass, day);
+                    if (day - 1 != 0) Timetable.RemoveScheduleForDay(schoolClass, day - 1);
                 }
             }
         }
@@ -107,7 +107,6 @@ namespace ASLET.Utils
                     return Tuple.Create(currentLesson, currentTeacher);
                 failedAttempts++;
             } while (failedAttempts <= 60);
-            Console.WriteLine("TOO MUCH ITERATIONS! " + schoolClass.className + " " + hour);
             return Tuple.Create(_lessons[^1], _teachers[^1]);
         }
 
@@ -116,7 +115,7 @@ namespace ASLET.Utils
             foreach (Teacher teacher in _teachers)
             {
                 if (!teacher.attachedClasses.Contains(schoolClass)) continue;
-                if (teacher.subject != subject || !teacher.freeLessons[hour - 1]) continue;
+                if (!teacher.TeachingSubject(subject) || !teacher.freeLessons[hour - 1]) continue;
                 teacher.freeLessons[hour - 1] = false;
                 return teacher;
             }
