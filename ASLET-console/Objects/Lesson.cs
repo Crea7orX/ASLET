@@ -2,6 +2,7 @@ namespace ASLET.Objects
 {
     public enum Complexity
     {
+        Nothing = 0,
         Easy = 1,
         Normal = 2,
         Hard = 3
@@ -9,17 +10,19 @@ namespace ASLET.Objects
 
     public enum LessonType
     {
-        Relaxing = 0,
-        Narrative = 1,
-        Language = 2,
-        Algorithmic = 3,
-        Science = 4,
-        Sport = 5
+        Nothing = 0,
+        Relaxing = 1,
+        Narrative = 2,
+        Language = 3,
+        Algorithmic = 4,
+        Science = 5,
+        Sport = 6
     }
 
     public class Lesson
     {
-        public static byte totalCount;
+        public static byte totalCountAWeek;
+        public static byte totalComplexity;
         public readonly string displayName;
         public readonly LessonType type;
         public readonly string subject;
@@ -29,7 +32,8 @@ namespace ASLET.Objects
 
         public Lesson(string displayName, LessonType type, string subject, Complexity complexity, byte maxADay, byte maxAWeek)
         {
-            totalCount += maxAWeek;
+            totalCountAWeek += maxAWeek;
+            totalComplexity += (byte)complexity;
             this.displayName = displayName;
             this.type = type;
             this.subject = subject;

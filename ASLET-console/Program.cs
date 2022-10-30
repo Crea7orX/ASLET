@@ -30,31 +30,33 @@ namespace ASLET
                     if (lesson) freeLessonsCount++;
                 Console.WriteLine(freeLessonsCount);
             } */
-            foreach (Class schoolClass in Classes)
-            {
-                Console.WriteLine(schoolClass.className);
-                foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable[schoolClass].Values)
-                {
-                    Console.WriteLine();
-                    // Console.WriteLine(
-                    //     "--------------------------------------------------------------------------------------------------------------------------------------------");
-                    foreach (Tuple<Lesson, Teacher> currentLesson in currentDay)
-                    {
-                        Console.Write(currentLesson.Item1.displayName.PadRight(60));
-                        Console.WriteLine();
-                        // Console.Write(currentLesson.Item2.name.PadRight(30));
-                        // Console.Write(String.Join(", ", currentLesson.Item2.freeLessons).PadRight(60));
-                        int freeLessonsCount = 0;
-                        foreach (bool lesson in currentLesson.Item2.freeLessons)
-                            if (lesson)
-                                freeLessonsCount++;
-                        // Console.WriteLine(freeLessonsCount);
-                    }
-
-                    // Console.WriteLine(
-                    //     "--------------------------------------------------------------------------------------------------------------------------------------------");
-                }
-            }
+            Console.WriteLine("FINISHED!");
+            Debug.SaveTimetable(Classes);
+            // foreach (Class schoolClass in Classes)
+            // {
+            //     Console.WriteLine(schoolClass.className);
+            //     foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable[schoolClass].Values)
+            //     {
+            //         Console.WriteLine();
+            //         // Console.WriteLine(
+            //         //     "--------------------------------------------------------------------------------------------------------------------------------------------");
+            //         foreach (Tuple<Lesson, Teacher> currentLesson in currentDay)
+            //         {
+            //             Console.Write(currentLesson.Item1.displayName.PadRight(60));
+            //             Console.WriteLine();
+            //             // Console.Write(currentLesson.Item2.name.PadRight(30));
+            //             // Console.Write(String.Join(", ", currentLesson.Item2.freeLessons).PadRight(60));
+            //             // int freeLessonsCount = 0;
+            //             // foreach (bool lesson in currentLesson.Item2.freeLessons)
+            //             //     if (lesson)
+            //             //         freeLessonsCount++;
+            //             // Console.WriteLine(freeLessonsCount);
+            //         }
+            //
+            //         // Console.WriteLine(
+            //         //     "--------------------------------------------------------------------------------------------------------------------------------------------");
+            //     }
+            // }
         }
 
         private static void FillLessons()
@@ -79,6 +81,7 @@ namespace ASLET
             Lessons.Add(new Lesson("Немски език", LessonType.Language, "german", Complexity.Normal, 2, 2));
             Lessons.Add(new Lesson("Час на класа", LessonType.Relaxing, "classhour", Complexity.Easy, 1, 1));
             Lessons.Add(new Lesson("История и цивилизации", LessonType.Narrative, "history", Complexity.Normal, 1, 4));
+            Lessons.Add(new Lesson("ПРАЗНО", LessonType.Nothing, "nothing", Complexity.Nothing, 0, 0));
         }
 
         private static void FillTeachers()

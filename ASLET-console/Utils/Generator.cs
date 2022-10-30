@@ -4,7 +4,7 @@ namespace ASLET.Utils
 {
     public class Generator
     {
-        public List<Tuple<Lesson, Teacher>> schedule;
+        private List<Tuple<Lesson, Teacher>> _schedule;
         private readonly List<Lesson> _lessons;
         private readonly List<Teacher> _teachers;
         private readonly List<Class> _classes;
@@ -15,7 +15,7 @@ namespace ASLET.Utils
 
         public Generator(List<Lesson> lessons, List<Teacher> teachers, List<Class> classes)
         {
-            schedule = new List<Tuple<Lesson, Teacher>>();
+            _schedule = new List<Tuple<Lesson, Teacher>>();
             _lessons = lessons;
             _teachers = teachers;
             _classes = classes;
@@ -34,7 +34,7 @@ namespace ASLET.Utils
 
             foreach (Class schoolClass in _classes)
             {
-                _classLessonsDiff.Add(schoolClass, (short)(Lesson.totalCount % 5));
+                _classLessonsDiff.Add(schoolClass, (short)(Lesson.totalCountAWeek % 5));
             }
 
             foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
@@ -42,8 +42,8 @@ namespace ASLET.Utils
                 foreach (Class schoolClass in _classes)
                 {
                     GenerateForDay(schoolClass, GetLessonsForADay(schoolClass));
-                    Timetable.AddScheduleForDay(schoolClass, day, schedule);
-                    schedule = new List<Tuple<Lesson, Teacher>>();
+                    Timetable.AddScheduleForDay(schoolClass, day, _schedule);
+                    _schedule = new List<Tuple<Lesson, Teacher>>();
                 }
 
                 foreach (Teacher teacher in _teachers)
@@ -53,29 +53,62 @@ namespace ASLET.Utils
             }
         }
 
-        public void GenerateForDay(Class schoolClass, byte hours)
+        private void GenerateForDay(Class schoolClass, byte hours, int times = 0)
         {
             for (byte i = 1; i <= hours; i++)
             {
-                schedule.Add(GenerateNextLesson(schoolClass, i));
+                _schedule.Add(GenerateNextLesson(schoolClass, i));
+            }
+
+            if (_schedule.Contains(Tuple.Create<Lesson, Teacher>(_lessons.Find(lesson => lesson.displayName == "ПРАЗНО"), null)))
+            {
+                if (times < 2)
+                {
+                    Console.WriteLine("RECURSIVE " + schoolClass.className + " " + hours);
+                    times++;
+                    _schedule.Clear();
+                    GenerateForDay(schoolClass, hours, times);
+                }
+                else
+                {
+                    // TODO
+                    Console.WriteLine("TOO MUCH RECURSIVE " + schoolClass.className + " " + hours);
+                }
             }
         }
 
         private Tuple<Lesson, Teacher> GenerateNextLesson(Class schoolClass, byte hour)
         {
+            int failedAttempts = 0;
             do
             {
                 byte index = (byte)_random.Next(0, _lessons.Count);
                 Lesson currentLesson = _lessons[index];
                 byte lessonsCount = GetLessonCountDay(currentLesson);
-                byte lessonsComplexity = GetComplexityForADay();
-                if (lessonsCount >= currentLesson.maxADay && lessonsComplexity < 10) continue;
+                if (lessonsCount >= currentLesson.maxADay)
+                {
+                    failedAttempts++;
+                    continue;
+                }
                 lessonsCount = GetLessonCountWeek(schoolClass, currentLesson);
-                if (lessonsCount >= currentLesson.maxAWeek) continue;
+                if (lessonsCount >= currentLesson.maxAWeek)
+                {
+                    failedAttempts++;
+                    continue;
+                }
+                byte lessonsComplexity = GetComplexityForADay();
+                if (Lesson.totalComplexity - lessonsComplexity < 16)
+                {
+                    failedAttempts++;
+                    continue;
+                }
                 Teacher? currentTeacher = GetFreeTeacher(currentLesson.subject, hour);
                 if (currentTeacher != null)
                     return Tuple.Create(currentLesson, currentTeacher);
-            } while (true);
+                failedAttempts++;
+            } while (failedAttempts <= 60);
+            Console.WriteLine("TOO MUCH ITERATIONS! " + schoolClass.className + " " + hour);
+            return Tuple.Create<Lesson, Teacher>(_lessons.Find(lesson => lesson.displayName == "ПРАЗНО"), null);
         }
 
         private Teacher? GetFreeTeacher(string subject, byte hour)
@@ -93,8 +126,9 @@ namespace ASLET.Utils
         private byte GetLessonCountDay(Lesson lesson)
         {
             byte count = 0;
-            foreach (var scheduleLesson in schedule)
+            foreach (var scheduleLesson in _schedule)
             {
+                if (scheduleLesson.Item1 == null) continue;
                 if (scheduleLesson.Item1.subject == lesson.subject)
                     count++;
             }
@@ -127,24 +161,24 @@ namespace ASLET.Utils
 
             if (_classLessonsDiff[schoolClass] > 0)
             {
-                count = (byte)(Lesson.totalCount / 5 + 1);
+                count = (byte)(Lesson.totalCountAWeek / 5 + 1);
                 _classLessonsDiff[schoolClass]--;
             }
             else
-                count = (byte)(Lesson.totalCount / 5);
+                count = (byte)(Lesson.totalCountAWeek / 5);
 
             return count;
         }
 
-		private byte GetComplexityForADay()
-		{
-            byte  totalComplexity = 0;
-            foreach (var scheduleLesson in schedule)
+        private byte GetComplexityForADay()
+        {
+            byte totalComplexity = 0;
+            foreach (var scheduleLesson in _schedule)
             {
-                    totalComplexity += (byte)scheduleLesson.Item1.complexity;
+                totalComplexity += (byte)scheduleLesson.Item1.complexity;
             }
 
             return totalComplexity;
-		}
+        }
     }
 }

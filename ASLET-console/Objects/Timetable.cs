@@ -15,13 +15,19 @@ namespace ASLET.Objects
 
         public static void AddScheduleForDay(Class schoolClass, DaysOfWeek day, List<Tuple<Lesson, Teacher>> lessons)
         {
-            Console.WriteLine(schoolClass.className + " " + timetable.ContainsKey(schoolClass));
             if (!timetable.ContainsKey(schoolClass))
             {
                 Dictionary<DaysOfWeek, List<Tuple<Lesson, Teacher>>> dictionary = new() { { day, lessons } };
                 timetable.Add(schoolClass, dictionary);
             }
             else timetable[schoolClass].Add(day, lessons);
+        }
+
+        public static void RemoveScheduleForDay(Class schoolClass, DaysOfWeek day)
+        {
+            Console.WriteLine(schoolClass.className + " " + timetable.ContainsKey(schoolClass));
+            if (!timetable.ContainsKey(schoolClass))
+                timetable[schoolClass].Remove(day);
         }
     }
 }
