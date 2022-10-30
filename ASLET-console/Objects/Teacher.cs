@@ -5,13 +5,14 @@ namespace ASLET.Objects
         public readonly string name;
         public readonly string subject;
         public readonly bool[] freeLessons;
+        public readonly List<Class> attachedClasses;
 
-
-        public Teacher(string name, string subject)
+        public Teacher(string name, string subject, List<Class> attachedClasses)
         {
             this.name = name;
             this.subject = subject;
             freeLessons = new bool[8];
+            this.attachedClasses = attachedClasses;
             SetFreeLessons();
         }
 

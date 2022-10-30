@@ -102,7 +102,7 @@ namespace ASLET.Utils
                     failedAttempts++;
                     continue;
                 }
-                Teacher? currentTeacher = GetFreeTeacher(currentLesson.subject, hour);
+                Teacher? currentTeacher = GetFreeTeacher(currentLesson.subject, hour, schoolClass);
                 if (currentTeacher != null)
                     return Tuple.Create(currentLesson, currentTeacher);
                 failedAttempts++;
@@ -111,10 +111,11 @@ namespace ASLET.Utils
             return Tuple.Create<Lesson, Teacher>(_lessons.Find(lesson => lesson.displayName == "ПРАЗНО"), null);
         }
 
-        private Teacher? GetFreeTeacher(string subject, byte hour)
+        private Teacher? GetFreeTeacher(string subject, byte hour, Class schoolClass)
         {
             foreach (Teacher teacher in _teachers)
             {
+                if (!teacher.attachedClasses.Contains(schoolClass)) continue;
                 if (teacher.subject != subject || !teacher.freeLessons[hour - 1]) continue;
                 teacher.freeLessons[hour - 1] = false;
                 return teacher;
@@ -128,7 +129,6 @@ namespace ASLET.Utils
             byte count = 0;
             foreach (var scheduleLesson in _schedule)
             {
-                if (scheduleLesson.Item1 == null) continue;
                 if (scheduleLesson.Item1.subject == lesson.subject)
                     count++;
             }

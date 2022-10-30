@@ -17,8 +17,16 @@ public class Debug
                 foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable[schoolClass].Values)
                 {
                     if (currentDay.Count - 1 < i) continue;
-                    if (currentDay[i].Item1 == null) continue;
                     writer.Write(currentDay[i].Item1.displayName.PadRight(40));
+                }
+
+                writer.WriteLine();
+                
+                foreach (List<Tuple<Lesson, Teacher>> currentDay in Timetable.timetable[schoolClass].Values)
+                {
+                    if (currentDay.Count - 1 < i) continue;
+                    if (currentDay[i].Item2 == null) continue;
+                    writer.Write(currentDay[i].Item2.name.PadRight(40));
                 }
 
                 writer.WriteLine();
@@ -29,7 +37,6 @@ public class Debug
                 int complexity = 0;
                 foreach (Tuple<Lesson, Teacher> currentLesson in currentDay)
                 {
-                    if (currentLesson.Item1 == null) continue;
                     complexity += (int)currentLesson.Item1.complexity;
                 }
 

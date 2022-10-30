@@ -11,9 +11,9 @@ namespace ASLET
 
         public static void Main(string[] args)
         {
+            FillClasses();
             FillLessons();
             FillTeachers();
-            FillClasses();
             Generator generator = new Generator(Lessons, Teachers, Classes);
 
             generator.GenerateForWeek();
@@ -72,9 +72,9 @@ namespace ASLET
                 2));
             Lessons.Add(new Lesson("Химия и опазване на околната среда", LessonType.Science, "chemistry",
                 Complexity.Hard, 1, 2));
-            Lessons.Add(new Lesson("Музика", LessonType.Relaxing, "music", Complexity.Easy, 2, 4));
+            Lessons.Add(new Lesson("Музика", LessonType.Relaxing, "music", Complexity.Easy, 0, 0));
             Lessons.Add(new Lesson("Изобразително изкуство", LessonType.Relaxing, "art", Complexity.Easy, 1, 1));
-            Lessons.Add(new Lesson("Информационни технологии", LessonType.Algorithmic, "it", Complexity.Easy, 2, 4));
+            Lessons.Add(new Lesson("Информационни технологии", LessonType.Algorithmic, "it", Complexity.Easy, 0, 0));
             Lessons.Add(new Lesson("Физическо възпитание и спорт", LessonType.Sport, "pe", Complexity.Easy, 1,
                 2));
             Lessons.Add(new Lesson("Английски език", LessonType.Language, "english", Complexity.Normal, 2, 2));
@@ -86,21 +86,40 @@ namespace ASLET
 
         private static void FillTeachers()
         {
-            Teachers.Add(new Teacher("Лилия Й. Колева", "bulgarian"));
-            Teachers.Add(new Teacher("Павлина Я. Коларова", "math"));
-            Teachers.Add(new Teacher("Ивелина Ю. Михайлова", "philosophy"));
-            Teachers.Add(new Teacher("Зорница Й. Атанасова", "geography"));
-            Teachers.Add(new Teacher("Диана Х. Димова", "physics"));
-            Teachers.Add(new Teacher("Павлина Й. Няголова", "biology"));
-            Teachers.Add(new Teacher("Жечка С. Владимирова", "chemistry"));
-            Teachers.Add(new Teacher("Радостин К. Златинов", "music"));
-            Teachers.Add(new Teacher("Кирил С. Стефанов ", "art"));
-            Teachers.Add(new Teacher("Полина Кирилова", "it"));
-            Teachers.Add(new Teacher("Елена Дончева", "pe"));
-            Teachers.Add(new Teacher("Ивелина Ю. Михайлова", "english"));
-            Teachers.Add(new Teacher("Веселина Янкова", "german"));
-            Teachers.Add(new Teacher("Павлина Й. Няголова", "classhour"));
-            Teachers.Add(new Teacher("Кирил К. Димитров", "history"));
+            List<Class> VIIIA = new List<Class> { Classes[0] };
+            List<Class> VIIIB = new List<Class> { Classes[1] };
+            List<Class> BOTH = new List<Class> { Classes[0], Classes[1] };
+            Teachers.Add(new Teacher("Лилия Й. Колева", "bulgarian", VIIIA));
+            Teachers.Add(new Teacher("Павлина Я. Коларова", "math", VIIIA));
+            Teachers.Add(new Teacher("Ивелина Ю. Михайлова", "philosophy", VIIIA));
+            Teachers.Add(new Teacher("Зорница Й. Атанасова", "geography", VIIIA));
+            Teachers.Add(new Teacher("Диана Х. Димова", "physics", VIIIA));
+            Teachers.Add(new Teacher("Павлина Й. Няголова", "biology", VIIIA));
+            Teachers.Add(new Teacher("Жечка С. Владимирова", "chemistry", VIIIA));
+            Teachers.Add(new Teacher("Радостин К. Златинов", "music", VIIIA));
+            Teachers.Add(new Teacher("Кирил С. Стефанов ", "art", VIIIA));
+            Teachers.Add(new Teacher("Полина Кирилова", "it", VIIIA));
+            Teachers.Add(new Teacher("Елена Дончева", "pe", VIIIA));
+            Teachers.Add(new Teacher("Ивелина Ю. Михайлова", "english", VIIIA));
+            Teachers.Add(new Teacher("Веселина Янкова", "german", VIIIA));
+            Teachers.Add(new Teacher("Павлина Й. Няголова", "classhour", VIIIA));
+            Teachers.Add(new Teacher("Кирил К. Димитров", "history", VIIIA));
+            
+            Teachers.Add(new Teacher("Лилия Й. Колева2", "bulgarian", VIIIB));
+            Teachers.Add(new Teacher("Павлина Я. Коларова2", "math", VIIIB));
+            Teachers.Add(new Teacher("Ивелина Ю. Михайлова2", "philosophy", VIIIB));
+            Teachers.Add(new Teacher("Зорница Й. Атанасова2", "geography", VIIIB));
+            Teachers.Add(new Teacher("Диана Х. Димова2", "physics", VIIIB));
+            Teachers.Add(new Teacher("Павлина Й. Няголова2", "biology", BOTH));
+            Teachers.Add(new Teacher("Жечка С. Владимирова2", "chemistry", VIIIB));
+            Teachers.Add(new Teacher("Радостин К. Златинов2", "music", VIIIB));
+            Teachers.Add(new Teacher("Кирил С. Стефанов 2", "art", VIIIB));
+            Teachers.Add(new Teacher("Полина Кирилова2", "it", VIIIB));
+            Teachers.Add(new Teacher("Елена Дончева2", "pe", VIIIB));
+            Teachers.Add(new Teacher("Ивелина Ю. Михайлова2", "english", VIIIB));
+            Teachers.Add(new Teacher("Веселина Янкова2", "german", VIIIB));
+            Teachers.Add(new Teacher("Павлина Й. Няголова2", "classhour", VIIIB));
+            Teachers.Add(new Teacher("Кирил К. Димитров2", "history", VIIIB));
         }
 
         private static void FillClasses()
