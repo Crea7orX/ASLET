@@ -25,8 +25,21 @@ namespace ASLET.Objects
 
         public static void RemoveScheduleForDay(Class schoolClass, DaysOfWeek day)
         {
-            if (timetable.ContainsKey(schoolClass))
-                timetable[schoolClass].Remove(day);
+            if (timetable[schoolClass].ContainsKey(day))
+                timetable[schoolClass][day].Clear();
+        }
+        
+        public static void ImportScheduleForDay(Class schoolClass, DaysOfWeek day, List<Tuple<Lesson, Teacher>> lessons)
+        {
+            if (timetable[schoolClass].ContainsKey(day))
+                timetable[schoolClass][day] = lessons;
+            else
+                AddScheduleForDay(schoolClass, day, lessons);
+        }
+
+        public static void ClearTimetable()
+        {
+            timetable.Clear();
         }
     }
 }

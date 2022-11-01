@@ -23,9 +23,16 @@ namespace ASLET.Utils
             _classLessonsDiff = new();
         }
 
-        public void GenerateForWeek()
+        public void GenerateForWeek(bool fillGaps = true)
         {
             Console.WriteLine(Checkers.CanTimetableBeGenerated(_lessons));
+            if (!fillGaps)
+            {
+                _schedule = new List<Tuple<Lesson, Teacher>>();
+                _classLessonsDiff.Clear();
+                Timetable.ClearTimetable();
+            }
+
             if (!Checkers.CanTimetableBeGenerated(_lessons))
             {
                 Console.WriteLine("Не може да бъде генерирана програма! ПРИЧИНА: НЯМА ДОСТАТЪЧНО СЕДМИЧНИ ЧАСОВЕ!");
@@ -51,20 +58,24 @@ namespace ASLET.Utils
                     teacher.SetFreeLessons();
                 }
             }
+
+            FillTimetableGaps(fillGaps);
         }
 
-        private void GenerateForDay(Class schoolClass, DaysOfWeek day, byte hours, byte times = 0)
+        private void GenerateForDay(Class schoolClass, DaysOfWeek day, byte hours, byte times = 0,
+            bool recursive = true)
         {
             for (byte i = 1; i <= hours; i++)
             {
                 _schedule.Add(GenerateNextLesson(schoolClass, i));
             }
 
-            if (_schedule.Contains(Tuple.Create(_lessons[^1], _teachers[^1])))
+            if (_schedule.Contains(Tuple.Create(_lessons[^1], _teachers[^1])) && recursive)
             {
                 if (times < 2)
                 {
                     times++;
+                    UpdateFreeLessonsForTeacher();
                     _schedule.Clear();
                     GenerateForDay(schoolClass, day, hours, times);
                 }
@@ -73,6 +84,21 @@ namespace ASLET.Utils
                     _schedule.Clear();
                     Timetable.RemoveScheduleForDay(schoolClass, day);
                     if (day - 1 != 0) Timetable.RemoveScheduleForDay(schoolClass, day - 1);
+                }
+            }
+            else if (_schedule.Contains(Tuple.Create(_lessons[^1], _teachers[^1])) && !recursive)
+            {
+                if (times < 6)
+                {
+                    times++;
+                    UpdateFreeLessonsForTeacher();
+                    _schedule.Clear();
+                    GenerateForDay(schoolClass, day, hours, times, recursive);
+                }
+                else
+                {
+                    _schedule.Clear();
+                    Timetable.RemoveScheduleForDay(schoolClass, day);
                 }
             }
         }
@@ -90,24 +116,86 @@ namespace ASLET.Utils
                     failedAttempts++;
                     continue;
                 }
+
                 lessonsCount = GetLessonCountWeek(schoolClass, currentLesson);
                 if (lessonsCount >= currentLesson.maxAWeek)
                 {
                     failedAttempts++;
                     continue;
                 }
+
                 byte lessonsComplexity = GetComplexityForADay();
                 if (Lesson.totalComplexity - lessonsComplexity < 16)
                 {
                     failedAttempts++;
                     continue;
                 }
+
                 Teacher? currentTeacher = GetFreeTeacher(currentLesson.subject, hour, schoolClass);
                 if (currentTeacher != null)
                     return Tuple.Create(currentLesson, currentTeacher);
                 failedAttempts++;
             } while (failedAttempts <= 60);
+
             return Tuple.Create(_lessons[^1], _teachers[^1]);
+        }
+
+        private void FillTimetableGaps(bool fillGaps)
+        {
+            foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
+            {
+                UpdateFreeLessonsForTeacher(day);
+                foreach (Class schoolClass in _classes)
+                {
+                    Console.WriteLine(Timetable.timetable[schoolClass][day].Count + " " + day);
+                    if (Timetable.timetable[schoolClass][day].Count == 0)
+                    {
+                        GenerateForDay(schoolClass, day, GetLessonsForADay(schoolClass), 0, false);
+                        Timetable.ImportScheduleForDay(schoolClass, day, _schedule);
+                        _schedule = new List<Tuple<Lesson, Teacher>>();
+                    }
+                }
+
+                foreach (Teacher teacher in _teachers)
+                {
+                    teacher.SetFreeLessons();
+                }
+            }
+
+            if (fillGaps)
+            {
+                byte count = 0;
+                while (Checkers.IsThereAnyGaps() && count < 6)
+                {
+                    GenerateForWeek(false);
+                    count++;
+                }
+            }
+        }
+
+        private void UpdateFreeLessonsForTeacher(DaysOfWeek day)
+        {
+            foreach (Dictionary<DaysOfWeek, List<Tuple<Lesson, Teacher>>> schedule in Timetable.timetable.Values)
+            {
+                byte hour = 0;
+                foreach (Tuple<Lesson, Teacher> lessonTeacherPair in schedule[day])
+                {
+                    if (!lessonTeacherPair.Item1.Equals(_lessons[^1]))
+                        lessonTeacherPair.Item2.freeLessons[hour] = false;
+                    hour++;
+                }
+            }
+        }
+
+        private void UpdateFreeLessonsForTeacher()
+        {
+            byte hour = 0;
+            foreach (Tuple<Lesson, Teacher> lessonTeacherPair in _schedule)
+            {
+                if (!lessonTeacherPair.Item1.Equals(_lessons[^1]))
+                    lessonTeacherPair.Item2.freeLessons[hour] = true;
+                hour++;
+            }
         }
 
         private Teacher? GetFreeTeacher(string subject, byte hour, Class schoolClass)
