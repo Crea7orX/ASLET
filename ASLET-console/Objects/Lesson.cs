@@ -30,10 +30,12 @@ namespace ASLET.Objects
         public readonly byte maxADay;
         public readonly byte maxAWeek;
 
+        public static Lesson nullLesson => new Lesson("ПРАЗНО", LessonType.Nothing, "nothing", Complexity.Nothing, 0, 0);
+
         public Lesson(string displayName, LessonType type, string subject, Complexity complexity, byte maxADay, byte maxAWeek)
         {
             totalCountAWeek += maxAWeek;
-            totalComplexity += (byte)complexity;
+            totalComplexity += (byte)((byte)complexity * maxADay);
             this.displayName = displayName;
             this.type = type;
             this.subject = subject;

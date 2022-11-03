@@ -7,6 +7,8 @@ namespace ASLET.Objects
         public readonly bool[] freeLessons;
         public readonly List<Class> attachedClasses;
 
+        public static Teacher nullTeacher => new Teacher("НЯМА УТИТЕЛ", "nothing", new List<Class>());
+
         public Teacher(string name, string subjects, List<Class> attachedClasses)
         {
             this.name = name;
