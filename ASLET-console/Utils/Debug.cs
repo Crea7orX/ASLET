@@ -4,10 +4,12 @@ namespace ASLET.Utils;
 
 public class Debug
 {
+    const string outputFile = "./timetable.txt";
+
     public static void SaveTimetable(List<Class> classes)
     {
-        if (!File.Exists("./timetable.txt")) File.Create("./timetable.txt");
-        using StreamWriter writer = new StreamWriter("./timetable.txt");
+        if (!File.Exists(outputFile)) File.Create(outputFile);
+        StreamWriter writer = new StreamWriter(outputFile);
         foreach (Class schoolClass in classes)
         {
             writer.WriteLine(schoolClass.className);
