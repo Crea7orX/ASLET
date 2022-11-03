@@ -25,7 +25,8 @@ namespace ASLET.Objects
 
         public static void RemoveScheduleForDay(Class schoolClass, DaysOfWeek day)
         {
-            if (timetable[schoolClass].ContainsKey(day))
+            Dictionary<DaysOfWeek, List<Tuple<Lesson, Teacher>>>? hello = new();
+            if (timetable.TryGetValue(schoolClass, out hello) && hello.ContainsKey(day))
                 timetable[schoolClass][day].Clear();
         }
         
