@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace ASLET.Objects
 {
     public class Class
@@ -10,11 +12,24 @@ namespace ASLET.Objects
         //        this.className = className;
         //        this.timetable = timetalble;
         //    }
-        public readonly string className;
+        public readonly byte classNumber;
+        public readonly char classLetter;
 
-        public Class(string className)
+        public string className
         {
-            this.className = className;
+            get
+            {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(classNumber);
+                    sb.Append(classLetter);
+                    return sb.ToString();
+            }
+        }
+
+        public Class(byte classNumber, char classLetter)
+        {
+            this.classNumber = classNumber;
+            this.classLetter = classLetter;
         }
     }
 }
