@@ -6,16 +6,11 @@ public class Checkers
 {
     public static bool CanTimetableBeGenerated(List<Lesson> lessons)
     {
-        UInt16 maxADaySum = 0;
-        UInt16 maxAWeekSum = 0;
-
         foreach (Lesson lesson in lessons)
         {
-            maxADaySum += lesson.maxADay;
-            maxAWeekSum += lesson.maxAWeek;
+            if(lesson.maxADay > lesson.maxAWeek) return false;
         }
-
-        return maxAWeekSum >= maxADaySum;
+        return true;
     }
 
     public static bool IsThereAnyGaps()
