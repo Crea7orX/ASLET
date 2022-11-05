@@ -11,6 +11,9 @@ namespace ASLET
 
         public static void Main(string[] args)
         {
+            Setup.SetupProgram();
+            return;
+            
             FillClasses();
             FillLessons();
             FillTeachers();
