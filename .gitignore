@@ -1,0 +1,17 @@
+﻿# IDEs and editors
+**/.idea/
+**/.run/
+/ASLET-console/.idea/
+/ASLET/.idea/
+
+#VScode
+/.vscode/
+
+#Temp files
+/ASLET-console/bin/
+/ASLET-console/obj/
+/ASLET/bin/
+/ASLET/obj/
+
+#Output files
+/ASLET-console/timetable.txt

@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 
 namespace ASLET.Views
 {
@@ -7,6 +8,11 @@ namespace ASLET.Views
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_OnClick(object? sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
