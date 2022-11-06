@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ASLET.Views.TeachersView"
-             Background="#5f6369">
+             Background="#5f6369"
+             CornerRadius="10">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -16,6 +17,6 @@
             <ColumnDefinition Width="160" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="TEACHERS" />
+        <TextBlock Text="УЧИТЕЛИ" />
     </Grid>
 </UserControl>
