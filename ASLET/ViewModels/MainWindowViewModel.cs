@@ -8,6 +8,8 @@ namespace ASLET.ViewModels
         public RoutingState Router { get; } = new RoutingState();
         public ReactiveCommand<Unit, IRoutableViewModel> GoToClasses { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> GoToTeachers { get; }
+        public ReactiveCommand<Unit, IRoutableViewModel> GoToSubjects { get; }
+        public ReactiveCommand<Unit, IRoutableViewModel> GoToHours { get; }
 
         public MainWindowViewModel()
         {
@@ -17,6 +19,14 @@ namespace ASLET.ViewModels
             GoToTeachers = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(TeachersViewModel.GetInstance(this))
             );
+            GoToSubjects = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(SubjectsViewModel.GetInstance(this))
+            );
+            GoToHours = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(HoursViewModel.GetInstance(this))
+            );
+
+            GoToClasses.Execute();
         }
     }
 }

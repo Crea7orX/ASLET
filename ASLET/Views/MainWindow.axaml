@@ -10,11 +10,14 @@
         MinWidth="800" MinHeight="450"
         x:Class="ASLET.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="ASLET"
-        Background="#5f6369">
+        Title="ASLET - Automated System for Large Educational Timetables"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        FontWeight="Bold"
+        FontSize="20">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
     <Grid>
@@ -25,24 +28,26 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="260" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="30" />
         </Grid.ColumnDefinitions>
-    
-        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  DockPanel.Dock="Left">
-            <Button Content="Classes" Command="{Binding GoToClasses}" />
-            <Button Content="Teachers" Command="{Binding GoToTeachers}" />
+
+        <Border Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Background="#5f6369" CornerRadius="10" Width="240" />
+        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" DockPanel.Dock="Left" Margin="0 10" Spacing="10">
+            <Button Content="Класове" Command="{Binding GoToClasses}" Width="240"
+                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
+            <Button Content="Учители" Command="{Binding GoToTeachers}" Width="240"
+                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
+            <Button Content="Предмети" Command="{Binding GoToSubjects}" Width="240"
+                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
+            <Button Content="Часове" Command="{Binding GoToHours}" Width="240"
+                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
         </StackPanel>
 
         <reactiveUi:RoutedViewHost Grid.Row="1" Grid.Column="2" Router="{Binding Router}">
-            <reactiveUi:RoutedViewHost.DefaultContent>
-                <TextBlock Text="Default content"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-            </reactiveUi:RoutedViewHost.DefaultContent>
             <reactiveUi:RoutedViewHost.ViewLocator>
-                <app:ASLETViewLocator/>
+                <app:ASLETViewLocator />
             </reactiveUi:RoutedViewHost.ViewLocator>
         </reactiveUi:RoutedViewHost>
     </Grid>
