@@ -3,6 +3,8 @@
         xmlns:vm="using:ASLET.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:reactiveUi="http://reactiveui.net"
+        xmlns:app="clr-namespace:ASLET"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         Width="800" Height="450"
         MinWidth="800" MinHeight="450"
@@ -22,11 +24,26 @@
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30" />
             <ColumnDefinition Width="160" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="30" />
         </Grid.ColumnDefinitions>
     
-        <TextBlock Text="MAIN" />
-        <Button Grid.Row="1" Grid.Column="1" Click="Button_OnClick" />
+        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  DockPanel.Dock="Left">
+            <Button Content="Classes" Command="{Binding GoToClasses}" />
+            <Button Content="Teachers" Command="{Binding GoToTeachers}" />
+        </StackPanel>
+
+        <reactiveUi:RoutedViewHost Grid.Row="1" Grid.Column="2" Router="{Binding Router}">
+            <reactiveUi:RoutedViewHost.DefaultContent>
+                <TextBlock Text="Default content"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </reactiveUi:RoutedViewHost.DefaultContent>
+            <reactiveUi:RoutedViewHost.ViewLocator>
+                <app:ASLETViewLocator/>
+            </reactiveUi:RoutedViewHost.ViewLocator>
+        </reactiveUi:RoutedViewHost>
     </Grid>
 </Window>
