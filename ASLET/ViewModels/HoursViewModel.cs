@@ -2,11 +2,11 @@
 
 namespace ASLET.ViewModels;
 
-public class HoursViewModel : ReactiveObject, IRoutableViewModel
+public class HoursViewModel : ViewModelBase, IRoutableViewModel
 {
     private static HoursViewModel? _instance;
 
-    public static HoursViewModel? GetInstance(IScreen hostScreen)
+    public static HoursViewModel GetInstance(IScreen hostScreen)
     {
         if (_instance == null)
         {

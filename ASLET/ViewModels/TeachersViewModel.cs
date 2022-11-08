@@ -2,17 +2,17 @@
 
 namespace ASLET.ViewModels;
 
-public class TeachersViewModel : ReactiveObject, IRoutableViewModel
+public class TeachersViewModel : ViewModelBase, IRoutableViewModel
 {
     private static TeachersViewModel? _instance;
 
-    public static TeachersViewModel? GetInstance(IScreen hostScreen)
+    public static TeachersViewModel GetInstance(IScreen hostScreen)
     {
         if (_instance == null)
         {
             _instance = new TeachersViewModel(hostScreen);
         }
-
+        
         return _instance;
     }
 

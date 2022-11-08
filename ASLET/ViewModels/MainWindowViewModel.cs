@@ -3,7 +3,7 @@ using ReactiveUI;
 
 namespace ASLET.ViewModels
 {
-    public class MainWindowViewModel : ReactiveObject, IScreen
+    public class MainWindowViewModel : ViewModelBase, IScreen
     {
         public RoutingState Router { get; } = new RoutingState();
         public ReactiveCommand<Unit, IRoutableViewModel> GoToClasses { get; }

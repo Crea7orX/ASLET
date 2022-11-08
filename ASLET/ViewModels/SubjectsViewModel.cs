@@ -2,11 +2,11 @@
 
 namespace ASLET.ViewModels;
 
-public class SubjectsViewModel : ReactiveObject, IRoutableViewModel
+public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
 {
     private static SubjectsViewModel? _instance;
 
-    public static SubjectsViewModel? GetInstance(IScreen hostScreen)
+    public static SubjectsViewModel GetInstance(IScreen hostScreen)
     {
         if (_instance == null)
         {
