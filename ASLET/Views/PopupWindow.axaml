@@ -44,6 +44,13 @@
             <Grid.Row>2</Grid.Row>
             <Grid.Column>0</Grid.Column>
             <ComboBox.HorizontalAlignment>Center</ComboBox.HorizontalAlignment>
+            <ComboBoxItem>1</ComboBoxItem>
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+            <ComboBoxItem>5</ComboBoxItem>
+            <ComboBoxItem>6</ComboBoxItem>
+            <ComboBoxItem>7</ComboBoxItem>
             <ComboBoxItem>8</ComboBoxItem>
             <ComboBoxItem>9</ComboBoxItem>
             <ComboBoxItem>10</ComboBoxItem>
@@ -63,6 +70,28 @@
             <ComboBoxItem>Е</ComboBoxItem>
             <ComboBoxItem>Ж</ComboBoxItem>
             <ComboBoxItem>З</ComboBoxItem>
+            <ComboBoxItem>И</ComboBoxItem>
+            <ComboBoxItem>Й</ComboBoxItem>
+            <ComboBoxItem>К</ComboBoxItem>
+            <ComboBoxItem>Л</ComboBoxItem>
+            <ComboBoxItem>М</ComboBoxItem>
+            <ComboBoxItem>Н</ComboBoxItem>
+            <ComboBoxItem>О</ComboBoxItem>
+            <ComboBoxItem>П</ComboBoxItem>
+            <ComboBoxItem>Р</ComboBoxItem>
+            <ComboBoxItem>С</ComboBoxItem>
+            <ComboBoxItem>Т</ComboBoxItem>
+            <ComboBoxItem>У</ComboBoxItem>
+            <ComboBoxItem>Ф</ComboBoxItem>
+            <ComboBoxItem>Х</ComboBoxItem>
+            <ComboBoxItem>Ц</ComboBoxItem>
+            <ComboBoxItem>Ч</ComboBoxItem>
+            <ComboBoxItem>Ш</ComboBoxItem>
+            <ComboBoxItem>Щ</ComboBoxItem>
+            <ComboBoxItem>Ъ</ComboBoxItem>
+            <ComboBoxItem>Ь</ComboBoxItem>
+            <ComboBoxItem>Ю</ComboBoxItem>
+            <ComboBoxItem>Я</ComboBoxItem>
 
         </ComboBox>
         

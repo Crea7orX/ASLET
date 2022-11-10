@@ -9,9 +9,9 @@ public partial class PopupWindow : Window
     public PopupWindow()
     {
         InitializeComponent();
-#if DEBUG
-        this.AttachDevTools();
-#endif
+        #if DEBUG
+                this.AttachDevTools();
+        #endif
     }
 
     private void InitializeComponent()
