@@ -3,8 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         WindowStartupLocation="CenterOwner"
+        CanResize="False"
         Height="400" Width="300"
-        MinHeight="400" MinWidth="300"
         x:Class="ASLET.Views.PopupWindow"
         Title="Добавяне на клас">
     <Grid>
