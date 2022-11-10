@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:ASLET.ViewModels.Shared"
+             x:Class="ASLET.Views.Shared.AddButtonView">
+    
+    <UserControl.DataContext>
+        <vm:AddButtonViewModel/>
+    </UserControl.DataContext>
+    <!--TODO: Make all buttons for input window a usercontrol-->
+    <UserControl.Styles>
+        <Style Selector="Button.AddButton">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Styles>
+    
+    <Button Classes="AddButton" Content="{Binding TextContent}">
+        
+        <Button.Click>OpenNewDialogWindow</Button.Click>
+        <Button.Name>AddClass</Button.Name>
+    </Button>
+</UserControl>

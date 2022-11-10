@@ -1,6 +1,7 @@
 ﻿using ASLET.ViewModels;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 
@@ -31,5 +32,11 @@ public partial class SubjectsView : ReactiveUserControl<SubjectsViewModel>
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+    }
+    
+    public void OpenNewDialogWindow(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        PopupWindow popupWindow = new PopupWindow();
+        popupWindow.Show();
     }
 }

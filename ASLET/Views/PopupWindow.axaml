@@ -2,8 +2,70 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        WindowStartupLocation="CenterScreen"
+        Height="400" Width="300"
         x:Class="ASLET.Views.PopupWindow"
         Title="PopupWindow">
-    Welcome to Avalonia!
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ExperimentalAcrylicBorder IsHitTestVisible="True">
+            <Grid.Row>0</Grid.Row>
+            <Grid.Column>0</Grid.Column>
+            <Grid.RowSpan>4</Grid.RowSpan>
+            <Grid.ColumnSpan>2</Grid.ColumnSpan>
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65">
+                </ExperimentalAcrylicMaterial>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <TextBlock>
+            <Grid.Row>0</Grid.Row>
+            <Grid.Column>0</Grid.Column>
+            <Grid.ColumnSpan>2</Grid.ColumnSpan>
+            <TextBlock.HorizontalAlignment>Center</TextBlock.HorizontalAlignment>
+            Въведи клас
+        </TextBlock>
+        <ComboBox SelectedIndex="0">
+            <Grid.Row>2</Grid.Row>
+            <Grid.Column>0</Grid.Column>
+            <ComboBox.HorizontalAlignment>Center</ComboBox.HorizontalAlignment>
+            <ComboBoxItem>8</ComboBoxItem>
+            <ComboBoxItem>9</ComboBoxItem>
+            <ComboBoxItem>10</ComboBoxItem>
+            <ComboBoxItem>11</ComboBoxItem>
+            <ComboBoxItem>12</ComboBoxItem>
+
+        </ComboBox>
+        <ComboBox SelectedIndex="0">
+            <Grid.Row>2</Grid.Row>
+            <Grid.Column>1</Grid.Column>
+            <ComboBox.HorizontalAlignment>Center</ComboBox.HorizontalAlignment>
+            <ComboBoxItem>А</ComboBoxItem>
+            <ComboBoxItem>Б</ComboBoxItem>
+            <ComboBoxItem>В</ComboBoxItem>
+            <ComboBoxItem>Г</ComboBoxItem>
+            <ComboBoxItem>Д</ComboBoxItem>
+            <ComboBoxItem>Е</ComboBoxItem>
+            <ComboBoxItem>Ж</ComboBoxItem>
+            <ComboBoxItem>З</ComboBoxItem>
+
+        </ComboBox>
+        
+        <!--TODO: Enter and cancel buttons-->
+    </Grid>
 </Window>

@@ -1,13 +1,16 @@
-using Avalonia.Controls;
-using Avalonia.Interactivity;
+using ASLET.ViewModels;
+using Avalonia.ReactiveUI;
+
 
 namespace ASLET.Views
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         public MainWindow()
         {
             InitializeComponent();
         }
+        
+        
     }
 }

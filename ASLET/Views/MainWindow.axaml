@@ -6,6 +6,7 @@
         xmlns:reactiveUi="http://reactiveui.net"
         xmlns:app="clr-namespace:ASLET"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        WindowStartupLocation="CenterScreen"
         Width="800" Height="450"
         MinWidth="800" MinHeight="450"
         x:Class="ASLET.Views.MainWindow"
