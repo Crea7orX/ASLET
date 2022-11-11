@@ -4,31 +4,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
         x:Class="ASLET.Views.ClassesDialogWindow"
+        xmlns:local="using:ASLET.Views"
         Title="Добавяне на клас"
         WindowStartupLocation="CenterOwner"
         CanResize="False"
         Height="300" Width="300"
-        TransparencyLevelHint="AcrylicBlur"
-        ExtendClientAreaToDecorationsHint="True"
-        FontWeight="Bold"
-        FontSize="20">
+        TransparencyLevelHint="AcrylicBlur">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="30" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="80" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-        <ExperimentalAcrylicBorder Grid.Row="0" Grid.Column="0" Grid.RowSpan="7"
-                                   IsHitTestVisible="False">
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
                     BackgroundSource="Digger"
@@ -38,78 +22,9 @@
                 </ExperimentalAcrylicMaterial>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете клас" />
-
-        <Grid Grid.Row="2" Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <ComboBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" SelectedIndex="0">
-                <ComboBoxItem>1</ComboBoxItem>
-                <ComboBoxItem>2</ComboBoxItem>
-                <ComboBoxItem>3</ComboBoxItem>
-                <ComboBoxItem>4</ComboBoxItem>
-                <ComboBoxItem>5</ComboBoxItem>
-                <ComboBoxItem>6</ComboBoxItem>
-                <ComboBoxItem>7</ComboBoxItem>
-                <ComboBoxItem>8</ComboBoxItem>
-                <ComboBoxItem>9</ComboBoxItem>
-                <ComboBoxItem>10</ComboBoxItem>
-                <ComboBoxItem>11</ComboBoxItem>
-                <ComboBoxItem>12</ComboBoxItem>
-            </ComboBox>
-
-            <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" SelectedIndex="0">
-                <ComboBoxItem>А</ComboBoxItem>
-                <ComboBoxItem>Б</ComboBoxItem>
-                <ComboBoxItem>В</ComboBoxItem>
-                <ComboBoxItem>Г</ComboBoxItem>
-                <ComboBoxItem>Д</ComboBoxItem>
-                <ComboBoxItem>Е</ComboBoxItem>
-                <ComboBoxItem>Ж</ComboBoxItem>
-                <ComboBoxItem>З</ComboBoxItem>
-                <ComboBoxItem>И</ComboBoxItem>
-                <ComboBoxItem>Й</ComboBoxItem>
-                <ComboBoxItem>К</ComboBoxItem>
-                <ComboBoxItem>Л</ComboBoxItem>
-                <ComboBoxItem>М</ComboBoxItem>
-                <ComboBoxItem>Н</ComboBoxItem>
-                <ComboBoxItem>О</ComboBoxItem>
-                <ComboBoxItem>П</ComboBoxItem>
-                <ComboBoxItem>Р</ComboBoxItem>
-                <ComboBoxItem>С</ComboBoxItem>
-                <ComboBoxItem>Т</ComboBoxItem>
-                <ComboBoxItem>У</ComboBoxItem>
-                <ComboBoxItem>Ф</ComboBoxItem>
-                <ComboBoxItem>Х</ComboBoxItem>
-                <ComboBoxItem>Ц</ComboBoxItem>
-                <ComboBoxItem>Ч</ComboBoxItem>
-                <ComboBoxItem>Ш</ComboBoxItem>
-                <ComboBoxItem>Щ</ComboBoxItem>
-                <ComboBoxItem>Ъ</ComboBoxItem>
-                <ComboBoxItem>Ь</ComboBoxItem>
-                <ComboBoxItem>Ю</ComboBoxItem>
-                <ComboBoxItem>Я</ComboBoxItem>
-            </ComboBox>
-        </Grid>
-
-        <Grid Grid.Row="4" Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                    FontWeight="Bold" FontSize="18" Width="120">
-                Добавяне
-            </Button>
-            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                    FontWeight="Bold" FontSize="18" Width="120">
-                Отказ
-            </Button>
-        </Grid>
-    </Grid>
+        
+        <Panel Margin="10">
+            <local:ClassesDialogView />
+        </Panel>
+    </Panel>
 </Window>

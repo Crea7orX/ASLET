@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Windows.Input;
+using ASLET.Models;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -24,17 +25,18 @@ public class ClassesViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand AddClassCommand { get; }
 
-    public Interaction<ClassesDialogWindowViewModel, ClassesDialogWindowViewModel?> AddClass { get; }
+    public Interaction<ClassesDialogViewModel, ClassModel?> AddClass { get; }
 
     public ClassesViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
         
-        AddClass = new Interaction<ClassesDialogWindowViewModel, ClassesDialogWindowViewModel?>();
+        AddClass = new Interaction<ClassesDialogViewModel, ClassModel?>();
         AddClassCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            ClassesDialogWindowViewModel? result = await AddClass.Handle(new ClassesDialogWindowViewModel());
+            ClassModel? result = await AddClass.Handle(new ClassesDialogViewModel());
 
+            // TODO ADD CLASS
             Console.WriteLine(result);
         });
     }

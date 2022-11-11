@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using ASLET.Models;
 using ASLET.ViewModels;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
@@ -11,15 +12,17 @@ namespace ASLET.Views
         public MainWindow()
         {
             InitializeComponent();
-            this.WhenActivated(d => d(ClassesViewModel.GetInstance(null).AddClass.RegisterHandler(DoShowDialogAsync)));
+            this.WhenActivated(d => d(ClassesViewModel.GetInstance(null).AddClass.RegisterHandler(AddClassDialogAsync)));
         }
         
-        private async Task DoShowDialogAsync(InteractionContext<ClassesDialogWindowViewModel, ClassesDialogWindowViewModel?> interaction)
+        private async Task AddClassDialogAsync(InteractionContext<ClassesDialogViewModel, ClassModel?> interaction)
         {
-            ClassesDialogWindow dialog = new ClassesDialogWindow();
-            dialog.DataContext = interaction.Input;
+            ClassesDialogWindow dialog = new ClassesDialogWindow
+            {
+                DataContext = interaction.Input
+            };
 
-            ClassesDialogWindowViewModel? result = await dialog.ShowDialog<ClassesDialogWindowViewModel?>(this);
+            ClassModel? result = await dialog.ShowDialog<ClassModel?>(this);
             interaction.SetOutput(result);
         }
     }
