@@ -19,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -27,10 +28,6 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="КЛАСОВЕ" />
         
-        <Button 
-            Classes="AddButton" 
-            Content="Добави клас"
-            Name="AddClass">
-        </Button>
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">Добавяне на клас</Button>
     </Grid>
 </UserControl>

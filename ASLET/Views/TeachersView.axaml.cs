@@ -33,10 +33,4 @@ public partial class TeachersView : ReactiveUserControl<TeachersViewModel>
     {
         AvaloniaXamlLoader.Load(this);
     }
-    
-    public void OpenNewDialogWindow(object? sender, RoutedEventArgs routedEventArgs)
-    {
-        PopupWindow popupWindow = new PopupWindow();
-        popupWindow.Show();
-    }
 }

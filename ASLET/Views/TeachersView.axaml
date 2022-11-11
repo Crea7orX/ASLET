@@ -25,12 +25,6 @@
             <ColumnDefinition Width="160" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="УЧИТЕЛИ" />
-        
-        <Button 
-            Classes="AddButton" 
-            Content="Добави учител"
-            Name="AddTeacher">
-        </Button>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="УЧИТЕЛИ" />
     </Grid>
 </UserControl>
