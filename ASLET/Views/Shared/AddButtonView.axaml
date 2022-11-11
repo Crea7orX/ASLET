@@ -16,9 +16,10 @@
         </Style>
     </UserControl.Styles>
     
-    <Button Classes="AddButton" Content="{Binding TextContent}">
-        
-        <Button.Click>OpenNewDialogWindow</Button.Click>
-        <Button.Name>AddClass</Button.Name>
+    <Button 
+        Classes="AddButton" 
+        Content="{Binding TextContent}"
+        Command="{Binding OpenNewDialogWindow}"
+        Name="AddClass">
     </Button>
 </UserControl>

@@ -31,7 +31,11 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+        <TextBlock 
+            Grid.Row="0" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2" 
+            HorizontalAlignment="Center">
             Въведете клас
         </TextBlock>
         <ComboBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" SelectedIndex="0">
