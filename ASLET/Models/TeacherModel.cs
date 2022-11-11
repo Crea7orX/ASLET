@@ -2,7 +2,7 @@
 
 public class TeacherModel
 {
-    public string Name { get; }
+    public string? Name { get; }
 
     public TeacherModel(string name = "")
     {
