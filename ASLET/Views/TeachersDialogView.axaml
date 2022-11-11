@@ -1,0 +1,46 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
+             x:Class="ASLET.Views.TeachersDialogView"
+             FontWeight="Bold"
+             FontSize="20">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете учител" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Text="Име на учител" />
+        <TextBox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="280" TextWrapping="Wrap" MaxLength="60"
+                 Text="{Binding TeacherName}" />
+
+        <Grid Grid.Row="6" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddTeacherCommand}">
+                Добавяне
+            </Button>
+            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding CancelCommand}">
+                Отказ
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>
