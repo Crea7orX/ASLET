@@ -14,12 +14,12 @@ namespace ASLET.Views
             this.WhenActivated(d => d(ClassesViewModel.GetInstance(null).AddClass.RegisterHandler(DoShowDialogAsync)));
         }
         
-        private async Task DoShowDialogAsync(InteractionContext<ClassesPopupWindowViewModel, ClassesPopupWindowViewModel?> interaction)
+        private async Task DoShowDialogAsync(InteractionContext<ClassesDialogWindowViewModel, ClassesDialogWindowViewModel?> interaction)
         {
-            ClassesPopupWindow dialog = new ClassesPopupWindow();
+            ClassesDialogWindow dialog = new ClassesDialogWindow();
             dialog.DataContext = interaction.Input;
 
-            ClassesPopupWindowViewModel? result = await dialog.ShowDialog<ClassesPopupWindowViewModel?>(this);
+            ClassesDialogWindowViewModel? result = await dialog.ShowDialog<ClassesDialogWindowViewModel?>(this);
             interaction.SetOutput(result);
         }
     }

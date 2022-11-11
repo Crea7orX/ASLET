@@ -24,16 +24,16 @@ public class ClassesViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand AddClassCommand { get; }
 
-    public Interaction<ClassesPopupWindowViewModel, ClassesPopupWindowViewModel?> AddClass { get; }
+    public Interaction<ClassesDialogWindowViewModel, ClassesDialogWindowViewModel?> AddClass { get; }
 
     public ClassesViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
         
-        AddClass = new Interaction<ClassesPopupWindowViewModel, ClassesPopupWindowViewModel?>();
+        AddClass = new Interaction<ClassesDialogWindowViewModel, ClassesDialogWindowViewModel?>();
         AddClassCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            ClassesPopupWindowViewModel? result = await AddClass.Handle(new ClassesPopupWindowViewModel());
+            ClassesDialogWindowViewModel? result = await AddClass.Handle(new ClassesDialogWindowViewModel());
 
             Console.WriteLine(result);
         });

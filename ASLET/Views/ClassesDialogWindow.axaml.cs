@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace ASLET.Views;
 
-public partial class ClassesPopupWindow : Window
+public partial class ClassesDialogWindow : Window
 {
-    public ClassesPopupWindow()
+    public ClassesDialogWindow()
     {
         InitializeComponent();
 #if DEBUG
