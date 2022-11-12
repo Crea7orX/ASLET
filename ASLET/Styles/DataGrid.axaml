@@ -13,6 +13,7 @@
         <Setter Property="GridLinesVisibility" Value="Vertical" />
         <Setter Property="HorizontalGridLinesBrush" Value="#202228" />
         <Setter Property="VerticalGridLinesBrush" Value="#202228" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Visible" />
         <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
         <Setter Property="SelectionMode" Value="Single" />
         <Setter Property="AutoGenerateColumns" Value="False" />
