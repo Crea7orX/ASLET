@@ -11,9 +11,9 @@ public class HoursDialogViewModel : ViewModelBase
     public ReactiveCommand<Unit, HourModel> AddHourCommand { get; }
     public ReactiveCommand<Unit, HourModel?> CancelCommand { get; }
 
-    public ObservableCollection<ClassModel> Classes = new();
-    public ObservableCollection<TeacherModel> Teachers = new();
-    public ObservableCollection<SubjectModel> Subjects = new();
+    public ObservableCollection<ClassModel> Classes { get; } = new();
+    public ObservableCollection<TeacherModel> Teachers { get; } = new();
+    public ObservableCollection<SubjectModel> Subjects { get; } = new();
 
     private ClassModel _selectedClass;
 

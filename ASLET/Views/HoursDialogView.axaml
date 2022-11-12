@@ -30,14 +30,36 @@
 
         <ComboBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
                   SelectedIndex="0" Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}{1} клас">
+                                <Binding Path="Grade" />
+                                <Binding Path="Letter" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
 
         <ComboBox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
                   SelectedIndex="0" Items="{Binding Teachers}" SelectedItem="{Binding SelectedTeacher}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
 
         <ComboBox Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
                   SelectedIndex="0" Items="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
 
         <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Center" Text="Часове седмично" />
@@ -51,7 +73,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddHoursCommand}">
+                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddHourCommand}">
                 Добавяне
             </Button>
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
