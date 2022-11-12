@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ASLET.Models;
 using ReactiveUI;
@@ -27,6 +29,24 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
 
     public Interaction<TeachersDialogViewModel, TeacherModel?> AddTeacher { get; }
 
+    private TeacherModel _selectedTeacher;
+
+    public TeacherModel SelectedTeacher
+    {
+        get => _selectedTeacher;
+        private set => this.RaiseAndSetIfChanged(ref _selectedTeacher, value);
+    }
+
+    private ObservableCollection<TeacherModel> _teachers = new();
+
+    public ObservableCollection<TeacherModel> Teachers
+    {
+        get => _teachers;
+        private set => this.RaiseAndSetIfChanged(ref _teachers, value);
+    }
+
+    public ICommand DeleteTeacherCommand { get; }
+
     public TeachersViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
@@ -38,6 +58,13 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
 
             // TODO ADD TEACHER
             Console.WriteLine(result);
+            if (result != null) Teachers.Add(result);
+        });
+
+        DeleteTeacherCommand = ReactiveCommand.CreateFromTask((TeacherModel selectedClass) =>
+        {
+            Teachers.Remove(selectedClass);
+            return Task.CompletedTask;
         });
     }
 }
