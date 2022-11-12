@@ -62,6 +62,7 @@ public class HoursDialogViewModel : ViewModelBase
 
     private void FillClasses()
     {
+        // TODO
         Classes.Add(new ClassModel(8, 'А'));
         Classes.Add(new ClassModel(8, 'Б'));
         SelectedClass = Classes[0];
@@ -69,6 +70,7 @@ public class HoursDialogViewModel : ViewModelBase
 
     private void FillTeachers()
     {
+        // TODO
         Teachers.Add(new TeacherModel("Учител 1"));
         Teachers.Add(new TeacherModel("Учител 2"));
         SelectedTeacher = Teachers[0];
@@ -76,6 +78,7 @@ public class HoursDialogViewModel : ViewModelBase
 
     private void FillSubjects()
     {
+        // TODO
         Subjects.Add(new SubjectModel("Предмет 1"));
         Subjects.Add(new SubjectModel("Предмет 2"));
         SelectedSubject = Subjects[0];
