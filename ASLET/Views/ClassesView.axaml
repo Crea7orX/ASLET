@@ -17,12 +17,33 @@
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="60" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="КЛАСОВЕ" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="КЛАСОВЕ" />
 
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20"
+        <Border Grid.Row="1" Grid.Column="1" MinWidth="360" BorderBrush="#36393F" BorderThickness="10" CornerRadius="10">
+            <DataGrid Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}" IsReadOnly="True" Classes="custom">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Клас" MinWidth="80" Width="*"  Binding="{Binding Grade}" CanUserSort="True" />
+                    <DataGridTextColumn Header="Паралелка" MinWidth="130" Width="*"  Binding="{Binding Letter}" CanUserSort="False" />
+                    <DataGridTemplateColumn Header="Изтриване" Width="130" CanUserSort="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button HorizontalAlignment="Center"
+                                        Command="{Binding DataContext.DeleteClassCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding}">
+                                    ИЗТРИВАНЕ
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
                 FontWeight="Bold" Command="{Binding AddClassCommand}" IsEnabled="True">
             Добавяне на клас
         </Button>
