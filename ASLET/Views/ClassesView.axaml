@@ -23,11 +23,15 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="КЛАСОВЕ" />
 
-        <Border Grid.Row="1" Grid.Column="1" MinWidth="360" BorderBrush="#36393F" BorderThickness="10" CornerRadius="10">
-            <DataGrid Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}" IsReadOnly="True" Classes="custom">
+        <Border Grid.Row="1" Grid.Column="1" MinWidth="360" BorderBrush="#36393F" BorderThickness="10"
+                CornerRadius="10">
+            <DataGrid Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}" IsReadOnly="True"
+                      Classes="custom">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Клас" MinWidth="80" Width="*"  Binding="{Binding Grade}" CanUserSort="True" />
-                    <DataGridTextColumn Header="Паралелка" MinWidth="130" Width="*"  Binding="{Binding Letter}" CanUserSort="False" />
+                    <DataGridTextColumn Header="Клас" MinWidth="80" Width="*" Binding="{Binding Grade}"
+                                        CanUserSort="True" />
+                    <DataGridTextColumn Header="Паралелка" MinWidth="130" Width="*" Binding="{Binding Letter}"
+                                        CanUserSort="False" />
                     <DataGridTemplateColumn Header="Изтриване" Width="130" CanUserSort="False">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
