@@ -14,6 +14,7 @@ namespace ASLET.Views
             InitializeComponent();
             this.WhenActivated(d => d(ClassesViewModel.GetInstance(null).AddClass.RegisterHandler(AddClassDialogAsync)));
             this.WhenActivated(d => d(TeachersViewModel.GetInstance(null).AddTeacher.RegisterHandler(AddTeacherDialogAsync)));
+            this.WhenActivated(d => d(SubjectsViewModel.GetInstance(null).AddSubject.RegisterHandler(AddSubjectDialogAsync)));
         }
         
         private async Task AddClassDialogAsync(InteractionContext<ClassesDialogViewModel, ClassModel?> interaction)
@@ -35,6 +36,17 @@ namespace ASLET.Views
             };
 
             TeacherModel? result = await dialog.ShowDialog<TeacherModel?>(this);
+            interaction.SetOutput(result);
+        }
+        
+        private async Task AddSubjectDialogAsync(InteractionContext<SubjectsDialogViewModel, SubjectModel?> interaction)
+        {
+            SubjectsDialogWindow dialog = new SubjectsDialogWindow()
+            {
+                DataContext = interaction.Input
+            };
+
+            SubjectModel? result = await dialog.ShowDialog<SubjectModel?>(this);
             interaction.SetOutput(result);
         }
     }
