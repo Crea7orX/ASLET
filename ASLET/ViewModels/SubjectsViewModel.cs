@@ -36,7 +36,7 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
         {
             SubjectModel? result = await AddSubject.Handle(new SubjectsDialogViewModel());
 
-            // TODO ADD TEACHER
+            // TODO ADD SUBJECT
             Console.WriteLine(result);
         });
     }
