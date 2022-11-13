@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASLET", "ASLET\ASLET.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASLET.Server", "ASLET.Server\ASLET.Server.csproj", "{D6767B3E-9CFE-4C2F-B4DF-CF1CEFFDA559}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASLET.Server.Contracts", "ASLET.Server.Contracts\ASLET.Server.Contracts.csproj", "{47A6BD20-291B-43E6-937C-BE8FEFE3FC37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D6767B3E-9CFE-4C2F-B4DF-CF1CEFFDA559}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6767B3E-9CFE-4C2F-B4DF-CF1CEFFDA559}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6767B3E-9CFE-4C2F-B4DF-CF1CEFFDA559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47A6BD20-291B-43E6-937C-BE8FEFE3FC37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47A6BD20-291B-43E6-937C-BE8FEFE3FC37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47A6BD20-291B-43E6-937C-BE8FEFE3FC37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47A6BD20-291B-43E6-937C-BE8FEFE3FC37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
