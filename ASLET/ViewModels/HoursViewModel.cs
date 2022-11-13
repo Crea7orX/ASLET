@@ -47,7 +47,6 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand DeleteHourCommand { get; }
 
-
     public HoursViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
