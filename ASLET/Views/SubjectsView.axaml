@@ -25,12 +25,35 @@
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="60" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="ПРЕДМЕТИ" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="ПРЕДМЕТИ" />
         
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20"
+        <Border Grid.Row="1" Grid.Column="1" MinWidth="360" BorderBrush="#36393F" BorderThickness="10"
+                CornerRadius="10">
+            <DataGrid Items="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}" IsReadOnly="True"
+                      Classes="custom">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Предмет" MinWidth="210" Width="*" Binding="{Binding Name}"
+                                        CanUserSort="True" />
+                    <DataGridTemplateColumn Header="Изтриване" Width="130" CanUserSort="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button HorizontalAlignment="Center"
+                                        Command="{Binding DataContext.DeleteSubjectCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding}">
+                                    ИЗТРИВАНЕ
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
                 FontWeight="Bold" Command="{Binding AddSubjectCommand}" IsEnabled="True">
             Добавяне на предмет
         </Button>

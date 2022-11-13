@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ASLET.Models;
 using ReactiveUI;
@@ -25,6 +27,24 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand AddSubjectCommand { get; }
 
+    private SubjectModel _selectedSubject;
+
+    public SubjectModel SelectedSubject
+    {
+        get => _selectedSubject;
+        private set => this.RaiseAndSetIfChanged(ref _selectedSubject, value);
+    }
+
+    private ObservableCollection<SubjectModel> _subjects = new();
+
+    public ObservableCollection<SubjectModel> Subjects
+    {
+        get => _subjects;
+        private set => this.RaiseAndSetIfChanged(ref _subjects, value);
+    }
+
+    public ICommand DeleteSubjectCommand { get; }
+
     public Interaction<SubjectsDialogViewModel, SubjectModel?> AddSubject { get; }
 
     public SubjectsViewModel(IScreen hostScreen)
@@ -38,6 +58,13 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
 
             // TODO ADD SUBJECT
             Console.WriteLine(result);
+            if (result != null) Subjects.Add(result);
+        });
+
+        DeleteSubjectCommand = ReactiveCommand.CreateFromTask((SubjectModel selectedSubject) =>
+        {
+            Subjects.Remove(selectedSubject);
+            return Task.CompletedTask;
         });
     }
 }
