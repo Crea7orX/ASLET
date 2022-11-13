@@ -12,12 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers" />
-    <Folder Include="ServiceErrors" />
-    <Folder Include="Services\Timetables" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ASLET.Server.Contracts\ASLET.Server.Contracts.csproj" />
   </ItemGroup>
 
