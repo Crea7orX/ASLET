@@ -61,9 +61,9 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
             if (result != null) Teachers.Add(result);
         });
 
-        DeleteTeacherCommand = ReactiveCommand.CreateFromTask((TeacherModel selectedClass) =>
+        DeleteTeacherCommand = ReactiveCommand.CreateFromTask((TeacherModel selectedTeacher) =>
         {
-            Teachers.Remove(selectedClass);
+            Teachers.Remove(selectedTeacher);
             return Task.CompletedTask;
         });
     }
