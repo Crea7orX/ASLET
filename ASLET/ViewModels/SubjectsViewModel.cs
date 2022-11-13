@@ -27,6 +27,8 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand AddSubjectCommand { get; }
 
+    public Interaction<SubjectsDialogViewModel, SubjectModel?> AddSubject { get; }
+
     private SubjectModel _selectedSubject;
 
     public SubjectModel SelectedSubject
@@ -44,8 +46,6 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
     }
 
     public ICommand DeleteSubjectCommand { get; }
-
-    public Interaction<SubjectsDialogViewModel, SubjectModel?> AddSubject { get; }
 
     public SubjectsViewModel(IScreen hostScreen)
     {
