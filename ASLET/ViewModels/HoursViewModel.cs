@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ASLET.Models;
 using ReactiveUI;
@@ -27,6 +29,25 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
 
     public Interaction<HoursDialogViewModel, HourModel?> AddHour { get; }
 
+    private HourModel _selectedHour;
+
+    public HourModel SelectedHour
+    {
+        get => _selectedHour;
+        private set => this.RaiseAndSetIfChanged(ref _selectedHour, value);
+    }
+
+    private ObservableCollection<HourModel> _hours = new();
+
+    public ObservableCollection<HourModel> Hours
+    {
+        get => _hours;
+        private set => this.RaiseAndSetIfChanged(ref _hours, value);
+    }
+
+    public ICommand DeleteHourCommand { get; }
+
+
     public HoursViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
@@ -38,6 +59,13 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
 
             // TODO ADD HOUR
             Console.WriteLine(result);
+            if (result != null) Hours.Add(result);
+        });
+
+        DeleteHourCommand = ReactiveCommand.CreateFromTask((HourModel selectedHour) =>
+        {
+            Hours.Remove(selectedHour);
+            return Task.CompletedTask;
         });
     }
 }
