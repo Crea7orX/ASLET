@@ -4,6 +4,7 @@
 /ASLET-console/.idea/
 /ASLET/.idea/
 /ASLET.Server/.idea/
+/ASLET.Server.Contracts/.idea/
 Folder.DotSettings
 
 #VScode
@@ -16,6 +17,8 @@ Folder.DotSettings
 /ASLET/obj/
 /ASLET.Server/bin/
 /ASLET.Server/obj/
+/ASLET.Server.Contracts/bin/
+/ASLET.Server.Contracts/obj/
 
 #Output files
 /ASLET-console/timetable.txt
