@@ -13,6 +13,8 @@ Folder.DotSettings
 /ASLET-console/obj/
 /ASLET/bin/
 /ASLET/obj/
+/ASLET.Server/bin/
+/ASLET.Server/obj/
 
 #Output files
 /ASLET-console/timetable.txt
