@@ -89,6 +89,9 @@ namespace ASLET.ViewModels
             _goToHours = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(HoursViewModel.GetInstance(this))
             );
+            GoToTimetables = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(TimetablesViewModel.GetInstance(this))
+            );
 
             GoToClasses();
         }
