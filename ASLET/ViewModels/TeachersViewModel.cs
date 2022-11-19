@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ASLET.Models;
+using ASLET.Services;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -81,15 +82,21 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
         {
             TeacherModel? result = await AddTeacher.Handle(new TeachersDialogViewModel());
 
-            // TODO ADD TEACHER
-            Console.WriteLine(result);
-            if (result != null) Teachers.Add(result);
+            if (result != null)
+            {
+                TimetableService.AddTeacher(result);
+            }
         });
 
         DeleteTeacherCommand = ReactiveCommand.CreateFromTask((TeacherModel selectedTeacher) =>
         {
-            Teachers.Remove(selectedTeacher);
+            TimetableService.RemoveTeacher(selectedTeacher);
             return Task.CompletedTask;
         });
+    }
+
+    public void UpdateTeachers(ref ObservableCollection<TeacherModel> teachers)
+    {
+        Teachers = teachers;
     }
 }
