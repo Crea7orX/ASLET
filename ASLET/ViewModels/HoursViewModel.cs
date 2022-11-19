@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ASLET.Models;
+using ASLET.Services;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -81,15 +82,21 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
         {
             HourModel? result = await AddHour.Handle(new HoursDialogViewModel());
 
-            // TODO ADD HOUR
-            Console.WriteLine(result);
-            if (result != null) Hours.Add(result);
+            if (result != null)
+            {
+                TimetableService.AddHour(result);
+            }
         });
 
         DeleteHourCommand = ReactiveCommand.CreateFromTask((HourModel selectedHour) =>
         {
-            Hours.Remove(selectedHour);
+            TimetableService.RemoveHour(selectedHour);
             return Task.CompletedTask;
         });
+    }
+
+    public void UpdateHours(ref ObservableCollection<HourModel> hours)
+    {
+        Hours = hours;
     }
 }
