@@ -44,6 +44,8 @@
                     Background="#5f6369" FontWeight="Bold" FontSize="20" />
             <Button Content="Часове" Command="{Binding GoToHours}" Width="240"
                     Background="#5f6369" FontWeight="Bold" FontSize="20" />
+            <Button Content="Учебни програми" Command="{Binding GoToTimetables}" Width="240"
+                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
         </StackPanel>
 
         <reactiveUi:RoutedViewHost Grid.Row="1" Grid.Column="2" Router="{Binding Router}">
