@@ -19,6 +19,7 @@ public static class TimetableService
         GlobalSpace.ClassController.Add(classToAdd.ToString());
         _classModels.Add(classToAdd);
         ClassesViewModel.GetInstance(null).UpdateClasses(ref _classModels);
+        TimetablesViewModel.GetInstance(null).FillClasses();
     }
 
     public static void RemoveClass(ClassModel classToRemove)
@@ -27,6 +28,7 @@ public static class TimetableService
         _classModels.Remove(classToRemove);
         ClassesViewModel.GetInstance(null).UpdateClasses(ref _classModels);
         CheckAndUpdateHours(classToRemove);
+        TimetablesViewModel.GetInstance(null).FillClasses();
     }
 
     public static void AddTeacher(TeacherModel teacherToAdd)

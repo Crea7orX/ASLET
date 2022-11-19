@@ -11,6 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
             <RowDefinition Height="30" />
@@ -22,7 +23,38 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="УЧЕБНИ ПРОГРАМИ" />
 
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
+        <ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
+                  SelectedIndex="0" Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}{1} клас">
+                                <Binding Path="Grade" />
+                                <Binding Path="Letter" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Border Grid.Row="2" Grid.Column="1" MinWidth="360" BorderBrush="#36393F" BorderThickness="10"
+                CornerRadius="10">
+            <DataGrid Items="{Binding Timetable}" IsReadOnly="True" CanUserSortColumns="False"
+                      Classes="custom">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Час" Width="60" Binding="{Binding Hour}" />
+                    <DataGridTextColumn Header="Понеделник" MinWidth="130" Width="*" Binding="{Binding Monday}" />
+                    <DataGridTextColumn Header="Вторник" MinWidth="130" Width="*" Binding="{Binding Tuesday}" />
+                    <DataGridTextColumn Header="Сряда" MinWidth="130" Width="*" Binding="{Binding Wednesday}" />
+                    <DataGridTextColumn Header="Четвъртък" MinWidth="130" Width="*" Binding="{Binding Thursday}" />
+                    <DataGridTextColumn Header="Петък" MinWidth="130" Width="*" Binding="{Binding Friday}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
                 FontWeight="Bold" Command="{Binding GenerateTimetableCommand}" IsEnabled="True">
             Генериране на учебна програма
         </Button>
