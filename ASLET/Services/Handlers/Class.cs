@@ -39,4 +39,10 @@ public class Class
         DictionaryUtils.Put(SubjectPlan, subject, times);
         Subjects.Add(subject);
     }
+
+    public void RemoveSubject(SubjectExample subject)
+    {
+        SubjectPlan.Remove(subject);
+        Subjects.Remove(subject);
+    }
 }
