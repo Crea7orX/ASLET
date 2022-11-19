@@ -51,6 +51,11 @@ public class ClassHandler : IHandler
         Classes[schoolClass].AddSubject(subject, times);
     }
 
+    public void RemoveSubject(string schoolClass, SubjectExample subject)
+    {
+        Classes[schoolClass].RemoveSubject(subject);
+    }
+
     // TODO ADD CONDITION
 
     public void SetUpController(Controller controller, List<Class> classes)
