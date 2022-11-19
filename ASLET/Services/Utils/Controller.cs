@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ASLET.Models;
 using ASLET.Services.Objects;
 
 namespace ASLET.Services.Utils;
@@ -126,21 +127,24 @@ public class Controller
     }
 
     // TODO LATER IMPLEMENTATION
-    private List<SubjectExample[,]> GetData()
+    public List<TimetableModel> GetData(string className)
     {
-        List<SubjectExample[,]> data = new List<SubjectExample[,]>();
+        List<TimetableModel> data = new List<TimetableModel>();
         for (int i = 0; i < Classes.Count; i++)
         {
-            SubjectExample[,] week = new SubjectExample[7, 5];
-            for (int j = 0; j < 5; j++)
+            if (Classes[i].Name != className) continue;
+            for (int k = 0; k < 7; k++)
             {
-                for (int k = 0; k < 7; k++)
+                string[] hours = new string[5];
+                for (int j = 0; j < 5; j++)
                 {
-                    week[k, j] = Classes[i].Days[j].Hours[k].SubjectExample;
+                    string subject = Classes[i].Days[j].Hours[k].SubjectExample.Subject + " - " + Classes[i].Days[j].Hours[k].SubjectExample.Teacher;
+                    if (subject == "неизвестно - неизвестно") subject = "";
+                    hours[j] = subject;
                 }
+                data.Add(new TimetableModel(k.ToString(), hours[0], hours[1], hours[2], hours[3], hours[4]));
             }
 
-            data.Add(week);
         }
 
         return data;
