@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ASLET.Models;
+using ASLET.Services;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -56,15 +57,21 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
         {
             SubjectModel? result = await AddSubject.Handle(new SubjectsDialogViewModel());
 
-            // TODO ADD SUBJECT
-            Console.WriteLine(result);
-            if (result != null) Subjects.Add(result);
+            if (result != null)
+            {
+                TimetableService.AddSubject(result);
+            }
         });
 
         DeleteSubjectCommand = ReactiveCommand.CreateFromTask((SubjectModel selectedSubject) =>
         {
-            Subjects.Remove(selectedSubject);
+            TimetableService.RemoveSubject(selectedSubject);
             return Task.CompletedTask;
         });
+    }
+
+    public void UpdateSubjects(ref ObservableCollection<SubjectModel> subjects)
+    {
+        Subjects = subjects;
     }
 }
