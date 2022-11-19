@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Threading.Tasks;
 using ASLET.Models;
+using ASLET.Services;
+using ASLET.Services.Handlers;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -50,7 +53,7 @@ public class HoursDialogViewModel : ViewModelBase
     public HoursDialogViewModel()
     {
         // TODO CHECKERS FOR VALID INPUT
-        AddHourCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new HourModel(_selectedClass.Grade, _selectedClass.Letter, _selectedTeacher.Name, _selectedSubject.Name, _hoursAWeek)));
+        AddHourCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new HourModel(_selectedClass.ClassId, _selectedClass.Grade, _selectedClass.Letter, _selectedTeacher.TeacherId, _selectedTeacher.Name, _selectedSubject.SubjectId, _selectedSubject.Name, _hoursAWeek)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<HourModel?>(null));
 
@@ -62,25 +65,47 @@ public class HoursDialogViewModel : ViewModelBase
 
     private void FillClasses()
     {
-        // TODO
-        Classes.Add(new ClassModel(8, 'А'));
-        Classes.Add(new ClassModel(8, 'Б'));
+        foreach (ClassModel @class in TimetableService.GetClasses())
+        {
+            Classes.Add(@class);
+        }
+        // foreach (string className in GlobalSpace.ClassController.Classes.Keys)
+        // {
+        //     if (className.Length == 2)
+        //     {
+        //         Classes.Add(new ClassModel(Byte.Parse(className.Substring(0, 1)), Char.Parse(className.Substring(1, 1))));
+        //     }
+        //     else if (className.Length == 3)
+        //     {
+        //         Classes.Add(new ClassModel(Byte.Parse(className.Substring(0, 2)), Char.Parse(className.Substring(2, 1))));
+        //     }
+        // }
         SelectedClass = Classes[0];
     }
 
     private void FillTeachers()
     {
-        // TODO
-        Teachers.Add(new TeacherModel("Учител 1"));
-        Teachers.Add(new TeacherModel("Учител 2"));
+        foreach (TeacherModel teacher in TimetableService.GetTeachers())
+        {
+            Teachers.Add(teacher);
+        }
+        // foreach (string teacherName in GlobalSpace.TeacherController.Teachers)
+        // {
+        //     Teachers.Add(new TeacherModel(teacherName));
+        // }
         SelectedTeacher = Teachers[0];
     }
 
     private void FillSubjects()
     {
-        // TODO
-        Subjects.Add(new SubjectModel("Предмет 1"));
-        Subjects.Add(new SubjectModel("Предмет 2"));
+        foreach (SubjectModel subject in TimetableService.GetSubjects())
+        {
+            Subjects.Add(subject);
+        }
+        // foreach (string subjectName in GlobalSpace.SubjectController.SubjectsDictionary.Keys)
+        // {
+        //     Subjects.Add(new SubjectModel(subjectName));
+        // }
         SelectedSubject = Subjects[0];
     }
 }
