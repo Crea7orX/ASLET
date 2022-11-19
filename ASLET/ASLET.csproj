@@ -29,6 +29,9 @@
     <Compile Update="Views\Shared\AddButton.axaml.cs">
       <DependentUpon>AddButton.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\TimetablesView.axaml.cs">
+      <DependentUpon>TimetablesView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AvaloniaXaml Update="Views\ClassesDialogView.axaml">

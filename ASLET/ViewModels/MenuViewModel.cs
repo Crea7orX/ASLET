@@ -66,6 +66,8 @@ public class MenuViewModel : ViewModelBase
     public void GoToTeachers() => _parent?.GoToTeachers();
     public void GoToSubjects() => _parent?.GoToSubjects();
     public void GoToHours() => _parent?.GoToHours();
+
+    public void GoToTimetables() => _parent?.GoToTimetables();
     
 
     #endregion

@@ -3,14 +3,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ASLET.Views.TimetablesView"
-             Background="#5f6369"
-             CornerRadius="10"
-             FontWeight="Bold"
-             FontSize="20">
+             x:Class="ASLET.Views.TimetablesView">
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/ClassesViewStyles.axaml"/>
+    </UserControl.Styles>
+    
+    <Border Classes="MainContainer" Classes.Dark="{Binding DarkMode}">
+
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
             <RowDefinition Height="30" />
@@ -20,11 +27,42 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="УЧЕБНИ ПРОГРАМИ" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Classes="Header"  Text="УЧЕБНИ ПРОГРАМИ" />
 
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
+        <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
+                  SelectedIndex="0" Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}{1} клас">
+                                <Binding Path="Grade" />
+                                <Binding Path="Letter" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Border Grid.Row="3" Grid.Column="1" Classes="MainContent">
+            <DataGrid Items="{Binding Timetable}" IsReadOnly="True" CanUserSortColumns="False"
+                      Classes="custom">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Час" Width="60" Binding="{Binding Hour}" />
+                    <DataGridTextColumn Header="Понеделник" MinWidth="130" Width="*" Binding="{Binding Monday}" />
+                    <DataGridTextColumn Header="Вторник" MinWidth="130" Width="*" Binding="{Binding Tuesday}" />
+                    <DataGridTextColumn Header="Сряда" MinWidth="130" Width="*" Binding="{Binding Wednesday}" />
+                    <DataGridTextColumn Header="Четвъртък" MinWidth="130" Width="*" Binding="{Binding Thursday}" />
+                    <DataGridTextColumn Header="Петък" MinWidth="130" Width="*" Binding="{Binding Friday}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
                 FontWeight="Bold" Command="{Binding GenerateTimetableCommand}" IsEnabled="True">
             Генериране на учебна програма
         </Button>
     </Grid>
+    </Border>
 </UserControl>

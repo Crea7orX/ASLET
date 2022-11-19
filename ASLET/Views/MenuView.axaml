@@ -52,6 +52,12 @@
                     <TextBlock>Часове</TextBlock>
                 </Button>
             </Border>
+            
+            <Border>
+                <Button Classes="MenuButton" Command="{Binding GoToTimetables}">
+                    <TextBlock>Учебни програми</TextBlock>
+                </Button>
+            </Border>
         </StackPanel>
         
         <Panel Grid.Row="3" Classes="DropupMenu" 

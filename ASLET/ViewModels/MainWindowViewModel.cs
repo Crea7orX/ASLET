@@ -15,7 +15,9 @@ namespace ASLET.ViewModels
         private ReactiveCommand<Unit, IRoutableViewModel> _goToTeachers { get; }
         private ReactiveCommand<Unit, IRoutableViewModel> _goToSubjects { get; }
         private ReactiveCommand<Unit, IRoutableViewModel> _goToHours { get; }
-        
+
+        private ReactiveCommand<Unit, IRoutableViewModel> _goToTimetables { get; }
+
         public void GoToClasses()
         {
             if (_lastView == "ClassesViewModel") return;
@@ -46,6 +48,14 @@ namespace ASLET.ViewModels
             
             _lastView = "HoursDialogViewModel";
             _goToHours.Execute();
+        }
+        
+        public void GoToTimetables()
+        {
+            if (_lastView == "TimetablesViewModel") return;
+            
+            _lastView = "TimetablesViewModel";
+            _goToTimetables.Execute();
         }
 
         #endregion
@@ -89,7 +99,7 @@ namespace ASLET.ViewModels
             _goToHours = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(HoursViewModel.GetInstance(this))
             );
-            GoToTimetables = ReactiveCommand.CreateFromObservable(
+            _goToTimetables = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(TimetablesViewModel.GetInstance(this))
             );
 
@@ -102,7 +112,7 @@ namespace ASLET.ViewModels
         private HoursViewModel? _hoursViewModelChild;
         private SubjectsViewModel? _subjectsViewModelChild;
         private TeachersViewModel? _teachersViewModelChild;
-        
+        private TimetablesViewModel? _timetablesViewModelChild;
 
         
         public void SetParents()
@@ -112,6 +122,7 @@ namespace ASLET.ViewModels
             HoursViewModel.SetParent(this);
             SubjectsViewModel.SetParent(this);
             TeachersViewModel.SetParent(this);
+            TimetablesViewModel.SetParent(this);
         }
 
         private void SetChildren()
@@ -120,6 +131,7 @@ namespace ASLET.ViewModels
             HoursViewModelChild = HoursViewModel.GetInstance(this);
             SubjectsViewModelChild = SubjectsViewModel.GetInstance(this);
             TeachersViewModelChild = TeachersViewModel.GetInstance(this);
+            TimetablesViewModelChild = TimetablesViewModel.GetInstance(this);
         }
 
         public ClassesViewModel? ClassesViewModelChild
@@ -144,6 +156,12 @@ namespace ASLET.ViewModels
         {
             get => _teachersViewModelChild;
             set => this.RaiseAndSetIfChanged(ref _teachersViewModelChild, value);
+        }
+        
+        public TimetablesViewModel? TimetablesViewModelChild
+        {
+            get => _timetablesViewModelChild;
+            set => this.RaiseAndSetIfChanged(ref _timetablesViewModelChild, value);
         }
 
         #endregion
