@@ -10,7 +10,7 @@
         Width="800" Height="450"
         MinWidth="800" MinHeight="450"
         x:Class="ASLET.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/ASLET.ico"
         Title="ASLET - Automated System for Large Educational Timetables"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
