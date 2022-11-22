@@ -1,0 +1,96 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ASLET.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="260" d:DesignHeight="450"
+             x:Class="ASLET.Views.MenuView"
+             Background="{DynamicResource Ivory}"
+             CornerRadius="10">
+    <UserControl.DataContext>
+        <vm:MenuViewModel/>
+    </UserControl.DataContext>
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/MenuStyles.axaml"/>
+    </UserControl.Styles>
+ 
+    <Grid Classes="MenuGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        
+        
+        <StackPanel Classes="MenuStackPanel" Grid.Row="1">
+            <Border>
+                <Button Classes="MenuButton" Command="{Binding GoToClasses}">
+                    <TextBlock>Класове</TextBlock>
+                </Button>
+            </Border>
+        
+            <Border>
+                <Button Classes="MenuButton" Command="{Binding GoToTeachers}">
+                    <TextBlock>Учители</TextBlock>
+                </Button>
+            </Border>
+        
+            <Border>
+                <Button Classes="MenuButton" Command="{Binding GoToSubjects}">
+                    <TextBlock>Предмети</TextBlock>
+                </Button>
+            </Border>
+        
+            <Border>
+                <Button Classes="MenuButton" Command="{Binding GoToHours}">
+                    <TextBlock>Часове</TextBlock>
+                </Button>
+            </Border>
+        </StackPanel>
+        
+        <Panel Grid.Row="3" Classes="DropupMenu" Classes.Open="{Binding UserSettingsIsOpen}">
+           <Border>
+               <Grid>
+                   <Grid.ColumnDefinitions>
+                       <ColumnDefinition Width="Auto"/>
+                       <ColumnDefinition Width="*"/>
+                       <ColumnDefinition Width="Auto"/>
+                   </Grid.ColumnDefinitions>
+                   <Grid.RowDefinitions>
+                       <RowDefinition Height="Auto"/>
+                       <RowDefinition Height="Auto"/>
+                   </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0">Тъмен режим</TextBlock>
+                    <ToggleSwitch Grid.Row="0" Grid.Column="2"/>
+               </Grid>
+           </Border>
+        </Panel>
+        
+        <Grid Grid.Row="4" Classes="UserProfile">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            
+            <Border Grid.Column="0" Grid.ColumnSpan="3"/>
+            
+            <Panel Grid.Column="0">
+                <TextBlock>И. Краев</TextBlock>
+            </Panel>
+            
+            
+            <Button Grid.Column="2" Command="{Binding LocalTest}">
+                <Image Source="/../Assets/chevron-up-royalbule-96.png"/>
+            </Button>
+            
+        </Grid>
+
+
+    </Grid>
+</UserControl>
