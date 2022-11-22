@@ -1,16 +1,39 @@
-using System;
-using System.ComponentModel;
 using System.Reactive;
-using Avalonia.Controls;
-using Avalonia.Threading;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
 
-public class MenuViewModel : ViewModelBase, INotifyPropertyChanged
+public class MenuViewModel : ViewModelBase
 {
+    
+    #region Private fields
+    
+    private bool _userSettingsIsOpen;
+    private static MainWindowViewModel? _parent;
+    
+    #endregion
 
-    private bool _userSettingsIsOpen = false;
+    #region Dark Mode
+    
+    private bool _darkMode;
+
+    public bool DarkMode
+    {
+        get => _darkMode;
+        set
+        {
+            _parent?.IsDarkMode(value);
+            this.RaiseAndSetIfChanged(ref _darkMode, value);
+        } 
+    }
+    
+    public void ToggleDarMode() => DarkMode ^= true;
+    
+    #endregion
+
+    #region Public props
+
+    public ReactiveCommand<Unit, Unit> ToggleDropup { get; }
     
     public bool UserSettingsIsOpen
     {
@@ -18,28 +41,41 @@ public class MenuViewModel : ViewModelBase, INotifyPropertyChanged
         set => this.RaiseAndSetIfChanged(ref _userSettingsIsOpen, value);
     }
 
-    private static MainWindowViewModel _Parent;
-    public static void Parent(MainWindowViewModel parent) => _Parent = parent;
-
     
-    public ReactiveCommand<Unit, Unit> LocalTest { get; }
 
+    #endregion
+
+    #region Constructors
 
     public MenuViewModel()
     {
+        DarkMode = false;
         UserSettingsIsOpen = false;
-        LocalTest = ReactiveCommand.Create(() =>  ToggleDropupMenu());
+        ToggleDropup = ReactiveCommand.Create(() =>  ToggleDropupMenu());
     }
 
+    #endregion
 
-    public void GoToClasses() => _Parent.GoToClasses();
-    public void GoToTeachers() => _Parent.GoToTeachers();
-    public void GoToSubjects() => _Parent.GoToSubjects();
-    public void GoToHours() => _Parent.GoToHours();
+    #region Functions
 
-    private void ToggleDropupMenu()
-    {
-        UserSettingsIsOpen ^= true;
-        Console.WriteLine(UserSettingsIsOpen);
-    }
+    #region Public Functions
+
+    public static void SetParent(MainWindowViewModel? parent) => _parent = parent;
+
+    public void GoToClasses() => _parent?.GoToClasses();
+    public void GoToTeachers() => _parent?.GoToTeachers();
+    public void GoToSubjects() => _parent?.GoToSubjects();
+    public void GoToHours() => _parent?.GoToHours();
+    
+
+    #endregion
+    
+    #region Private functions
+
+    private void ToggleDropupMenu() => UserSettingsIsOpen ^= true;
+
+    #endregion
+
+    #endregion
+    
 }

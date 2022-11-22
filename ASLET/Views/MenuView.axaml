@@ -4,17 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ASLET.ViewModels"
              mc:Ignorable="d" d:DesignWidth="260" d:DesignHeight="450"
-             x:Class="ASLET.Views.MenuView"
-             Background="{DynamicResource Ivory}"
+             x:Class="ASLET.Views.MenuView" 
              CornerRadius="10">
     <UserControl.DataContext>
         <vm:MenuViewModel/>
     </UserControl.DataContext>
     
     <UserControl.Styles>
-        <StyleInclude Source="/../Styles/MenuStyles.axaml"/>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/MenuViewStyles.axaml"/>
     </UserControl.Styles>
  
+    <Border Classes="Menu" Classes.Dark="{Binding DarkMode}">
+        
     <Grid Classes="MenuGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -52,7 +54,8 @@
             </Border>
         </StackPanel>
         
-        <Panel Grid.Row="3" Classes="DropupMenu" Classes.Open="{Binding UserSettingsIsOpen}">
+        <Panel Grid.Row="3" Classes="DropupMenu" 
+               Classes.Open="{Binding UserSettingsIsOpen}">
            <Border>
                <Grid>
                    <Grid.ColumnDefinitions>
@@ -65,7 +68,7 @@
                        <RowDefinition Height="Auto"/>
                    </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0">Тъмен режим</TextBlock>
-                    <ToggleSwitch Grid.Row="0" Grid.Column="2"/>
+                    <ToggleSwitch Grid.Row="0" Grid.Column="2" Command="{Binding ToggleDarMode}"/>
                </Grid>
            </Border>
         </Panel>
@@ -77,20 +80,26 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             
-            
             <Border Grid.Column="0" Grid.ColumnSpan="3"/>
             
             <Panel Grid.Column="0">
                 <TextBlock>И. Краев</TextBlock>
             </Panel>
             
-            
-            <Button Grid.Column="2" Command="{Binding LocalTest}">
+            <Button Grid.Column="2" Command="{Binding ToggleDropup}" 
+                    IsEnabled="{Binding !UserSettingsIsOpen}"
+                    IsVisible="{Binding !UserSettingsIsOpen}">
                 <Image Source="/../Assets/chevron-up-royalbule-96.png"/>
             </Button>
-            
+            <Button Grid.Column="2" Command="{Binding ToggleDropup}"
+                    IsEnabled="{Binding UserSettingsIsOpen}"
+                    IsVisible="{Binding UserSettingsIsOpen}">
+                <Image Source="/../Assets/chevron-down-royalbule-96.png"/>
+            </Button>
         </Grid>
-
-
+        
     </Grid>
+    </Border>
+
+
 </UserControl>

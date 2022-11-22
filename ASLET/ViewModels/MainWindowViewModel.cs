@@ -6,31 +6,15 @@ namespace ASLET.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase, IScreen
     {
+
+        #region Routing 
+
         private string _lastView = String.Empty;
-        
         public RoutingState Router { get; } = new RoutingState();
         private ReactiveCommand<Unit, IRoutableViewModel> _goToClasses { get; }
         private ReactiveCommand<Unit, IRoutableViewModel> _goToTeachers { get; }
         private ReactiveCommand<Unit, IRoutableViewModel> _goToSubjects { get; }
         private ReactiveCommand<Unit, IRoutableViewModel> _goToHours { get; }
-
-        public MainWindowViewModel()
-        {
-            _goToClasses = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(ClassesViewModel.GetInstance(this))
-            );
-            _goToTeachers = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(TeachersViewModel.GetInstance(this))
-            );
-            _goToSubjects = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(SubjectsViewModel.GetInstance(this))
-            );
-            _goToHours = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(HoursViewModel.GetInstance(this))
-            );
-
-            GoToClasses();
-        }
         
         public void GoToClasses()
         {
@@ -63,5 +47,45 @@ namespace ASLET.ViewModels
             _lastView = "HoursDialogViewModel";
             _goToHours.Execute();
         }
+
+        #endregion
+
+        #region Dark Mode
+
+        private bool _darkMode;
+        
+        public bool DarkMode
+        {
+            get => _darkMode;
+            set => this.RaiseAndSetIfChanged(ref _darkMode, value);
+        }
+
+        public void IsDarkMode(bool isDarkMode)
+        {
+            DarkMode = isDarkMode;
+        }
+        #endregion
+        
+        
+        public MainWindowViewModel()
+        {
+            _goToClasses = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(ClassesViewModel.GetInstance(this))
+            );
+            _goToTeachers = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(TeachersViewModel.GetInstance(this))
+            );
+            _goToSubjects = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(SubjectsViewModel.GetInstance(this))
+            );
+            _goToHours = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(HoursViewModel.GetInstance(this))
+            );
+
+            GoToClasses();
+
+            MenuViewModel.SetParent(this);
+        }
+        
     }
 }
