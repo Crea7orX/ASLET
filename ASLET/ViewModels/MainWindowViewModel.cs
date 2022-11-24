@@ -60,15 +60,23 @@ namespace ASLET.ViewModels
             set => this.RaiseAndSetIfChanged(ref _darkMode, value);
         }
 
-        public void IsDarkMode(bool isDarkMode)
+        public void ToggleDarkMode(bool isDarkMode)
         {
             DarkMode = isDarkMode;
+            ClassesViewModelChild!.DarkMode = DarkMode;
+            HoursViewModelChild!.DarkMode = DarkMode;
+            SubjectsViewModelChild!.DarkMode = DarkMode;
+            TeachersViewModelChild!.DarkMode = DarkMode;
         }
+        
         #endregion
         
         
         public MainWindowViewModel()
         {
+            SetParents();
+            SetChildren();
+            
             _goToClasses = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(ClassesViewModel.GetInstance(this))
             );
@@ -83,9 +91,59 @@ namespace ASLET.ViewModels
             );
 
             GoToClasses();
-
-            MenuViewModel.SetParent(this);
         }
+
+        #region Parent-child relations
+
+        private ClassesViewModel? _classesViewModelChild;
+        private HoursViewModel? _hoursViewModelChild;
+        private SubjectsViewModel? _subjectsViewModelChild;
+        private TeachersViewModel? _teachersViewModelChild;
+        
+
+        
+        public void SetParents()
+        {
+            MenuViewModel.SetParent(this);
+            ClassesViewModel.SetParent(this);
+            HoursViewModel.SetParent(this);
+            SubjectsViewModel.SetParent(this);
+            TeachersViewModel.SetParent(this);
+        }
+
+        private void SetChildren()
+        {
+            ClassesViewModelChild = ClassesViewModel.GetInstance(this);
+            HoursViewModelChild = HoursViewModel.GetInstance(this);
+            SubjectsViewModelChild = SubjectsViewModel.GetInstance(this);
+            TeachersViewModelChild = TeachersViewModel.GetInstance(this);
+        }
+
+        public ClassesViewModel? ClassesViewModelChild
+        {
+            get => _classesViewModelChild;
+            set => this.RaiseAndSetIfChanged(ref _classesViewModelChild, value);
+        } 
+        
+        public HoursViewModel? HoursViewModelChild
+        {
+            get => _hoursViewModelChild;
+            set => this.RaiseAndSetIfChanged(ref _hoursViewModelChild, value);
+        }
+
+        public SubjectsViewModel? SubjectsViewModelChild
+        {
+            get => _subjectsViewModelChild;
+            set => this.RaiseAndSetIfChanged(ref _subjectsViewModelChild, value);
+        }
+        
+        public TeachersViewModel? TeachersViewModelChild
+        {
+            get => _teachersViewModelChild;
+            set => this.RaiseAndSetIfChanged(ref _teachersViewModelChild, value);
+        }
+
+        #endregion
         
     }
 }

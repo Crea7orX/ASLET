@@ -8,10 +8,18 @@
              CornerRadius="10"
              FontWeight="Bold"
              FontSize="20">
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/ClassesViewStyles.axaml"/>
+    </UserControl.Styles>
+
+    <Border Classes="MainContainer" Classes.Dark="{Binding DarkMode}">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
             <RowDefinition Height="30" />
@@ -21,12 +29,11 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="ЧАСОВЕ" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Classes="Header" Text="ЧАСОВЕ" />
 
-        <Border Grid.Row="1" Grid.Column="1" MinWidth="360" BorderBrush="#36393F" BorderThickness="10"
-                CornerRadius="10">
+        <Border Grid.Row="2" Grid.Column="1" Classes="MainContent">
             <DataGrid Items="{Binding Hours}" SelectedItem="{Binding SelectedHour}" IsReadOnly="True"
-                      Classes="custom">
+                      Classes="MainData">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Клас" Width="70" CanUserSort="True">
                         <DataGridTextColumn.Binding>
@@ -57,9 +64,10 @@
             </DataGrid>
         </Border>
 
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
                 FontWeight="Bold" Command="{Binding AddHourCommand}" IsEnabled="True">
-            Добавяне на час
+            <TextBlock Text="Добавяне на час"/>
         </Button>
     </Grid>
+        </Border>
 </UserControl>

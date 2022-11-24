@@ -22,7 +22,7 @@ public class MenuViewModel : ViewModelBase
         get => _darkMode;
         set
         {
-            _parent?.IsDarkMode(value);
+            _parent?.ToggleDarkMode(value);
             this.RaiseAndSetIfChanged(ref _darkMode, value);
         } 
     }

@@ -1,0 +1,62 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- Add Styles Here -->
+    
+    <Style Selector="Border.MainContainer">
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Background" Value="{DynamicResource Ivory}"/>
+    </Style>
+    
+    <Style Selector="TextBlock.Header">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+    
+    <Style Selector="Border.MainContent">
+        <Setter Property="MinWidth" Value="360"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Silk}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+    
+    <Style Selector="DataGrid.MainData">
+        <!-- <Setter Property="Background" Value="{DynamicResource Ivory}" /> -->
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="AlternatingRowBackground" Value="#2F3136" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="GridLinesVisibility" Value="Vertical" />
+        <Setter Property="HorizontalGridLinesBrush" Value="#202228" />
+        <Setter Property="VerticalGridLinesBrush" Value="#202228" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
+        <Setter Property="SelectionMode" Value="Single" />
+        <Setter Property="AutoGenerateColumns" Value="False" />
+        <Setter Property="CanUserSortColumns" Value="True" />
+        <Setter Property="CanUserResizeColumns" Value="False" />
+        <Setter Property="CanUserReorderColumns" Value="False" />
+    </Style>
+    <Style Selector="DataGridColumnHeader">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+    </Style>
+    <Style Selector="DataGridRow">
+        <Setter Property="Height" Value="60" />
+    </Style>
+    
+    <!--Dark Mode-->
+    <Style Selector="Border.MainContainer.Dark">
+        <Setter Property="Background" Value="{DynamicResource DarkGrey}"/>
+    </Style>
+    
+    <Style Selector="Border.MainContainer.Dark > Grid > Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource Thunder}"/>
+    </Style>
+    
+    <Style Selector="Border.MainContainer.Dark > Grid > Border > DataGrid.custom">
+        <!-- <Setter Property="Background" Value="{DynamicResource DarkGrey}" /> -->
+    </Style>
+</Styles>
