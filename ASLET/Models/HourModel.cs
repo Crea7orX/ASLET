@@ -35,6 +35,6 @@ public class HourModel
 
     public SubjectExample GetSubject()
     {
-        return new SubjectExample(SubjectName, TeacherName);
+        return new SubjectExample(SubjectId, TeacherId, SubjectName, TeacherName);
     }
 }
