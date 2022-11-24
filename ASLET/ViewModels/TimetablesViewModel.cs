@@ -83,7 +83,7 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         if (!_hasGeneratedTimetable) return;
         Timetable.Clear();
         
-        foreach (TimetableModel timetableModel in ScheduleFabric.algControll.GetData(_selectedClass.ToString()))
+        foreach (TimetableModel timetableModel in ScheduleFabric.algControll.GetData(_selectedClass.ClassId))
         {
             Timetable.Add(timetableModel);
         }
