@@ -1,28 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ASLET.Services.Handlers;
 
 public class TeacherHandler : IHandler
 {
-    public List<string> Teachers { get; }
+    public List<Guid> Teachers { get; }
 
     public TeacherHandler()
     {
-        Teachers = new List<string>();
+        Teachers = new List<Guid>();
     }
 
-    public void Add(string name)
+    public void Add(Guid id, string name)
     {
-        Teachers.Add(name);
+        Teachers.Add(id);
     }
 
-    public void Remove(string name)
+    public void Remove(Guid id)
     {
-        Teachers.Remove(name);
+        Teachers.Remove(id);
     }
 
-    public bool Contains(string name)
+    public bool Contains(Guid id)
     {
-        return Teachers.Contains(name);
+        return Teachers.Contains(id);
     }
 }

@@ -1,10 +1,12 @@
-﻿namespace ASLET.Services.Handlers;
+﻿using System;
+
+namespace ASLET.Services.Handlers;
 
 public interface IHandler
 {
-    public void Add(string name);
+    public void Add(Guid id, string name);
 
-    public void Remove(string name);
+    public void Remove(Guid id);
 
-    public bool Contains(string name);
+    public bool Contains(Guid id);
 }

@@ -36,17 +36,17 @@ public class Controller
             return true;
         }
 
-        if (index == State.Count)
-        {
-            if (AllReady())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        // if (index == State.Count)
+        // {
+        //     if (AllReady())
+        //     {
+        //         return true;
+        //     }
+        //     else
+        //     {
+        //         return false;
+        //     }
+        // }
 
         HourNode node = State[index];
         if (node.SameClass.IsReady() && node.NextClass != null)
@@ -59,15 +59,15 @@ public class Controller
             return Assign(index + 1);
         }
 
-        if (node.PreviousHour != null && !node.PreviousHour.Set)
-        {
-            return false;
-        }
-
-        if (node.Domain.Count == 0)
-        {
-            return false;
-        }
+        // if (node.PreviousHour != null && !node.PreviousHour.Set)
+        // {
+        //     return false;
+        // }
+        //
+        // if (node.Domain.Count == 0)
+        // {
+        //     return false;
+        // }
 
         for (int i = 0; i < node.Domain.Count; i++)
         {
@@ -127,12 +127,12 @@ public class Controller
     }
 
     // TODO LATER IMPLEMENTATION
-    public List<TimetableModel> GetData(string className)
+    public List<TimetableModel> GetData(Guid id)
     {
         List<TimetableModel> data = new List<TimetableModel>();
         for (int i = 0; i < Classes.Count; i++)
         {
-            if (Classes[i].Name != className) continue;
+            if (Classes[i].Id != id) continue;
             for (int k = 0; k < 7; k++)
             {
                 string[] hours = new string[5];
@@ -171,6 +171,12 @@ public class Controller
                 }
             }
         }
+    }
+
+    public void Clear()
+    {
+        State.Clear();
+        Classes.Clear();
     }
 
     public void Make()

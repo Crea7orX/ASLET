@@ -187,7 +187,7 @@ public class HourNode
 
     private void RestoreWeekDomain()
     {
-        if (SameClass.GetOccurrence(SubjectExample) == SameClass.GetSubjectPlan(SubjectExample))
+        if (SameClass.GetOccurrence(SubjectExample) != SameClass.GetSubjectPlan(SubjectExample))
         {
             foreach (DayNode day in SameClass.Days)
             {
@@ -237,8 +237,8 @@ public class HourNode
     {
         Domain.Sort((a, b) =>
         {
-            int hard1 = GlobalSpace.SubjectController.SubjectsDictionary[a.Subject].Hardness;
-            int hard2 = GlobalSpace.SubjectController.SubjectsDictionary[b.Subject].Hardness;
+            int hard1 = GlobalSpace.SubjectController.SubjectsDictionary[a.SubjectId].Hardness;
+            int hard2 = GlobalSpace.SubjectController.SubjectsDictionary[b.SubjectId].Hardness;
             if (hard1 > hard2)
             {
                 return -1;
@@ -270,7 +270,7 @@ public class HourNode
         Dictionary<int, List<SubjectExample>> dictionary = new Dictionary<int, List<SubjectExample>>();
         foreach (SubjectExample element in Domain)
         {
-            int hardness = GlobalSpace.SubjectController.SubjectsDictionary[element.Subject].Hardness;
+            int hardness = GlobalSpace.SubjectController.SubjectsDictionary[element.SubjectId].Hardness;
             if (!dictionary.ContainsKey(hardness))
             {
                 DictionaryUtils.Put(dictionary, hardness, new List<SubjectExample>());

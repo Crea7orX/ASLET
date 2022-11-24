@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ASLET.Services.Utils;
 
@@ -6,14 +7,17 @@ namespace ASLET.Services.Objects;
 
 public class ClassNode
 {
+    public Guid Id { get; }
+
     public List<DayNode> Days { get; }
     public string Name { get; }
     private Dictionary<SubjectExample, int> SubjectsPlan { get; }
     private Dictionary<SubjectExample, int> CurrentOccurrence { get; }
     private Dictionary<SubjectExample, object> Properties { get; set; } // TODO
 
-    public ClassNode(string name)
+    public ClassNode(Guid id, string name)
     {
+        Id = id;
         Days = new List<DayNode>();
         SubjectsPlan = new Dictionary<SubjectExample, int>();
         CurrentOccurrence = new Dictionary<SubjectExample, int>();
@@ -104,7 +108,7 @@ public class ClassNode
 
     public override bool Equals(object? obj)
     {
-        return ((ClassNode)obj).Name.Equals(Name);
+        return ((ClassNode)obj).Id.Equals(Id);
     }
 
     // TODO MAYBE LATER

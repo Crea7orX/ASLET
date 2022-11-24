@@ -65,14 +65,12 @@ public static class GlobalSpace
             classDictionary[grade].Add(schoolClass);
         }
 
-        foreach (List<Class> classes in classDictionary.Values)
-        {
-            ClassController.SetUpController(ScheduleFabric.algControll, new List<Class>(classes));
-            ScheduleFabric.algControll.Make();
-        }
+        ScheduleFabric.algControll.Clear();
+        ClassController.SetUpController(ScheduleFabric.algControll, ClassController.Classes);
+        ScheduleFabric.algControll.Make();
 
         UpdateClassController();
-        RunMistakeChecker();
+        // RunMistakeChecker();
         _ready = true;
     }
 

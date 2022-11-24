@@ -16,7 +16,7 @@ public static class TimetableService
 
     public static void AddClass(ClassModel classToAdd)
     {
-        GlobalSpace.ClassController.Add(classToAdd.ToString());
+        GlobalSpace.ClassController.Add(classToAdd.ClassId, classToAdd.ToString());
         _classModels.Add(classToAdd);
         ClassesViewModel.GetInstance(null).UpdateClasses(ref _classModels);
         TimetablesViewModel.GetInstance(null).FillClasses();
@@ -24,7 +24,7 @@ public static class TimetableService
 
     public static void RemoveClass(ClassModel classToRemove)
     {
-        GlobalSpace.ClassController.Remove(classToRemove.ToString());
+        GlobalSpace.ClassController.Remove(classToRemove.ClassId);
         _classModels.Remove(classToRemove);
         ClassesViewModel.GetInstance(null).UpdateClasses(ref _classModels);
         CheckAndUpdateHours(classToRemove);
@@ -33,14 +33,14 @@ public static class TimetableService
 
     public static void AddTeacher(TeacherModel teacherToAdd)
     {
-        GlobalSpace.TeacherController.Add(teacherToAdd.ToString());
+        GlobalSpace.TeacherController.Add(teacherToAdd.TeacherId, teacherToAdd.ToString());
         _teacherModels.Add(teacherToAdd);
         TeachersViewModel.GetInstance(null).UpdateTeachers(ref _teacherModels);
     }
 
     public static void RemoveTeacher(TeacherModel teacherToRemove)
     {
-        GlobalSpace.TeacherController.Remove(teacherToRemove.ToString());
+        GlobalSpace.TeacherController.Remove(teacherToRemove.TeacherId);
         _teacherModels.Remove(teacherToRemove);
         TeachersViewModel.GetInstance(null).UpdateTeachers(ref _teacherModels);
         CheckAndUpdateHours(teacherToRemove);
@@ -48,14 +48,14 @@ public static class TimetableService
 
     public static void AddSubject(SubjectModel subjectToAdd)
     {
-        GlobalSpace.SubjectController.Add(subjectToAdd.ToString());
+        GlobalSpace.SubjectController.Add(subjectToAdd.SubjectId, subjectToAdd.ToString());
         _subjectModels.Add(subjectToAdd);
         SubjectsViewModel.GetInstance(null).UpdateSubjects(ref _subjectModels);
     }
 
     public static void RemoveSubject(SubjectModel subjectToRemove)
     {
-        GlobalSpace.SubjectController.Remove(subjectToRemove.ToString());
+        GlobalSpace.SubjectController.Remove(subjectToRemove.SubjectId);
         _subjectModels.Remove(subjectToRemove);
         SubjectsViewModel.GetInstance(null).UpdateSubjects(ref _subjectModels);
         CheckAndUpdateHours(subjectToRemove);
@@ -63,14 +63,14 @@ public static class TimetableService
 
     public static void AddHour(HourModel hourToAdd)
     {
-        GlobalSpace.ClassController.AddSubject(hourToAdd.ClassToString(), hourToAdd.GetSubject(), hourToAdd.HoursAWeek);
+        GlobalSpace.ClassController.AddSubject(hourToAdd.ClassId, hourToAdd.GetSubject(), hourToAdd.HoursAWeek);
         _hourModels.Add(hourToAdd);
         HoursViewModel.GetInstance(null).UpdateHours(ref _hourModels);
     }
 
     public static void RemoveHour(HourModel hourToRemove)
     {
-        GlobalSpace.ClassController.RemoveSubject(hourToRemove.ClassToString(), hourToRemove.GetSubject());
+        GlobalSpace.ClassController.RemoveSubject(hourToRemove.ClassId, hourToRemove.GetSubject(), hourToRemove.HoursAWeek);
         _hourModels.Remove(hourToRemove);
         HoursViewModel.GetInstance(null).UpdateHours(ref _hourModels);
     }

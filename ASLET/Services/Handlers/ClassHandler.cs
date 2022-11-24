@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using ASLET.Services.Objects;
 using ASLET.Services.Utils;
 
@@ -8,29 +9,29 @@ namespace ASLET.Services.Handlers;
 
 public class ClassHandler : IHandler
 {
-    public Dictionary<string, Class> Classes { get; }
+    public Dictionary<Guid, Class> Classes { get; }
     private static readonly SubjectExample EmptySubject = new SubjectExample();
     private static readonly Random Random = new Random();
 
     public ClassHandler()
     {
-        Classes = new Dictionary<string, Class>();
+        Classes = new Dictionary<Guid, Class>();
     }
 
-    public void Add(string name)
+    public void Add(Guid id, string name)
     {
-        DictionaryUtils.Put(Classes, name, new Class(name));
+        DictionaryUtils.Put(Classes, id, new Class(id, name));
     }
 
-    public void Remove(string name)
+    public void Remove(Guid id)
     {
-        Classes.Remove(name);
+        Classes.Remove(id);
     }
 
-    public bool Contains(string name)
+    public bool Contains(Guid id)
     {
         // TODO ?????????? VALUE
-        return Classes.ContainsKey(name);
+        return Classes.ContainsKey(id);
     }
 
     public void ClearAllSchedules()
@@ -41,29 +42,30 @@ public class ClassHandler : IHandler
         }
     }
 
-    public void ClearSchedule(string schoolClass)
+    public void ClearSchedule(Guid id)
     {
-        Classes[schoolClass].ClearSchedule();
+        Classes[id].ClearSchedule();
     }
 
-    public void AddSubject(string schoolClass, SubjectExample subject, int times)
+    public void AddSubject(Guid id, SubjectExample subject, int times)
     {
-        Classes[schoolClass].AddSubject(subject, times);
+        Classes[id].AddSubject(subject, times);
     }
 
-    public void RemoveSubject(string schoolClass, SubjectExample subject)
+    public void RemoveSubject(Guid id, SubjectExample subject, int times)
     {
-        Classes[schoolClass].RemoveSubject(subject);
+        Classes[id].RemoveSubject(subject, times);
     }
 
     // TODO ADD CONDITION
 
-    public void SetUpController(Controller controller, List<Class> classes)
+    public void SetUpController(Controller controller, Dictionary<Guid, Class> classes)
     {
-        foreach (Class schoolClass in classes)
+        foreach (Class schoolClass in classes.Values)
         {
+            Guid id = schoolClass.Id;
             string name = schoolClass.Name;
-            ClassNode node = new ClassNode(name);
+            ClassNode node = new ClassNode(id, name);
             foreach (KeyValuePair<SubjectExample, int> subject in schoolClass.SubjectPlan)
             {
                 node.AddSubject(subject.Key, subject.Value);
@@ -76,7 +78,7 @@ public class ClassHandler : IHandler
         controller.SetUpClasses();
         Class[] classArr = new Class[classes.Count];
         // TODO POSSIBLE REFERENCE BUGS
-        Array.Copy(classes.ToArray(), classArr, classes.Count);
+        Array.Copy(classes.Values.ToArray(), classArr, classes.Count);
         // classes.ToArray().CopyTo(classArr, 0);
         for (int i = 0; i < classes.Count; i++)
         {
@@ -100,13 +102,15 @@ public class ClassHandler : IHandler
         for (int i = 0; i < controller.Classes.Count; i++)
         {
             ClassNode classNode = controller.Classes[i];
-            SubjectExample[,] schedule = Classes[classNode.Name].Schedule;
+            SubjectExample[,] schedule = Classes[classNode.Id].Schedule;
             for (int j = 0; j < classNode.Days.Count; j++)
             {
                 DayNode dayNode = classNode.Days[j];
                 for (int k = 0; k < dayNode.Hours.Count; k++)
                 {
                     HourNode hourNode = dayNode.Hours[k];
+                    schedule[j, k].SubjectId = hourNode.SubjectExample.SubjectId;
+                    schedule[j, k].TeacherId = hourNode.SubjectExample.TeacherId;
                     schedule[j, k].Subject = hourNode.SubjectExample.Subject;
                     schedule[j, k].Teacher = hourNode.SubjectExample.Teacher;
                 }
@@ -114,9 +118,9 @@ public class ClassHandler : IHandler
         }
     }
 
-    public string GetTeacher(string schoolClass, string subject)
+    public string GetTeacher(Guid id, string subject)
     {
-        foreach (SubjectExample subjectExample in Classes[schoolClass].Subjects)
+        foreach (SubjectExample subjectExample in Classes[id].Subjects)
         {
             if (subjectExample.Subject.Equals(subject))
             {
@@ -127,20 +131,20 @@ public class ClassHandler : IHandler
         return null;
     }
 
-    public void SetSubjectWithNoChecks(string schoolClass, int day, int hour, SubjectExample selectedValue)
+    public void SetSubjectWithNoChecks(Guid id, int day, int hour, SubjectExample selectedValue)
     {
-        Classes[schoolClass].Schedule[day, hour] = selectedValue;
+        Classes[id].Schedule[day, hour] = selectedValue;
     }
 
-    public string SetSubject(string schoolClass, int day, int hour, SubjectExample selectedValue)
+    public string SetSubject(Guid id, int day, int hour, SubjectExample selectedValue)
     {
         if (selectedValue.Equals(EmptySubject))
         {
-            Classes[schoolClass].Schedule[day, hour] = selectedValue;
+            Classes[id].Schedule[day, hour] = selectedValue;
             return null;
         }
 
-        SubjectExample[,] schedule = Classes[schoolClass].Schedule;
+        SubjectExample[,] schedule = Classes[id].Schedule;
         int count = 1;
         for (int i = 0; i < schedule.GetLength(0); i++)
         {
@@ -154,21 +158,21 @@ public class ClassHandler : IHandler
             }
         }
 
-        if (count > Classes[schoolClass].SubjectPlan[selectedValue])
+        if (count > Classes[id].SubjectPlan[selectedValue])
         {
             return "TOO MANY SUBJECTS IN WEEK";
         }
 
         for (int i = 0; i < Classes.Count; i++)
         {
-            SubjectExample subject = Classes[schoolClass].Schedule[day, hour];
+            SubjectExample subject = Classes[id].Schedule[day, hour];
             if (!subject.Equals(EmptySubject) && subject.Equals(selectedValue))
             {
                 return "SAME SUBJECT IN ANOTHER CLASS";
             }
         }
 
-        Classes[schoolClass].Schedule[day, hour] = selectedValue;
+        Classes[id].Schedule[day, hour] = selectedValue;
         return null;
     }
 
@@ -176,9 +180,13 @@ public class ClassHandler : IHandler
     {
         SubjectExample subject1 = schoolClass.Schedule[subjectLocation1.X, subjectLocation1.Y];
         SubjectExample subject2 = schoolClass.Schedule[subjectLocation2.X, subjectLocation2.Y];
-        SubjectExample subjectTemp = new SubjectExample(subject1.Subject, subject1.Teacher);
+        SubjectExample subjectTemp = new SubjectExample(subject1.SubjectId, subject1.TeacherId, subject1.Subject, subject1.Teacher);
+        subject1.SubjectId = subject2.SubjectId;
+        subject1.TeacherId = subject2.TeacherId;
         subject1.Subject = subject2.Subject;
         subject1.Teacher = subject2.Teacher;
+        subject2.SubjectId = subjectTemp.SubjectId;
+        subject2.TeacherId = subjectTemp.TeacherId;
         subject2.Subject = subjectTemp.Subject;
         subject2.Teacher = subjectTemp.Teacher;
     }

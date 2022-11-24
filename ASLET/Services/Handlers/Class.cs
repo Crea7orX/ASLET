@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ASLET.Services.Objects;
 using ASLET.Services.Utils;
 
@@ -6,6 +7,8 @@ namespace ASLET.Services.Handlers;
 
 public class Class
 {
+    public Guid Id { get; }
+
     public List<SubjectExample> Subjects { get; }
 
     public Dictionary<SubjectExample, int> SubjectPlan { get; }
@@ -14,8 +17,9 @@ public class Class
     public SubjectExample[,] Schedule { get; }
     public string Name { get; }
 
-    public Class(string name)
+    public Class(Guid id, string name)
     {
+        Id = id;
         Name = name;
         SubjectPlan = new Dictionary<SubjectExample, int>();
         Subjects = new List<SubjectExample>();
@@ -40,9 +44,16 @@ public class Class
         Subjects.Add(subject);
     }
 
-    public void RemoveSubject(SubjectExample subject)
+    public void RemoveSubject(SubjectExample subject, int times)
     {
-        SubjectPlan.Remove(subject);
+        // if (SubjectPlan[subject] == times)
+        // {
+        //     SubjectPlan.Remove(subject);
+        // }
+        // else
+        // {
+            SubjectPlan[subject] -= times;
+        // }
         Subjects.Remove(subject);
     }
 }
