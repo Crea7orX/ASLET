@@ -22,3 +22,6 @@ Folder.DotSettings
 
 #Output files
 /ASLET-console/timetable.txt
+
+#database
+**/*.db*
