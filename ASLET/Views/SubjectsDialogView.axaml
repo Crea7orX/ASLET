@@ -6,8 +6,12 @@
              x:Class="ASLET.Views.SubjectsDialogView"
              FontWeight="Bold"
              FontSize="20">
-
-    <Grid>
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/DialogWindowStyles.axaml"></StyleInclude>
+    </UserControl.Styles>
+    
+    <Grid Classes.Dark="{Binding DarkMode}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
@@ -36,11 +40,11 @@
 
             <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                     FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddSubjectCommand}">
-                Добавяне
+                <TextBlock Text="Добавяне"/>
             </Button>
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                     FontWeight="Bold" FontSize="18" Width="120" Command="{Binding CancelCommand}">
-                Отказ
+                <TextBlock Text="Отказ"/>
             </Button>
         </Grid>
     </Grid>

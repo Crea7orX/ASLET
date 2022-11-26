@@ -51,7 +51,7 @@
                                 <Button HorizontalAlignment="Center"
                                         Command="{Binding DataContext.DeleteSubjectCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding}">
-                                    ИЗТРИВАНЕ
+                                    <TextBlock Text="X" Foreground="Red"/>
                                 </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

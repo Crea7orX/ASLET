@@ -12,18 +12,31 @@ public class TeachersDialogViewModel : ViewModelBase
 
     private string _teacherName;
 
+    #region DarkMode
+
+    private bool _darkMode;
+    public bool DarkMode
+    {
+        get => _darkMode;
+        set => this.RaiseAndSetIfChanged(ref _darkMode, value);
+    }
+    #endregion
+
+    
     public string TeacherName
     {
         get => _teacherName;
         set => this.RaiseAndSetIfChanged(ref _teacherName, value);
     }
 
-    public TeachersDialogViewModel()
+    public TeachersDialogViewModel(bool darkMode)
     {
         // TODO CHECKERS FOR VALID INPUT
         AddTeacherCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new TeacherModel(_teacherName)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<TeacherModel?>(null));
+
+        DarkMode = darkMode; 
         
         TeacherName = "";
     }

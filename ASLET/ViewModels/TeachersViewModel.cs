@@ -80,7 +80,7 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
         AddTeacher = new Interaction<TeachersDialogViewModel, TeacherModel?>();
         AddTeacherCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            TeacherModel? result = await AddTeacher.Handle(new TeachersDialogViewModel());
+            TeacherModel? result = await AddTeacher.Handle(new TeachersDialogViewModel(DarkMode));
 
             if (result != null)
             {

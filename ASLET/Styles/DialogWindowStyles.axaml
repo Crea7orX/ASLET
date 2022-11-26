@@ -10,6 +10,17 @@
     <Style Selector="Grid.Dark">
         <Setter Property="Background" Value="{DynamicResource DarkGrey}"/>
     </Style>
+    
+    <Style Selector="Grid.Dark > ComboBox">
+        <Setter Property="Background" Value="{DynamicResource Thunder}"/>
+    </Style>
+    <Style Selector="Grid.Dark > ComboBox > ComboBoxItem">
+        <Setter Property="Background" Value="{DynamicResource Thunder}"/>
+    </Style>
+    <Style Selector="Grid.Dark > ComboBox > ComboBoxItem:pointerover /template/ ContentPresenter"> 
+        <Setter Property="Background" Value="{DynamicResource ComboBoxItemHover}"/>
+    </Style>
+    
     <Style Selector="Grid.Dark > Grid > ComboBox">
         <Setter Property="Background" Value="{DynamicResource Thunder}"/>
     </Style>
