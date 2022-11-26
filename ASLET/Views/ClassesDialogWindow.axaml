@@ -10,21 +10,8 @@
         CanResize="False"
         Height="300" Width="300"
         TransparencyLevelHint="AcrylicBlur">
-
+    
     <Panel>
-        <ExperimentalAcrylicBorder IsHitTestVisible="False">
-            <ExperimentalAcrylicBorder.Material>
-                <ExperimentalAcrylicMaterial
-                    BackgroundSource="Digger"
-                    TintColor="Black"
-                    TintOpacity="1"
-                    MaterialOpacity="0.65">
-                </ExperimentalAcrylicMaterial>
-            </ExperimentalAcrylicBorder.Material>
-        </ExperimentalAcrylicBorder>
-        
-        <Panel Margin="10">
-            <local:ClassesDialogView />
-        </Panel>
+        <local:ClassesDialogView />
     </Panel>
 </Window>

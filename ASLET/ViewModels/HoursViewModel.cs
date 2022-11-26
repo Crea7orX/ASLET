@@ -11,6 +11,8 @@ namespace ASLET.ViewModels;
 
 public class HoursViewModel : ViewModelBase, IRoutableViewModel
 {
+    #region Routing
+
     private static HoursViewModel? _instance;
 
     public static HoursViewModel GetInstance(IScreen? hostScreen)
@@ -25,6 +27,10 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
 
     public string? UrlPathSegment => "Hours";
     public IScreen HostScreen { get; }
+
+    #endregion
+
+    #region Logic
 
     public ICommand AddHourCommand { get; }
 
@@ -48,6 +54,25 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand DeleteHourCommand { get; }
 
+    #endregion
+    
+    #region Parent-child relations
+
+    private static MainWindowViewModel? _parent;
+    public static void SetParent(MainWindowViewModel? parent) => _parent = parent;
+
+    #endregion
+    
+    #region DarkMode
+
+    private bool _darkMode;
+    public bool DarkMode
+    {
+        get => _darkMode;
+        set => this.RaiseAndSetIfChanged(ref _darkMode, value);
+    }
+    #endregion
+    
     public HoursViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
@@ -55,7 +80,7 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
         AddHour = new Interaction<HoursDialogViewModel, HourModel?>();
         AddHourCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            HourModel? result = await AddHour.Handle(new HoursDialogViewModel());
+            HourModel? result = await AddHour.Handle(new HoursDialogViewModel(DarkMode));
 
             if (result != null)
             {

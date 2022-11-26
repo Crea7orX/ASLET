@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using ASLET.Services.Objects;
 using ASLET.Services.Utils;

@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:ASLET.ViewModels"
+        xmlns:views="using:ASLET.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:reactiveUi="http://reactiveui.net"
@@ -10,7 +11,7 @@
         Width="800" Height="450"
         MinWidth="800" MinHeight="450"
         x:Class="ASLET.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/ASLET.ico"
         Title="ASLET - Automated System for Large Educational Timetables"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
@@ -30,25 +31,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30" />
             <ColumnDefinition Width="260" />
+            <ColumnDefinition Width="30" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="30" />
         </Grid.ColumnDefinitions>
+        
+        <views:MenuView Grid.Row="1" Grid.Column="1"/>
 
-        <Border Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Background="#5f6369" CornerRadius="10" Width="240" />
-        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" DockPanel.Dock="Left" Margin="0 10" Spacing="10">
-            <Button Content="Класове" Command="{Binding GoToClasses}" Width="240"
-                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
-            <Button Content="Учители" Command="{Binding GoToTeachers}" Width="240"
-                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
-            <Button Content="Предмети" Command="{Binding GoToSubjects}" Width="240"
-                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
-            <Button Content="Часове" Command="{Binding GoToHours}" Width="240"
-                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
-            <Button Content="Учебни програми" Command="{Binding GoToTimetables}" Width="240"
-                    Background="#5f6369" FontWeight="Bold" FontSize="20" />
-        </StackPanel>
-
-        <reactiveUi:RoutedViewHost Grid.Row="1" Grid.Column="2" Router="{Binding Router}">
+        <reactiveUi:RoutedViewHost Grid.Row="1" Grid.Column="3" Router="{Binding Router}">
             <reactiveUi:RoutedViewHost.ViewLocator>
                 <app:ASLETViewLocator />
             </reactiveUi:RoutedViewHost.ViewLocator>

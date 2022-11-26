@@ -29,5 +29,22 @@
     <Compile Update="Views\Shared\AddButton.axaml.cs">
       <DependentUpon>AddButton.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\TimetablesView.axaml.cs">
+      <DependentUpon>TimetablesView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaXaml Update="Views\ClassesDialogView.axaml">
+      <DependentUpon>ClassesDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\HoursDialogView.axaml">
+      <DependentUpon>HoursDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\SubjectsDialogView.axaml">
+      <DependentUpon>SubjectsDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\TeachersDialogView.axaml">
+      <DependentUpon>TeachersDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
   </ItemGroup>
 </Project>

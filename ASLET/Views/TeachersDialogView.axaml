@@ -7,27 +7,38 @@
              FontWeight="Bold"
              FontSize="20">
 
-    <Grid>
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/DialogWindowStyles.axaml"></StyleInclude>
+    </UserControl.Styles>
+    
+    <Grid Classes.Dark="{Binding DarkMode}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="30" />
-            <RowDefinition Height="30" />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете учител" />
+        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="Въведете учител" />
 
-        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Text="Име на учител" />
-        <TextBox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="280" TextWrapping="Wrap" MaxLength="60"
+        <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Text="Име на учител" />
+        <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Width="280" TextWrapping="Wrap" MaxLength="60"
                  Text="{Binding TeacherName}" />
 
-        <Grid Grid.Row="6" Grid.Column="0">
+        <Grid Grid.Row="7" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -35,11 +46,11 @@
 
             <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                     FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddTeacherCommand}">
-                Добавяне
+                <TextBlock Text="Добавяне"/>
             </Button>
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                     FontWeight="Bold" FontSize="18" Width="120" Command="{Binding CancelCommand}">
-                Отказ
+                <TextBlock Text="Отказ"/>
             </Button>
         </Grid>
     </Grid>

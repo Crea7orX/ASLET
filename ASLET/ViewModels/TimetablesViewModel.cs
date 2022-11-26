@@ -12,6 +12,8 @@ namespace ASLET.ViewModels;
 
 public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
 {
+    #region Routing
+
     private static TimetablesViewModel? _instance;
 
     public static TimetablesViewModel GetInstance(IScreen? hostScreen)
@@ -27,6 +29,10 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
     public string? UrlPathSegment => "Timetables";
     
     public IScreen HostScreen { get; }
+
+    #endregion
+
+    #region Logic
 
     public ICommand GenerateTimetableCommand { get; }
 
@@ -54,21 +60,6 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         private set => this.RaiseAndSetIfChanged(ref _timetable, value);
     }
 
-    public TimetablesViewModel(IScreen hostScreen)
-    {
-        HostScreen = hostScreen;
-        
-        GenerateTimetableCommand = ReactiveCommand.CreateFromTask(async () =>
-        {
-            TimetableService.GenerateTimetable();
-            _hasGeneratedTimetable = true;
-            UpdateTimetable();
-        });
-        
-        FillClasses();
-        if (Classes.Count > 0) SelectedClass = Classes[0];
-    }
-
     public void FillClasses()
     {
         Classes.Clear();
@@ -88,4 +79,39 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
             Timetable.Add(timetableModel);
         }
     }
+    
+    #endregion
+    
+    #region Parent-child relations
+
+    private static MainWindowViewModel? _parent;
+    public static void SetParent(MainWindowViewModel? parent) => _parent = parent;
+
+    #endregion
+    
+    #region DarkMode
+
+    private bool _darkMode;
+    public bool DarkMode
+    {
+        get => _darkMode;
+        set => this.RaiseAndSetIfChanged(ref _darkMode, value);
+    }
+    #endregion
+
+    public TimetablesViewModel(IScreen hostScreen)
+    {
+        HostScreen = hostScreen;
+        
+        GenerateTimetableCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            TimetableService.GenerateTimetable();
+            _hasGeneratedTimetable = true;
+            UpdateTimetable();
+        });
+        
+        FillClasses();
+        if (Classes.Count > 0) SelectedClass = Classes[0];
+    }
+    
 }

@@ -31,13 +31,25 @@ public class ClassesDialogViewModel : ViewModelBase
         get => _selectedLetter;
         private set => this.RaiseAndSetIfChanged(ref _selectedLetter, value);
     }
+    
+    #region DarkMode
 
-    public ClassesDialogViewModel()
+    private bool _darkMode;
+    public bool DarkMode
+    {
+        get => _darkMode;
+        set => this.RaiseAndSetIfChanged(ref _darkMode, value);
+    }
+    #endregion
+
+    public ClassesDialogViewModel(bool darkMode)
     {
         // TODO CHECKERS FOR VALID INPUT
         AddClassCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new ClassModel(_selectedGrade, _selectedLetter)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<ClassModel?>(null));
+
+        DarkMode = darkMode;
 
         FillGrades();
         FillLetters();

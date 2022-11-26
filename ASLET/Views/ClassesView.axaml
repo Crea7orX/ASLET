@@ -3,15 +3,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ASLET.Views.ClassesView"
-             Background="#5f6369"
-             CornerRadius="10"
-             FontWeight="Bold"
-             FontSize="20">
+             x:Class="ASLET.Views.ClassesView">
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/ClassesViewStyles.axaml"/>
+    </UserControl.Styles>
 
+    <Border Classes="MainContainer" Classes.Dark="{Binding DarkMode}">
+        
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
             <RowDefinition Height="30" />
@@ -21,12 +25,12 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="КЛАСОВЕ" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                   Classes="Header" Text="КЛАСОВЕ"/>
 
-        <Border Grid.Row="1" Grid.Column="1" MinWidth="360" BorderBrush="#36393F" BorderThickness="10"
-                CornerRadius="10">
+        <Border Grid.Row="2" Grid.Column="1" Classes="MainContent">
             <DataGrid Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}" IsReadOnly="True"
-                      Classes="custom">
+                      Classes="MainData">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Клас" MinWidth="80" Width="*" Binding="{Binding Grade}"
                                         CanUserSort="True" />
@@ -38,7 +42,7 @@
                                 <Button HorizontalAlignment="Center"
                                         Command="{Binding DataContext.DeleteClassCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding}">
-                                    ИЗТРИВАНЕ
+                                    <TextBlock Text="X" Foreground="Red"/>
                                 </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -47,9 +51,13 @@
             </DataGrid>
         </Border>
 
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
-                FontWeight="Bold" Command="{Binding AddClassCommand}" IsEnabled="True">
-            Добавяне на клас
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" 
+                HorizontalAlignment="Center" 
+                Command="{Binding AddClassCommand}" IsEnabled="True">
+            <TextBlock>Добавяне на клас</TextBlock>
         </Button>
     </Grid>
+        
+    </Border>
+
 </UserControl>

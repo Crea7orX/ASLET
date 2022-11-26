@@ -11,6 +11,8 @@ namespace ASLET.ViewModels;
 
 public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
 {
+    #region Routing
+
     private static SubjectsViewModel? _instance;
 
     public static SubjectsViewModel GetInstance(IScreen? hostScreen)
@@ -25,6 +27,10 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
 
     public string? UrlPathSegment => "Subjects";
     public IScreen HostScreen { get; }
+
+    #endregion
+
+    #region Logic
 
     public ICommand AddSubjectCommand { get; }
 
@@ -48,6 +54,26 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand DeleteSubjectCommand { get; }
 
+
+    #endregion
+    
+    #region Parent-child relations
+
+    private static MainWindowViewModel? _parent;
+    public static void SetParent(MainWindowViewModel? parent) => _parent = parent;
+
+    #endregion
+    
+    #region DarkMode
+
+    private bool _darkMode;
+    public bool DarkMode
+    {
+        get => _darkMode;
+        set => this.RaiseAndSetIfChanged(ref _darkMode, value);
+    }
+    #endregion
+    
     public SubjectsViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;

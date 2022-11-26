@@ -7,7 +7,12 @@
              FontWeight="Bold"
              FontSize="20">
 
-    <Grid>
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/DialogWindowStyles.axaml"></StyleInclude>
+    </UserControl.Styles>
+    
+    <Grid Classes.Dark="{Binding DarkMode}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
@@ -26,7 +31,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете предмет" />
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете предмет" />
 
         <ComboBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
                   SelectedIndex="0" Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}">
@@ -74,11 +79,12 @@
 
             <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                     FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddHourCommand}">
-                Добавяне
+                    <TextBlock Text="Добавяне"/> 
             </Button>
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                     FontWeight="Bold" FontSize="18" Width="120" Command="{Binding CancelCommand}">
-                Отказ
+                <TextBlock Text="Отказ"/> 
+
             </Button>
         </Grid>
     </Grid>

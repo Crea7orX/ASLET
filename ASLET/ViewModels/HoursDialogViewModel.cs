@@ -50,13 +50,25 @@ public class HoursDialogViewModel : ViewModelBase
         private set => this.RaiseAndSetIfChanged(ref _hoursAWeek, value);
     }
 
-    public HoursDialogViewModel()
+    #region DarkMode
+
+    private bool _darkMode;
+    public bool DarkMode
+    {
+        get => _darkMode;
+        set => this.RaiseAndSetIfChanged(ref _darkMode, value);
+    }
+    #endregion
+    
+    public HoursDialogViewModel(bool darkMode)
     {
         // TODO CHECKERS FOR VALID INPUT
         AddHourCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new HourModel(_selectedClass.ClassId, _selectedClass.Grade, _selectedClass.Letter, _selectedTeacher.TeacherId, _selectedTeacher.Name, _selectedSubject.SubjectId, _selectedSubject.Name, _hoursAWeek)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<HourModel?>(null));
 
+        DarkMode = darkMode;
+        
         FillClasses();
         FillTeachers();
         FillSubjects();

@@ -16,10 +16,18 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </UserControl.Styles>
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/ClassesViewStyles.axaml"/>
+    </UserControl.Styles>
+
+    <Border Classes="MainContainer" Classes.Dark="{Binding DarkMode}">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
             <RowDefinition Height="30" />
@@ -29,12 +37,11 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="ПРЕДМЕТИ" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="ПРЕДМЕТИ" />
         
-        <Border Grid.Row="1" Grid.Column="1" MinWidth="360" BorderBrush="#36393F" BorderThickness="10"
-                CornerRadius="10">
+        <Border Grid.Row="2" Grid.Column="1" Classes="MainContent">
             <DataGrid Items="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}" IsReadOnly="True"
-                      Classes="custom">
+                      Classes="MainData">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Предмет" MinWidth="210" Width="*" Binding="{Binding Name}"
                                         CanUserSort="True" />
@@ -44,7 +51,7 @@
                                 <Button HorizontalAlignment="Center"
                                         Command="{Binding DataContext.DeleteSubjectCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding}">
-                                    ИЗТРИВАНЕ
+                                    <TextBlock Text="X" Foreground="Red"/>
                                 </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -53,9 +60,10 @@
             </DataGrid>
         </Border>
 
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
                 FontWeight="Bold" Command="{Binding AddSubjectCommand}" IsEnabled="True">
-            Добавяне на предмет
+            <TextBlock Text="Добавяне на предмет"/>
         </Button>
     </Grid>
+        </Border>
 </UserControl>

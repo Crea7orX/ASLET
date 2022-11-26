@@ -11,6 +11,8 @@ namespace ASLET.ViewModels;
 
 public class TeachersViewModel : ViewModelBase, IRoutableViewModel
 {
+    #region Routing
+
     private static TeachersViewModel? _instance;
 
     public static TeachersViewModel GetInstance(IScreen? hostScreen)
@@ -25,6 +27,10 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
 
     public string? UrlPathSegment => "Teachers";
     public IScreen HostScreen { get; }
+
+    #endregion
+
+    #region Logic
 
     public ICommand AddTeacherCommand { get; }
 
@@ -48,6 +54,25 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand DeleteTeacherCommand { get; }
 
+    #endregion
+
+    #region Parent-child relations
+
+    private static MainWindowViewModel? _parent;
+    public static void SetParent(MainWindowViewModel? parent) => _parent = parent;
+
+    #endregion
+    
+    #region DarkMode
+
+    private bool _darkMode;
+    public bool DarkMode
+    {
+        get => _darkMode;
+        set => this.RaiseAndSetIfChanged(ref _darkMode, value);
+    }
+    #endregion
+
     public TeachersViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
@@ -55,7 +80,7 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
         AddTeacher = new Interaction<TeachersDialogViewModel, TeacherModel?>();
         AddTeacherCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            TeacherModel? result = await AddTeacher.Handle(new TeachersDialogViewModel());
+            TeacherModel? result = await AddTeacher.Handle(new TeachersDialogViewModel(DarkMode));
 
             if (result != null)
             {
