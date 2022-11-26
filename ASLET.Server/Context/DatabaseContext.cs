@@ -1,4 +1,5 @@
-﻿using ASLET.Server.Models;
+﻿using ASLET.Models;
+using ASLET.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASLET.Server.Context;
@@ -10,11 +11,12 @@ public class DatabaseContext : DbContext
     public DbSet<Teacher> Teachers { get; set; }
     public DbSet<Hour> Hours { get; set; }
     public DbSet<TimetableSlot> TimetableSlots { get; set; }
+    public DbSet<AsletUser> AsletUsers { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ASLET;Integrated Security=True"); // TODO
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     optionsBuilder.UseSqlite("Server=(localdb)\\MSSQLLocalDB;Database=ASLET;Integrated Security=True"); // TODO
+    // }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,5 +27,10 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<TimetableSlot>().HasMany<SchoolClass>(slot => slot.Classes);
         
         base.OnModelCreating(modelBuilder);
+    }
+
+    public DatabaseContext(DbContextOptions options) : base(options)
+    {
+        
     }
 }
