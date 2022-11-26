@@ -60,9 +60,10 @@
             </DataGrid>
         </Border>
 
-        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
-                FontWeight="Bold" Command="{Binding AddHourCommand}" IsEnabled="True">
-            <TextBlock Text="Добавяне на час"/>
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" 
+                HorizontalAlignment="Center" 
+                Command="{Binding AddHourCommand}" IsEnabled="True">
+            <TextBlock>Добавяне на час</TextBlock>
         </Button>
     </Grid>
         </Border>

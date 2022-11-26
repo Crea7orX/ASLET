@@ -61,7 +61,7 @@
 
         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
                 FontWeight="Bold" Command="{Binding GenerateTimetableCommand}" IsEnabled="True">
-            Генериране на учебна програма
+            <TextBlock Text="Генериране на учебна програма"/>
         </Button>
     </Grid>
     </Border>

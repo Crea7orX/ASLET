@@ -80,7 +80,7 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
         AddHour = new Interaction<HoursDialogViewModel, HourModel?>();
         AddHourCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            HourModel? result = await AddHour.Handle(new HoursDialogViewModel());
+            HourModel? result = await AddHour.Handle(new HoursDialogViewModel(DarkMode));
 
             if (result != null)
             {

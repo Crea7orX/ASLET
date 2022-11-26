@@ -77,6 +77,7 @@ namespace ASLET.ViewModels
             HoursViewModelChild!.DarkMode = DarkMode;
             SubjectsViewModelChild!.DarkMode = DarkMode;
             TeachersViewModelChild!.DarkMode = DarkMode;
+            TimetablesViewModelChild!.DarkMode = DarkMode;
         }
         
         #endregion

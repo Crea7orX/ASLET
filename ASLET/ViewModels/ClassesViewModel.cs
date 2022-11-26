@@ -82,7 +82,7 @@ public class ClassesViewModel : ViewModelBase, IRoutableViewModel
         AddClass = new Interaction<ClassesDialogViewModel, ClassModel?>();
         AddClassCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            ClassModel? result = await AddClass.Handle(new ClassesDialogViewModel());
+            ClassModel? result = await AddClass.Handle(new ClassesDialogViewModel(DarkMode));
 
             if (result != null)
             {

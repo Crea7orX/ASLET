@@ -2,11 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Add Resources Here -->
     <SolidColorBrush x:Key="RoyalBlue">#4169e1</SolidColorBrush>
-    <SolidColorBrush x:Key="Ivory">#FFFFF0</SolidColorBrush>
+    <SolidColorBrush x:Key="Ivory">#FFFFFF</SolidColorBrush>
     <SolidColorBrush x:Key="Silk">#B3B3A5</SolidColorBrush>
     
     <!--Dark Mode-->
     <SolidColorBrush x:Key="DarkGrey">#121212</SolidColorBrush>
     <SolidColorBrush x:Key="Thunder">#2b2a2b</SolidColorBrush>
+    <SolidColorBrush x:Key="ComboBoxItemHover">#333233</SolidColorBrush>
 
 </ResourceDictionary>

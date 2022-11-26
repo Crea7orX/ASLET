@@ -59,4 +59,13 @@
     <Style Selector="Border.MainContainer.Dark > Grid > Border > DataGrid.custom">
         <!-- <Setter Property="Background" Value="{DynamicResource DarkGrey}" /> -->
     </Style>
+    <Style Selector="Border.MainContainer.Dark > Grid > ComboBox">
+        <Setter Property="Background" Value="{DynamicResource Thunder}"/>
+    </Style>
+    <Style Selector="Border.MainContainer.Dark > Grid > ComboBox > ComboBoxItem">
+        <Setter Property="Background" Value="{DynamicResource Thunder}"/>
+    </Style>
+    <Style Selector="Border.MainContainer.Dark > Grid > ComboBox > ComboBoxItem:pointerover /template/ ContentPresenter"> 
+        <Setter Property="Background" Value="{DynamicResource ComboBoxItemHover}"/>
+    </Style>
 </Styles>

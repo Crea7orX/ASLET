@@ -6,29 +6,34 @@
              x:Class="ASLET.Views.ClassesDialogView"
              FontWeight="Bold"
              FontSize="20">
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/DialogWindowStyles.axaml"></StyleInclude>
+    </UserControl.Styles>
 
-    <Grid>
+    <Grid Classes.Dark="{Binding DarkMode}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="30" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="80" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете клас" />
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете клас" />
 
-        <Grid Grid.Row="2" Grid.Column="0">
+        <Grid Grid.Row="3" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ComboBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" MaxDropDownHeight="100"
+            <ComboBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" MaxDropDownHeight="100" 
                       SelectedIndex="0" Items="{Binding Grades}" SelectedItem="{Binding SelectedGrade}">
 
             </ComboBox>
@@ -39,7 +44,7 @@
             </ComboBox>
         </Grid>
 
-        <Grid Grid.Row="5" Grid.Column="0">
+        <Grid Grid.Row="4" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -47,11 +52,11 @@
 
             <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                     FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddClassCommand}">
-                Добавяне
+                <TextBlock Text="Добавяне"/> 
             </Button>
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                     FontWeight="Bold" FontSize="18" Width="120" Command="{Binding CancelCommand}">
-                Отказ
+                <TextBlock Text="Отказ"/> 
             </Button>
         </Grid>
     </Grid>
