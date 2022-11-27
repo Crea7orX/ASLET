@@ -89,7 +89,7 @@
             <Border Grid.Column="0" Grid.ColumnSpan="3"/>
             
             <Panel Grid.Column="0">
-                <TextBlock>И. Краев</TextBlock>
+                <TextBlock>ALSET</TextBlock>
             </Panel>
             
             <Button Grid.Column="2" Command="{Binding ToggleDropup}" 
