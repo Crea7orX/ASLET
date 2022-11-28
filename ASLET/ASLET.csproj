@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+	<TrimMode>copyused</TrimMode>
+	<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
+    <None Remove=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+	<TrimmableAssembly Include="Avalonia.Themes.Fluent" />
+	<TrimmableAssembly Include="Avalonia.Themes.Default" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.18" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
+	<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
+	<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
+	<PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\HoursView.axaml.cs">
+      <DependentUpon>HoursView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Shared\AddButton.axaml.cs">
+      <DependentUpon>AddButton.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TimetablesView.axaml.cs">
+      <DependentUpon>TimetablesView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaXaml Update="Views\ClassesDialogView.axaml">
+      <DependentUpon>ClassesDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\HoursDialogView.axaml">
+      <DependentUpon>HoursDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\SubjectsDialogView.axaml">
+      <DependentUpon>SubjectsDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\TeachersDialogView.axaml">
+      <DependentUpon>TeachersDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\RoomsDialogView.axaml">
+      <DependentUpon>RoomsDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
+  </ItemGroup>
+</Project>

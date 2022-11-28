@@ -1,0 +1,91 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ASLET.Views.TimetablesView">
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/ClassesViewStyles.axaml"/>
+    </UserControl.Styles>
+    
+    <Border Classes="MainContainer" Classes.Dark="{Binding DarkMode}">
+
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="60" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Classes="Header" Text="УЧЕБНИ ПРОГРАМИ" />
+
+        <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
+                  SelectedIndex="0" Items="{Binding Timetables}" SelectedItem="{Binding SelectedTimetable}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DisplayName}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Border Grid.Row="3" Grid.Column="1" Classes="MainContent">
+            <DataGrid Items="{Binding Timetable}" IsReadOnly="True" CanUserSortColumns="False"
+                      Classes="MainData" RowHeight="100">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Час" Width="60" Binding="{Binding Hour}" />
+                    <DataGridTemplateColumn Header="Понеделник" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Monday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Вторник" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Tuesday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Сряда" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Wednesday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Четвъртък" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Thursday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Петък" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Friday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20"
+                FontWeight="Bold" Command="{Binding GenerateTimetableCommand}" IsEnabled="True">
+            <TextBlock Text="Генериране на учебна програма"/>
+        </Button>
+    </Grid>
+    </Border>
+</UserControl>

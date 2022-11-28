@@ -1,0 +1,103 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
+             x:Class="ASLET.Views.HoursDialogView"
+             FontWeight="Bold"
+             FontSize="20">
+
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/DialogWindowStyles.axaml"></StyleInclude>
+    </UserControl.Styles>
+    
+    <Grid Classes.Dark="{Binding DarkMode}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете предмет" />
+
+        <ComboBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
+                  SelectedIndex="0" Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}{1} клас">
+                                <Binding Path="Grade" />
+                                <Binding Path="Letter" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <ComboBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
+                  SelectedIndex="0" Items="{Binding Teachers}" SelectedItem="{Binding SelectedTeacher}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <ComboBox Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
+                  SelectedIndex="0" Items="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Grid Grid.Row="7" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Часове седмично" />
+            <NumericUpDown Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Width="180" Minimum="1" Maximum="12"
+                           Value="{Binding HoursAWeek}" />
+            
+            <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Лаборат." />
+            <CheckBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" IsChecked="{Binding RequireLaboratory}" />
+        </Grid>
+
+        <Grid Grid.Row="9" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddHourCommand}">
+                    <TextBlock Text="Добавяне"/> 
+            </Button>
+            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding CancelCommand}">
+                <TextBlock Text="Отказ"/> 
+
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,77 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ASLET.Views.HoursView">
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/ClassesViewStyles.axaml"/>
+    </UserControl.Styles>
+
+    <Border Classes="MainContainer" Classes.Dark="{Binding DarkMode}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="60" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Classes="Header" Text="ЧАСОВЕ" />
+
+        <Border Grid.Row="2" Grid.Column="1" Classes="MainContent">
+            <DataGrid Items="{Binding Hours}" SelectedItem="{Binding SelectedHour}" IsReadOnly="True"
+                      Classes="MainData">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Клас" Width="70" CanUserSort="True">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding StringFormat="{}{0}{1}">
+                                <Binding Path="Groups[0].Grade" />
+                                <Binding Path="Groups[0].Letter" />
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Учител" MinWidth="180" Width="*" Binding="{Binding ProfessorModel.Name}"
+                                        CanUserSort="True" />
+                    <DataGridTextColumn Header="Предмет" MinWidth="180" Width="*" Binding="{Binding CourseModel.Name}"
+                                        CanUserSort="True" />
+                    <DataGridTextColumn Header="Часове" Width="100" Binding="{Binding Duration}"
+                                        CanUserSort="True" />
+                    <DataGridTemplateColumn Header="Лаб." Width="80" CanUserSort="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox HorizontalAlignment="Center" IsEnabled="False" IsChecked="{Binding LabRequired}"></CheckBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Изтриване" Width="130" CanUserSort="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button HorizontalAlignment="Center"
+                                        Command="{Binding DataContext.DeleteHourCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding}">
+                                    <TextBlock Text="X" Foreground="Red"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" 
+                HorizontalAlignment="Center" 
+                Command="{Binding AddHourCommand}" IsEnabled="True">
+            <TextBlock>Добавяне на час</TextBlock>
+        </Button>
+    </Grid>
+        </Border>
+</UserControl>

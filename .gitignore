@@ -1,7 +1,11 @@
-# IDEs and editors
+﻿# IDEs and editors
 **/.idea/
 **/.run/
 /ASLET-console/.idea/
+/ASLET/.idea/
+/ASLET.Server/.idea/
+/ASLET.Server.Contracts/.idea/
+Folder.DotSettings
 
 #VScode
 /.vscode/
@@ -10,5 +14,15 @@
 /ASLET-console/bin/
 /ASLET-console/obj/
 
+/ASLET/bin/
+/ASLET/obj/
+/ASLET.Server/bin/
+/ASLET.Server/obj/
+/ASLET.Server.Contracts/bin/
+/ASLET.Server.Contracts/obj/
+
 #Output files
 /ASLET-console/timetable.txt
+
+#database
+**/*.db*

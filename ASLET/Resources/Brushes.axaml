@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Add Resources Here -->
+    <SolidColorBrush x:Key="RoyalBlue">#4169e1</SolidColorBrush>
+    <SolidColorBrush x:Key="Ivory">#F2F2F2</SolidColorBrush>
+    <SolidColorBrush x:Key="DataGridAlternatingRowBackground">#E6E6E6</SolidColorBrush>
+
+    <SolidColorBrush x:Key="Silk">#B3B3A5</SolidColorBrush>
+    
+    <!--Dark Mode-->
+    <SolidColorBrush x:Key="DarkGrey">#2B2B2B</SolidColorBrush>
+    <SolidColorBrush x:Key="Thunder">#454545</SolidColorBrush>
+    <SolidColorBrush x:Key="ComboBoxItemHover">#333233</SolidColorBrush>
+    <SolidColorBrush x:Key="DataGridAlternatingRowBackgroundDarkMode">#333333</SolidColorBrush>
+
+
+
+</ResourceDictionary>

@@ -1,0 +1,75 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
+             x:Class="ASLET.Views.ClassesDialogView"
+             FontWeight="Bold"
+             FontSize="20">
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml"/>
+        <StyleInclude Source="/../Styles/DialogWindowStyles.axaml"></StyleInclude>
+    </UserControl.Styles>
+
+    <Grid Classes.Dark="{Binding DarkMode}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете клас" />
+
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" MaxDropDownHeight="100" 
+                      SelectedIndex="0" Items="{Binding Grades}" SelectedItem="{Binding SelectedGrade}">
+
+            </ComboBox>
+
+            <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" MaxDropDownHeight="100"
+                      SelectedIndex="0" Items="{Binding Letters}" SelectedItem="{Binding SelectedLetter}">
+
+            </ComboBox>
+        </Grid>
+        
+        <Grid Grid.Row="4" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Хора в класа" />
+            <NumericUpDown Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Width="120" Minimum="1" Maximum="100"
+                           Value="{Binding ClassSize}" />
+        </Grid>
+
+        <Grid Grid.Row="6" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddClassCommand}">
+                <TextBlock Text="Добавяне"/> 
+            </Button>
+            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding CancelCommand}">
+                <TextBlock Text="Отказ"/> 
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>
