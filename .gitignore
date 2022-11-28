@@ -13,6 +13,7 @@ Folder.DotSettings
 #Temp files
 /ASLET-console/bin/
 /ASLET-console/obj/
+
 /ASLET/bin/
 /ASLET/obj/
 /ASLET.Server/bin/
