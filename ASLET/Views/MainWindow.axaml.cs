@@ -16,27 +16,28 @@ namespace ASLET.Views
             this.WhenActivated(d => d(TeachersViewModel.GetInstance(null).AddTeacher.RegisterHandler(AddTeacherDialogAsync)));
             this.WhenActivated(d => d(SubjectsViewModel.GetInstance(null).AddSubject.RegisterHandler(AddSubjectDialogAsync)));
             this.WhenActivated(d => d(HoursViewModel.GetInstance(null).AddHour.RegisterHandler(AddHourDialogAsync)));
+            this.WhenActivated(d => d(RoomsViewModel.GetInstance(null).AddRoom.RegisterHandler(AddRoomDialogAsync)));
         }
         
-        private async Task AddClassDialogAsync(InteractionContext<ClassesDialogViewModel, ClassModel?> interaction)
+        private async Task AddClassDialogAsync(InteractionContext<ClassesDialogViewModel, StudentsGroupModel?> interaction)
         {
             ClassesDialogWindow dialog = new ClassesDialogWindow
             {
                 DataContext = interaction.Input
             };
 
-            ClassModel? result = await dialog.ShowDialog<ClassModel?>(this);
+            StudentsGroupModel? result = await dialog.ShowDialog<StudentsGroupModel?>(this);
             interaction.SetOutput(result);
         }
         
-        private async Task AddTeacherDialogAsync(InteractionContext<TeachersDialogViewModel, TeacherModel?> interaction)
+        private async Task AddTeacherDialogAsync(InteractionContext<TeachersDialogViewModel, ProfessorModel?> interaction)
         {
             TeachersDialogWindow dialog = new TeachersDialogWindow()
             {
                 DataContext = interaction.Input
             };
 
-            TeacherModel? result = await dialog.ShowDialog<TeacherModel?>(this);
+            ProfessorModel? result = await dialog.ShowDialog<ProfessorModel?>(this);
             interaction.SetOutput(result);
         }
         
@@ -51,14 +52,25 @@ namespace ASLET.Views
             interaction.SetOutput(result);
         }
         
-        private async Task AddHourDialogAsync(InteractionContext<HoursDialogViewModel, HourModel?> interaction)
+        private async Task AddHourDialogAsync(InteractionContext<HoursDialogViewModel, SubjectClassModel?> interaction)
         {
             HoursDialogWindow dialog = new HoursDialogWindow()
             {
                 DataContext = interaction.Input
             };
 
-            HourModel? result = await dialog.ShowDialog<HourModel?>(this);
+            SubjectClassModel? result = await dialog.ShowDialog<SubjectClassModel?>(this);
+            interaction.SetOutput(result);
+        }
+        
+        private async Task AddRoomDialogAsync(InteractionContext<RoomsDialogViewModel, RoomModel?> interaction)
+        {
+            RoomsDialogWindow dialog = new RoomsDialogWindow()
+            {
+                DataContext = interaction.Input
+            };
+
+            RoomModel? result = await dialog.ShowDialog<RoomModel?>(this);
             interaction.SetOutput(result);
         }
     }

@@ -47,5 +47,8 @@
     <AvaloniaXaml Update="Views\TeachersDialogView.axaml">
       <DependentUpon>TeachersDialogWindow.axaml</DependentUpon>
     </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\RoomsDialogView.axaml">
+      <DependentUpon>RoomsDialogWindow.axaml</DependentUpon>
+    </AvaloniaXaml>
   </ItemGroup>
 </Project>

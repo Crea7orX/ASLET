@@ -37,6 +37,13 @@ public class ASLETViewLocator : IViewLocator
                 HoursViewModel context => HoursView.GetInstance(context),
                 _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
             };
+        } else if (viewModel is RoomsViewModel)
+        {
+            return viewModel switch
+            {
+                RoomsViewModel context => RoomsView.GetInstance(context),
+                _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
+            };
         } else if (viewModel is TimetablesViewModel)
         {
             return viewModel switch

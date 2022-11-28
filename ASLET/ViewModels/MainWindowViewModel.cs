@@ -19,7 +19,7 @@ namespace ASLET.ViewModels
         private ReactiveCommand<Unit, IRoutableViewModel> _goToTeachers { get; }
         private ReactiveCommand<Unit, IRoutableViewModel> _goToSubjects { get; }
         private ReactiveCommand<Unit, IRoutableViewModel> _goToHours { get; }
-
+        private ReactiveCommand<Unit, IRoutableViewModel> _goToRooms { get; }
         private ReactiveCommand<Unit, IRoutableViewModel> _goToTimetables { get; }
 
         public void GoToClasses()
@@ -48,10 +48,18 @@ namespace ASLET.ViewModels
         
         public void GoToHours()
         {
-            if (_lastView == "HoursDialogViewModel") return;
+            if (_lastView == "HoursViewModel") return;
             
-            _lastView = "HoursDialogViewModel";
+            _lastView = "HoursViewModel";
             _goToHours.Execute();
+        }
+        
+        public void GoToRooms()
+        {
+            if (_lastView == "RoomsViewModel") return;
+            
+            _lastView = "RoomsViewModel";
+            _goToRooms.Execute();
         }
         
         public void GoToTimetables()
@@ -78,9 +86,10 @@ namespace ASLET.ViewModels
         {
             DarkMode = isDarkMode;
             ClassesViewModelChild!.DarkMode = DarkMode;
-            HoursViewModelChild!.DarkMode = DarkMode;
-            SubjectsViewModelChild!.DarkMode = DarkMode;
             TeachersViewModelChild!.DarkMode = DarkMode;
+            SubjectsViewModelChild!.DarkMode = DarkMode;
+            HoursViewModelChild!.DarkMode = DarkMode;
+            RoomsViewModelChild!.DarkMode = DarkMode;
             TimetablesViewModelChild!.DarkMode = DarkMode;
         }
         
@@ -104,6 +113,9 @@ namespace ASLET.ViewModels
             _goToHours = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(HoursViewModel.GetInstance(this))
             );
+            _goToRooms = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(RoomsViewModel.GetInstance(this))
+            );
             _goToTimetables = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(TimetablesViewModel.GetInstance(this))
             );
@@ -111,49 +123,50 @@ namespace ASLET.ViewModels
             GoToClasses();
 
 
-            ClassModel class1 = new ClassModel(1, 'А');
-            ClassModel class2 = new ClassModel(2, 'А');
-            ClassModel class3 = new ClassModel(1, 'Б');
-            TimetableService.AddClass(class1);
-            TimetableService.AddClass(class2);
-            TimetableService.AddClass(class3);
-
-            TeacherModel teacher1 = new TeacherModel("Учител 1");
-            TeacherModel teacher2 = new TeacherModel("Учител 2");
-            TimetableService.AddTeacher(teacher1);
-            TimetableService.AddTeacher(teacher2);
-
-            SubjectModel subject1 = new SubjectModel("Предмет 1");
-            SubjectModel subject2 = new SubjectModel("Предмет 2");
-            TimetableService.AddSubject(subject1);
-            TimetableService.AddSubject(subject2);
-
-            HourModel hour1 = new HourModel(class1.ClassId, class1.Grade, class1.Letter, teacher1.TeacherId,
-                teacher1.Name, subject1.SubjectId, subject1.Name, 2);
-            HourModel hour2 = new HourModel(class1.ClassId, class1.Grade, class1.Letter, teacher2.TeacherId,
-                teacher2.Name, subject2.SubjectId, subject2.Name, 4);
-            HourModel hour3 = new HourModel(class2.ClassId, class2.Grade, class2.Letter, teacher1.TeacherId,
-                teacher1.Name, subject1.SubjectId, subject1.Name, 2);
-            HourModel hour4 = new HourModel(class2.ClassId, class2.Grade, class1.Letter, teacher2.TeacherId,
-                teacher2.Name, subject2.SubjectId, subject2.Name, 4);
-            HourModel hour5 = new HourModel(class3.ClassId, class3.Grade, class3.Letter, teacher1.TeacherId,
-                teacher1.Name, subject2.SubjectId, subject2.Name, 5);
-            HourModel hour6 = new HourModel(class1.ClassId, class1.Grade, class1.Letter, teacher2.TeacherId,
-                teacher2.Name, subject2.SubjectId, subject2.Name, 5);
-            TimetableService.AddHour(hour1);
-            TimetableService.AddHour(hour2);
-            TimetableService.AddHour(hour3);
-            TimetableService.AddHour(hour4);
-            TimetableService.AddHour(hour5);
-            TimetableService.AddHour(hour6);
+            // ClassModel class1 = new ClassModel(1, 'А');
+            // ClassModel class2 = new ClassModel(2, 'А');
+            // ClassModel class3 = new ClassModel(1, 'Б');
+            // TimetableService.AddClass(class1);
+            // TimetableService.AddClass(class2);
+            // TimetableService.AddClass(class3);
+            //
+            // TeacherModel teacher1 = new TeacherModel("Учител 1");
+            // TeacherModel teacher2 = new TeacherModel("Учител 2");
+            // TimetableService.AddTeacher(teacher1);
+            // TimetableService.AddTeacher(teacher2);
+            //
+            // SubjectModel subject1 = new SubjectModel("Предмет 1");
+            // SubjectModel subject2 = new SubjectModel("Предмет 2");
+            // TimetableService.AddSubject(subject1);
+            // TimetableService.AddSubject(subject2);
+            //
+            // HourModel hour1 = new HourModel(class1.ClassId, class1.Grade, class1.Letter, teacher1.TeacherId,
+            //     teacher1.Name, subject1.SubjectId, subject1.Name, 2);
+            // HourModel hour2 = new HourModel(class1.ClassId, class1.Grade, class1.Letter, teacher2.TeacherId,
+            //     teacher2.Name, subject2.SubjectId, subject2.Name, 4);
+            // HourModel hour3 = new HourModel(class2.ClassId, class2.Grade, class2.Letter, teacher1.TeacherId,
+            //     teacher1.Name, subject1.SubjectId, subject1.Name, 2);
+            // HourModel hour4 = new HourModel(class2.ClassId, class2.Grade, class1.Letter, teacher2.TeacherId,
+            //     teacher2.Name, subject2.SubjectId, subject2.Name, 4);
+            // HourModel hour5 = new HourModel(class3.ClassId, class3.Grade, class3.Letter, teacher1.TeacherId,
+            //     teacher1.Name, subject2.SubjectId, subject2.Name, 5);
+            // HourModel hour6 = new HourModel(class1.ClassId, class1.Grade, class1.Letter, teacher2.TeacherId,
+            //     teacher2.Name, subject2.SubjectId, subject2.Name, 5);
+            // TimetableService.AddHour(hour1);
+            // TimetableService.AddHour(hour2);
+            // TimetableService.AddHour(hour3);
+            // TimetableService.AddHour(hour4);
+            // TimetableService.AddHour(hour5);
+            // TimetableService.AddHour(hour6);
         }
 
         #region Parent-child relations
 
         private ClassesViewModel? _classesViewModelChild;
-        private HoursViewModel? _hoursViewModelChild;
-        private SubjectsViewModel? _subjectsViewModelChild;
         private TeachersViewModel? _teachersViewModelChild;
+        private SubjectsViewModel? _subjectsViewModelChild;
+        private HoursViewModel? _hoursViewModelChild;
+        private RoomsViewModel? _roomsViewModelChild;
         private TimetablesViewModel? _timetablesViewModelChild;
 
         
@@ -161,18 +174,20 @@ namespace ASLET.ViewModels
         {
             MenuViewModel.SetParent(this);
             ClassesViewModel.SetParent(this);
-            HoursViewModel.SetParent(this);
-            SubjectsViewModel.SetParent(this);
             TeachersViewModel.SetParent(this);
+            SubjectsViewModel.SetParent(this);
+            HoursViewModel.SetParent(this);
+            RoomsViewModel.SetParent(this);
             TimetablesViewModel.SetParent(this);
         }
 
         private void SetChildren()
         {
             ClassesViewModelChild = ClassesViewModel.GetInstance(this);
-            HoursViewModelChild = HoursViewModel.GetInstance(this);
-            SubjectsViewModelChild = SubjectsViewModel.GetInstance(this);
             TeachersViewModelChild = TeachersViewModel.GetInstance(this);
+            SubjectsViewModelChild = SubjectsViewModel.GetInstance(this);
+            HoursViewModelChild = HoursViewModel.GetInstance(this);
+            RoomsViewModelChild = RoomsViewModel.GetInstance(this);
             TimetablesViewModelChild = TimetablesViewModel.GetInstance(this);
         }
 
@@ -182,10 +197,10 @@ namespace ASLET.ViewModels
             set => this.RaiseAndSetIfChanged(ref _classesViewModelChild, value);
         } 
         
-        public HoursViewModel? HoursViewModelChild
+        public TeachersViewModel? TeachersViewModelChild
         {
-            get => _hoursViewModelChild;
-            set => this.RaiseAndSetIfChanged(ref _hoursViewModelChild, value);
+            get => _teachersViewModelChild;
+            set => this.RaiseAndSetIfChanged(ref _teachersViewModelChild, value);
         }
 
         public SubjectsViewModel? SubjectsViewModelChild
@@ -194,12 +209,18 @@ namespace ASLET.ViewModels
             set => this.RaiseAndSetIfChanged(ref _subjectsViewModelChild, value);
         }
         
-        public TeachersViewModel? TeachersViewModelChild
+        public HoursViewModel? HoursViewModelChild
         {
-            get => _teachersViewModelChild;
-            set => this.RaiseAndSetIfChanged(ref _teachersViewModelChild, value);
+            get => _hoursViewModelChild;
+            set => this.RaiseAndSetIfChanged(ref _hoursViewModelChild, value);
         }
         
+        public RoomsViewModel? RoomsViewModelChild
+        {
+            get => _roomsViewModelChild;
+            set => this.RaiseAndSetIfChanged(ref _roomsViewModelChild, value);
+        }
+
         public TimetablesViewModel? TimetablesViewModelChild
         {
             get => _timetablesViewModelChild;

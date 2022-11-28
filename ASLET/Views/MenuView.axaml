@@ -54,6 +54,12 @@
             </Border>
             
             <Border>
+                <Button Classes="MenuButton" Command="{Binding GoToRooms}">
+                    <TextBlock>Стаи</TextBlock>
+                </Button>
+            </Border>
+            
+            <Border>
                 <Button Classes="MenuButton" Command="{Binding GoToTimetables}">
                     <TextBlock>Учебни програми</TextBlock>
                 </Button>
