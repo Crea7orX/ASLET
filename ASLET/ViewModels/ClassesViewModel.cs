@@ -36,19 +36,19 @@ public class ClassesViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand AddClassCommand { get; }
 
-    public Interaction<ClassesDialogViewModel, ClassModel?> AddClass { get; }
+    public Interaction<ClassesDialogViewModel, StudentsGroupModel?> AddClass { get; }
 
-    private ClassModel _selectedClass;
+    private StudentsGroupModel _selectedClass;
 
-    public ClassModel SelectedClass
+    public StudentsGroupModel SelectedClass
     {
         get => _selectedClass;
         private set => this.RaiseAndSetIfChanged(ref _selectedClass, value);
     }
 
-    private ObservableCollection<ClassModel> _classes = new();
+    private ObservableCollection<StudentsGroupModel> _classes = new();
 
-    public ObservableCollection<ClassModel> Classes
+    public ObservableCollection<StudentsGroupModel> Classes
     {
         get => _classes;
         private set => this.RaiseAndSetIfChanged(ref _classes, value);
@@ -79,25 +79,26 @@ public class ClassesViewModel : ViewModelBase, IRoutableViewModel
     {
         HostScreen = hostScreen;
 
-        AddClass = new Interaction<ClassesDialogViewModel, ClassModel?>();
+        AddClass = new Interaction<ClassesDialogViewModel, StudentsGroupModel?>();
         AddClassCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            ClassModel? result = await AddClass.Handle(new ClassesDialogViewModel(DarkMode));
+            StudentsGroupModel? result = await AddClass.Handle(new ClassesDialogViewModel(DarkMode));
 
             if (result != null)
             {
-                TimetableService.AddClass(result);
+                ConfigurationService.Instance.AddGroup(result);
             }
         });
 
-        DeleteClassCommand = ReactiveCommand.CreateFromTask((ClassModel selectedClass) =>
+        DeleteClassCommand = ReactiveCommand.CreateFromTask((StudentsGroupModel selectedClass) =>
         {
-            TimetableService.RemoveClass(selectedClass);
+            ConfigurationService.Instance.RemoveGroup(selectedClass);
+            // TimetableService.RemoveClass(selectedClass);
             return Task.CompletedTask;
         });
     }
 
-    public void UpdateClasses(ref ObservableCollection<ClassModel> classes)
+    public void UpdateClasses(ref ObservableCollection<StudentsGroupModel> classes)
     {
         Classes = classes;
     }

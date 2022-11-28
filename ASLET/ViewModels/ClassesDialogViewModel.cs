@@ -12,8 +12,8 @@ namespace ASLET.ViewModels;
 public class ClassesDialogViewModel : ViewModelBase
 {
     private readonly string _alphabet = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦШЩЪЬЮЯ";
-    public ReactiveCommand<Unit, ClassModel> AddClassCommand { get; }
-    public ReactiveCommand<Unit, ClassModel?> CancelCommand { get; }
+    public ReactiveCommand<Unit, StudentsGroupModel> AddClassCommand { get; }
+    public ReactiveCommand<Unit, StudentsGroupModel?> CancelCommand { get; }
 
     public ObservableCollection<byte> Grades { get; } = new();
     public ObservableCollection<char> Letters { get; } = new();
@@ -32,6 +32,14 @@ public class ClassesDialogViewModel : ViewModelBase
         private set => this.RaiseAndSetIfChanged(ref _selectedLetter, value);
     }
     
+    private int _classSize;
+
+    public int ClassSize
+    {
+        get => _classSize;
+        private set => this.RaiseAndSetIfChanged(ref _classSize, value);
+    }
+
     #region DarkMode
 
     private bool _darkMode;
@@ -45,14 +53,16 @@ public class ClassesDialogViewModel : ViewModelBase
     public ClassesDialogViewModel(bool darkMode)
     {
         // TODO CHECKERS FOR VALID INPUT
-        AddClassCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new ClassModel(_selectedGrade, _selectedLetter)));
+        AddClassCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new StudentsGroupModel(_selectedGrade, _selectedLetter, _classSize)));
 
-        CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<ClassModel?>(null));
+        CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<StudentsGroupModel?>(null));
 
         DarkMode = darkMode;
 
         FillGrades();
         FillLetters();
+
+        ClassSize = 26;
     }
 
     private void FillGrades()

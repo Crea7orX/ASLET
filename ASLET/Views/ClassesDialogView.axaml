@@ -15,19 +15,20 @@
     <Grid Classes.Dark="{Binding DarkMode}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
-            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете клас" />
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете клас" />
 
-        <Grid Grid.Row="3" Grid.Column="0">
+        <Grid Grid.Row="2" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -43,8 +44,19 @@
 
             </ComboBox>
         </Grid>
-
+        
         <Grid Grid.Row="4" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Хора в класа" />
+            <NumericUpDown Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Width="120" Minimum="1" Maximum="100"
+                           Value="{Binding ClassSize}" />
+        </Grid>
+
+        <Grid Grid.Row="6" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />

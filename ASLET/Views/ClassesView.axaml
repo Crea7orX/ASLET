@@ -35,6 +35,8 @@
                                         CanUserSort="True" />
                     <DataGridTextColumn Header="Паралелка" MinWidth="130" Width="*" Binding="{Binding Letter}"
                                         CanUserSort="False" />
+                    <DataGridTextColumn Header="Души" Width="80" Binding="{Binding NumberOfStudents}"
+                                        CanUserSort="False" />
                     <DataGridTemplateColumn Header="Изтриване" Width="130" CanUserSort="False">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
