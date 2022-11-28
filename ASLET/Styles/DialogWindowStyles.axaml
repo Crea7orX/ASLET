@@ -11,6 +11,10 @@
         <Setter Property="Background" Value="{DynamicResource DarkGrey}"/>
     </Style>
     
+    <Style Selector="Grid.Dark > TextBox">
+        <Setter Property="Background" Value="{DynamicResource Thunder}"/>
+    </Style>
+    
     <Style Selector="Grid.Dark > ComboBox">
         <Setter Property="Background" Value="{DynamicResource Thunder}"/>
     </Style>

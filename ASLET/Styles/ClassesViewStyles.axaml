@@ -27,7 +27,7 @@
     <Style Selector="DataGrid.MainData">
         <!-- <Setter Property="Background" Value="{DynamicResource Ivory}" /> -->
         <Setter Property="Margin" Value="5"/>
-        <Setter Property="AlternatingRowBackground" Value="Transparent" />
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource DataGridAlternatingRowBackground}" /> 
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="GridLinesVisibility" Value="Vertical" />
         <Setter Property="HorizontalGridLinesBrush" Value="#202228" />
@@ -56,9 +56,10 @@
         <Setter Property="BorderBrush" Value="{DynamicResource Thunder}"/>
     </Style>
     
-    <Style Selector="Border.MainContainer.Dark > Grid > Border > DataGrid.custom">
-        <!-- <Setter Property="Background" Value="{DynamicResource DarkGrey}" /> -->
+    <Style Selector="Border.MainContainer.Dark > Grid > Border > DataGrid">
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource DataGridAlternatingRowBackgroundDarkMode}" />
     </Style>
+    
     <Style Selector="Border.MainContainer.Dark > Grid > ComboBox">
         <Setter Property="Background" Value="{DynamicResource Thunder}"/>
     </Style>

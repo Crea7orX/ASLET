@@ -29,8 +29,7 @@
                    Classes="Header" Text="КЛАСОВЕ"/>
 
         <Border Grid.Row="2" Grid.Column="1" Classes="MainContent">
-            <DataGrid Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}" IsReadOnly="True"
-                      Classes="MainData">
+            <DataGrid Classes="MainData" Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}" IsReadOnly="True" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Клас" MinWidth="80" Width="*" Binding="{Binding Grade}"
                                         CanUserSort="True" />
