@@ -13,7 +13,7 @@ public static class TimetableService
     private static ObservableCollection<TeacherModel> _teacherModels = new();
     private static ObservableCollection<SubjectModel> _subjectModels = new();
     private static ObservableCollection<HourModel> _hourModels = new();
-
+    
     public static void AddClass(ClassModel classToAdd)
     {
         GlobalSpace.ClassController.Add(classToAdd.ClassId, classToAdd.ToString());
@@ -21,7 +21,7 @@ public static class TimetableService
         ClassesViewModel.GetInstance(null).UpdateClasses(ref _classModels);
         TimetablesViewModel.GetInstance(null).FillClasses();
     }
-
+    
     public static void RemoveClass(ClassModel classToRemove)
     {
         GlobalSpace.ClassController.Remove(classToRemove.ClassId);
@@ -30,14 +30,14 @@ public static class TimetableService
         CheckAndUpdateHours(classToRemove);
         TimetablesViewModel.GetInstance(null).FillClasses();
     }
-
+    
     public static void AddTeacher(TeacherModel teacherToAdd)
     {
         GlobalSpace.TeacherController.Add(teacherToAdd.TeacherId, teacherToAdd.ToString());
         _teacherModels.Add(teacherToAdd);
         TeachersViewModel.GetInstance(null).UpdateTeachers(ref _teacherModels);
     }
-
+    
     public static void RemoveTeacher(TeacherModel teacherToRemove)
     {
         GlobalSpace.TeacherController.Remove(teacherToRemove.TeacherId);
@@ -45,14 +45,14 @@ public static class TimetableService
         TeachersViewModel.GetInstance(null).UpdateTeachers(ref _teacherModels);
         CheckAndUpdateHours(teacherToRemove);
     }
-
+    
     public static void AddSubject(SubjectModel subjectToAdd)
     {
         GlobalSpace.SubjectController.Add(subjectToAdd.SubjectId, subjectToAdd.ToString());
         _subjectModels.Add(subjectToAdd);
         SubjectsViewModel.GetInstance(null).UpdateSubjects(ref _subjectModels);
     }
-
+    
     public static void RemoveSubject(SubjectModel subjectToRemove)
     {
         GlobalSpace.SubjectController.Remove(subjectToRemove.SubjectId);
@@ -60,41 +60,41 @@ public static class TimetableService
         SubjectsViewModel.GetInstance(null).UpdateSubjects(ref _subjectModels);
         CheckAndUpdateHours(subjectToRemove);
     }
-
+    
     public static void AddHour(HourModel hourToAdd)
     {
         GlobalSpace.ClassController.AddSubject(hourToAdd.ClassId, hourToAdd.GetSubject(), hourToAdd.HoursAWeek);
         _hourModels.Add(hourToAdd);
         HoursViewModel.GetInstance(null).UpdateHours(ref _hourModels);
     }
-
+    
     public static void RemoveHour(HourModel hourToRemove)
     {
         GlobalSpace.ClassController.RemoveSubject(hourToRemove.ClassId, hourToRemove.GetSubject(), hourToRemove.HoursAWeek);
         _hourModels.Remove(hourToRemove);
         HoursViewModel.GetInstance(null).UpdateHours(ref _hourModels);
     }
-
+    
     public static void GenerateTimetable()
     {
         GlobalSpace.MakePlan();
     }
-
+    
     public static ObservableCollection<ClassModel> GetClasses()
     {
         return _classModels;
     }
-
+    
     public static ObservableCollection<TeacherModel> GetTeachers()
     {
         return _teacherModels;
     }
-
+    
     public static ObservableCollection<SubjectModel> GetSubjects()
     {
         return _subjectModels;
     }
-
+    
     private static void CheckAndUpdateHours<TModel>(TModel removedModel)
     {
         ObservableCollection<HourModel> hoursToRemove = new ObservableCollection<HourModel>();
@@ -106,6 +106,10 @@ public static class TimetableService
             }
         }
         _hourModels.RemoveMany(hoursToRemove);
+        foreach (HourModel currentHour in hoursToRemove)
+        {
+            GlobalSpace.ClassController.RemoveSubject(currentHour.ClassId, currentHour.GetSubject(), currentHour.HoursAWeek);
+        }
         HoursViewModel.GetInstance(null).UpdateHours(ref _hourModels);
     }
 }

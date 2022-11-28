@@ -142,7 +142,7 @@ public class Controller
                     if (subject == "неизвестно - неизвестно") subject = "";
                     hours[j] = subject;
                 }
-                data.Add(new TimetableModel(k.ToString(), hours[0], hours[1], hours[2], hours[3], hours[4]));
+                // data.Add(new TimetableModel(k.ToString(), hours[0], hours[1], hours[2], hours[3], hours[4]));
             }
 
         }
