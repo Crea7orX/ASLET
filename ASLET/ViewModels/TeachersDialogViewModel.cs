@@ -7,8 +7,8 @@ namespace ASLET.ViewModels;
 
 public class TeachersDialogViewModel : ViewModelBase
 {
-    public ReactiveCommand<Unit, TeacherModel> AddTeacherCommand { get; }
-    public ReactiveCommand<Unit, TeacherModel?> CancelCommand { get; }
+    public ReactiveCommand<Unit, ProfessorModel> AddTeacherCommand { get; }
+    public ReactiveCommand<Unit, ProfessorModel?> CancelCommand { get; }
 
     private string _teacherName;
 
@@ -32,9 +32,9 @@ public class TeachersDialogViewModel : ViewModelBase
     public TeachersDialogViewModel(bool darkMode)
     {
         // TODO CHECKERS FOR VALID INPUT
-        AddTeacherCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new TeacherModel(_teacherName)));
+        AddTeacherCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new ProfessorModel(_teacherName)));
 
-        CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<TeacherModel?>(null));
+        CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<ProfessorModel?>(null));
 
         DarkMode = darkMode; 
         
