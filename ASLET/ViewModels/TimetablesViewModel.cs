@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using ASLET.Models;
 using ASLET.Services;
-using ASLET.Services.Handlers;
-using ASLET.Services.Objects;
+using ASLET.Services.GeneticAlgorithm;
+using Avalonia;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -38,17 +39,17 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
 
     private bool _hasGeneratedTimetable = false;
 
-    public ObservableCollection<ClassModel> Classes { get; } = new();
+    public ObservableCollection<TimetableSelectorModel> Timetables { get; } = new();
 
-    private ClassModel _selectedClass;
+    private TimetableSelectorModel _selectedTimetable;
 
-    public ClassModel SelectedClass
+    public TimetableSelectorModel SelectedTimetable
     {
-        get => _selectedClass;
+        get => _selectedTimetable;
         private set
         {
-            this.RaiseAndSetIfChanged(ref _selectedClass, value);
-            UpdateTimetable();
+            this.RaiseAndSetIfChanged(ref _selectedTimetable, value);
+            UpdateTimetable(_selectedTimetable);
         }
     }
 
@@ -60,26 +61,89 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         private set => this.RaiseAndSetIfChanged(ref _timetable, value);
     }
 
-    public void FillClasses()
+    private Dictionary<int, List<TimetableSlotModel>> _roomsTimetable = new();
+    
+    private void GenerateTimetable()
     {
-        Classes.Clear();
-        foreach (ClassModel @class in TimetableService.GetClasses())
+        Timetables.Clear();
+        Timetable.Clear();
+        _roomsTimetable.Clear();
+        
+        Hgasso<Schedule> algorithm = new Hgasso<Schedule>(new Schedule(ConfigurationService.Instance));
+        algorithm.Run();
+        List<TimetableSlotModel> result = TimetableVisualizationService.GetResult(algorithm.Result);
+
+        ObservableCollection<StudentsGroupModel> classes = ConfigurationService.Instance.GetGroups();
+        ObservableCollection<ProfessorModel> teachers = ConfigurationService.Instance.GetTeachers();
+        ObservableCollection<RoomModel> rooms = ConfigurationService.Instance.GetRooms();
+        
+        foreach (StudentsGroupModel @class in classes)
         {
-            Classes.Add(@class);
+            Timetables.Add(new TimetableSelectorModel(@class, @class.Name + " - " + @class.NumberOfStudents + " (" + @class.Id + ")"));
+        }
+
+        foreach (ProfessorModel teacher in teachers)
+        {
+            Timetables.Add(new TimetableSelectorModel(teacher, teacher.Name + " (" + teacher.Id + ")"));
+        }
+        
+        foreach (RoomModel room in rooms)
+        {
+            _roomsTimetable.Add(room.Id, result.Where(slot => slot.Room.Id == room.Id).ToList());
+            Timetables.Add(new TimetableSelectorModel(room, room.Name + " - " + room.NumberOfSeats + " (" + room.Id + ")"));
+        }
+
+        SelectedTimetable = Timetables[0];
+    }
+
+    private void UpdateTimetable(TimetableSelectorModel selector)
+    {
+        Timetable.Clear();
+        Dictionary<int, Dictionary<int, string>> hoursDayLink = new Dictionary<int, Dictionary<int, string>>();
+        for (int i = 1; i <= Constants.DAY_HOURS; i++)
+        {
+            hoursDayLink[i] = new Dictionary<int, string>();
+            for (int j = 1; j <= 5; j++)
+            {
+                hoursDayLink[i].Add(j, "");
+            }
+        }
+        if (selector.Model is StudentsGroupModel)
+        {
+            StudentsGroupModel selectedClass = (StudentsGroupModel)selector.Model;
+            foreach (List<TimetableSlotModel> slotModels in _roomsTimetable.Values)
+            {
+                foreach (TimetableSlotModel timetableSlotModel in slotModels.Where(slot => Equals(slot.Subject.Groups[0], selectedClass)))
+                {
+                    hoursDayLink[timetableSlotModel.Hour][timetableSlotModel.Day] = timetableSlotModel.ClassToString();
+                }
+            }
+        } else if (selector.Model is ProfessorModel)
+        {
+            ProfessorModel selectedTeacher = (ProfessorModel)selector.Model;
+            foreach (List<TimetableSlotModel> slotModels in _roomsTimetable.Values)
+            {
+                foreach (TimetableSlotModel timetableSlotModel in slotModels.Where(slot => Equals(slot.Teacher, selectedTeacher)))
+                {
+                    hoursDayLink[timetableSlotModel.Hour][timetableSlotModel.Day] = timetableSlotModel.TeacherToString();
+                }
+            }
+        } else if (selector.Model is RoomModel)
+        {
+            RoomModel selectedRoom = (RoomModel)selector.Model;
+            foreach (TimetableSlotModel timetableSlotModel in _roomsTimetable[selectedRoom.Id])
+            {
+                hoursDayLink[timetableSlotModel.Hour][timetableSlotModel.Day] = timetableSlotModel.RoomToString();
+            }
+        }
+
+        foreach (KeyValuePair<int,Dictionary<int,string>> keyValuePair in hoursDayLink)
+        {
+            Timetable.Add(new TimetableModel(keyValuePair.Key.ToString(), keyValuePair.Value[1],
+                keyValuePair.Value[2], keyValuePair.Value[3], keyValuePair.Value[4], keyValuePair.Value[5]));
         }
     }
 
-    private void UpdateTimetable()
-    {
-        if (!_hasGeneratedTimetable) return;
-        Timetable.Clear();
-        
-        foreach (TimetableModel timetableModel in ScheduleFabric.algControll.GetData(_selectedClass.ClassId))
-        {
-            Timetable.Add(timetableModel);
-        }
-    }
-    
     #endregion
     
     #region Parent-child relations
@@ -105,13 +169,10 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         
         GenerateTimetableCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            TimetableService.GenerateTimetable();
-            _hasGeneratedTimetable = true;
-            UpdateTimetable();
+            GenerateTimetable();
         });
         
-        FillClasses();
-        if (Classes.Count > 0) SelectedClass = Classes[0];
+        if (Timetables.Count > 0) SelectedTimetable = Timetables[0];
     }
     
 }

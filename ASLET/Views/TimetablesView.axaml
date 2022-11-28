@@ -27,34 +27,57 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Classes="Header"  Text="УЧЕБНИ ПРОГРАМИ" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Classes="Header" Text="УЧЕБНИ ПРОГРАМИ" />
 
         <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
-                  SelectedIndex="0" Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}">
+                  SelectedIndex="0" Items="{Binding Timetables}" SelectedItem="{Binding SelectedTimetable}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0}{1} клас">
-                                <Binding Path="Grade" />
-                                <Binding Path="Letter" />
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
+                    <TextBlock Text="{Binding DisplayName}"></TextBlock>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
 
         <Border Grid.Row="3" Grid.Column="1" Classes="MainContent">
             <DataGrid Items="{Binding Timetable}" IsReadOnly="True" CanUserSortColumns="False"
-                      Classes="custom">
+                      Classes="MainData" RowHeight="100">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Час" Width="60" Binding="{Binding Hour}" />
-                    <DataGridTextColumn Header="Понеделник" MinWidth="130" Width="*" Binding="{Binding Monday}" />
-                    <DataGridTextColumn Header="Вторник" MinWidth="130" Width="*" Binding="{Binding Tuesday}" />
-                    <DataGridTextColumn Header="Сряда" MinWidth="130" Width="*" Binding="{Binding Wednesday}" />
-                    <DataGridTextColumn Header="Четвъртък" MinWidth="130" Width="*" Binding="{Binding Thursday}" />
-                    <DataGridTextColumn Header="Петък" MinWidth="130" Width="*" Binding="{Binding Friday}" />
+                    <DataGridTemplateColumn Header="Понеделник" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Monday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Вторник" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Tuesday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Сряда" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Wednesday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Четвъртък" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Thursday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Петък" MinWidth="130" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Friday}"></TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
