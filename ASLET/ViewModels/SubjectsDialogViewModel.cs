@@ -17,13 +17,25 @@ public class SubjectsDialogViewModel : ViewModelBase
         get => _subjectName;
         set => this.RaiseAndSetIfChanged(ref _subjectName, value);
     }
+    
+    #region DarkMode
 
-    public SubjectsDialogViewModel()
+    private bool _darkMode;
+    public bool DarkMode
+    {
+        get => _darkMode;
+        set => this.RaiseAndSetIfChanged(ref _darkMode, value);
+    }
+    #endregion
+
+    public SubjectsDialogViewModel(bool darkMode)
     {
         // TODO CHECKERS FOR VALID INPUT
         AddSubjectCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new SubjectModel(_subjectName)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<SubjectModel?>(null));
+        
+        DarkMode = darkMode;
         
         SubjectName = "";
     }

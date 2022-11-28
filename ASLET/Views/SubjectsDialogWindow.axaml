@@ -11,7 +11,7 @@
         Height="300" Width="300"
         TransparencyLevelHint="AcrylicBlur">
     
-        <Panel Margin="10">
+        <Panel>
             <local:SubjectsDialogView />
         </Panel>
 </Window>
