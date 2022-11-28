@@ -4,31 +4,30 @@ using System.Reactive;
 using System.Threading.Tasks;
 using ASLET.Models;
 using ASLET.Services;
-using ASLET.Services.Handlers;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
 
 public class HoursDialogViewModel : ViewModelBase
 {
-    public ReactiveCommand<Unit, HourModel> AddHourCommand { get; }
-    public ReactiveCommand<Unit, HourModel?> CancelCommand { get; }
+    public ReactiveCommand<Unit, SubjectClassModel> AddHourCommand { get; }
+    public ReactiveCommand<Unit, SubjectClassModel?> CancelCommand { get; }
 
-    public ObservableCollection<ClassModel> Classes { get; } = new();
-    public ObservableCollection<TeacherModel> Teachers { get; } = new();
+    public ObservableCollection<StudentsGroupModel> Classes { get; } = new();
+    public ObservableCollection<ProfessorModel> Teachers { get; } = new();
     public ObservableCollection<SubjectModel> Subjects { get; } = new();
 
-    private ClassModel _selectedClass;
+    private StudentsGroupModel _selectedClass;
 
-    public ClassModel SelectedClass
+    public StudentsGroupModel SelectedClass
     {
         get => _selectedClass;
         private set => this.RaiseAndSetIfChanged(ref _selectedClass, value);
     }
 
-    private TeacherModel _selectedTeacher;
+    private ProfessorModel _selectedTeacher;
 
-    public TeacherModel SelectedTeacher
+    public ProfessorModel SelectedTeacher
     {
         get => _selectedTeacher;
         private set => this.RaiseAndSetIfChanged(ref _selectedTeacher, value);
@@ -49,75 +48,71 @@ public class HoursDialogViewModel : ViewModelBase
         get => _hoursAWeek;
         private set => this.RaiseAndSetIfChanged(ref _hoursAWeek, value);
     }
+    
+    private bool _requireLaboratory;
+
+    public bool RequireLaboratory
+    {
+        get => _requireLaboratory;
+        private set => this.RaiseAndSetIfChanged(ref _requireLaboratory, value);
+    }
 
     #region DarkMode
 
     private bool _darkMode;
+
     public bool DarkMode
     {
         get => _darkMode;
         set => this.RaiseAndSetIfChanged(ref _darkMode, value);
     }
+
     #endregion
     
     public HoursDialogViewModel(bool darkMode)
     {
         // TODO CHECKERS FOR VALID INPUT
-        AddHourCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new HourModel(_selectedClass.ClassId, _selectedClass.Grade, _selectedClass.Letter, _selectedTeacher.TeacherId, _selectedTeacher.Name, _selectedSubject.SubjectId, _selectedSubject.Name, _hoursAWeek)));
+        AddHourCommand = ReactiveCommand.CreateFromTask(() =>
+            Task.FromResult(new SubjectClassModel(_selectedTeacher, _selectedSubject, _requireLaboratory, _hoursAWeek, _selectedClass)));
 
-        CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<HourModel?>(null));
+        CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<SubjectClassModel?>(null));
 
         DarkMode = darkMode;
-        
+
         FillClasses();
         FillTeachers();
         FillSubjects();
+        
         HoursAWeek = 1;
     }
 
     private void FillClasses()
     {
-        foreach (ClassModel @class in TimetableService.GetClasses())
+        foreach (StudentsGroupModel @class in ConfigurationService.Instance.GetGroups())
         {
             Classes.Add(@class);
         }
-        // foreach (string className in GlobalSpace.ClassController.Classes.Keys)
-        // {
-        //     if (className.Length == 2)
-        //     {
-        //         Classes.Add(new ClassModel(Byte.Parse(className.Substring(0, 1)), Char.Parse(className.Substring(1, 1))));
-        //     }
-        //     else if (className.Length == 3)
-        //     {
-        //         Classes.Add(new ClassModel(Byte.Parse(className.Substring(0, 2)), Char.Parse(className.Substring(2, 1))));
-        //     }
-        // }
+        
         SelectedClass = Classes[0];
     }
 
     private void FillTeachers()
     {
-        foreach (TeacherModel teacher in TimetableService.GetTeachers())
+        foreach (ProfessorModel teacher in ConfigurationService.Instance.GetTeachers())
         {
             Teachers.Add(teacher);
         }
-        // foreach (string teacherName in GlobalSpace.TeacherController.Teachers)
-        // {
-        //     Teachers.Add(new TeacherModel(teacherName));
-        // }
+        
         SelectedTeacher = Teachers[0];
     }
 
     private void FillSubjects()
     {
-        foreach (SubjectModel subject in TimetableService.GetSubjects())
+        foreach (SubjectModel subject in ConfigurationService.Instance.GetSubjects())
         {
             Subjects.Add(subject);
         }
-        // foreach (string subjectName in GlobalSpace.SubjectController.SubjectsDictionary.Keys)
-        // {
-        //     Subjects.Add(new SubjectModel(subjectName));
-        // }
+        
         SelectedSubject = Subjects[0];
     }
 }

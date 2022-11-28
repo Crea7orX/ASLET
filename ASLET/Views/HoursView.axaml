@@ -34,17 +34,24 @@
                     <DataGridTextColumn Header="Клас" Width="70" CanUserSort="True">
                         <DataGridTextColumn.Binding>
                             <MultiBinding StringFormat="{}{0}{1}">
-                                <Binding Path="Grade" />
-                                <Binding Path="Letter" />
+                                <Binding Path="Groups[0].Grade" />
+                                <Binding Path="Groups[0].Letter" />
                             </MultiBinding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Учител" MinWidth="180" Width="*" Binding="{Binding TeacherName}"
+                    <DataGridTextColumn Header="Учител" MinWidth="180" Width="*" Binding="{Binding ProfessorModel.Name}"
                                         CanUserSort="True" />
-                    <DataGridTextColumn Header="Предмет" MinWidth="180" Width="*" Binding="{Binding SubjectName}"
+                    <DataGridTextColumn Header="Предмет" MinWidth="180" Width="*" Binding="{Binding CourseModel.Name}"
                                         CanUserSort="True" />
-                    <DataGridTextColumn Header="Часове" Width="100" Binding="{Binding HoursAWeek}"
+                    <DataGridTextColumn Header="Часове" Width="100" Binding="{Binding Duration}"
                                         CanUserSort="True" />
+                    <DataGridTemplateColumn Header="Лаб." Width="80" CanUserSort="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox HorizontalAlignment="Center" IsEnabled="False" IsChecked="{Binding LabRequired}"></CheckBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Изтриване" Width="130" CanUserSort="False">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

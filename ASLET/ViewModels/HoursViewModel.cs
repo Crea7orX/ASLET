@@ -34,19 +34,19 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand AddHourCommand { get; }
 
-    public Interaction<HoursDialogViewModel, HourModel?> AddHour { get; }
+    public Interaction<HoursDialogViewModel, SubjectClassModel?> AddHour { get; }
 
-    private HourModel _selectedHour;
+    private SubjectClassModel _selectedHour;
 
-    public HourModel SelectedHour
+    public SubjectClassModel SelectedHour
     {
         get => _selectedHour;
         private set => this.RaiseAndSetIfChanged(ref _selectedHour, value);
     }
 
-    private ObservableCollection<HourModel> _hours = new();
+    private ObservableCollection<SubjectClassModel> _hours = new();
 
-    public ObservableCollection<HourModel> Hours
+    public ObservableCollection<SubjectClassModel> Hours
     {
         get => _hours;
         private set => this.RaiseAndSetIfChanged(ref _hours, value);
@@ -77,25 +77,26 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
     {
         HostScreen = hostScreen;
         
-        AddHour = new Interaction<HoursDialogViewModel, HourModel?>();
+        AddHour = new Interaction<HoursDialogViewModel, SubjectClassModel?>();
         AddHourCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            HourModel? result = await AddHour.Handle(new HoursDialogViewModel(DarkMode));
+            SubjectClassModel? result = await AddHour.Handle(new HoursDialogViewModel(DarkMode));
 
             if (result != null)
             {
-                TimetableService.AddHour(result);
+                ConfigurationService.Instance.AddHour(result);
             }
         });
 
-        DeleteHourCommand = ReactiveCommand.CreateFromTask((HourModel selectedHour) =>
+        DeleteHourCommand = ReactiveCommand.CreateFromTask((SubjectClassModel selectedHour) =>
         {
-            TimetableService.RemoveHour(selectedHour);
+            ConfigurationService.Instance.RemoveHour(selectedHour);
+            // TimetableService.RemoveHour(selectedHour);
             return Task.CompletedTask;
         });
     }
 
-    public void UpdateHours(ref ObservableCollection<HourModel> hours)
+    public void UpdateHours(ref ObservableCollection<SubjectClassModel> hours)
     {
         Hours = hours;
     }

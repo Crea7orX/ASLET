@@ -16,14 +16,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
-            <RowDefinition Height="30" />
             <RowDefinition Height="10" />
             <RowDefinition Height="30" />
             <RowDefinition Height="10" />
             <RowDefinition Height="30" />
             <RowDefinition Height="10" />
-            <RowDefinition Height="30" />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
@@ -31,9 +29,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете предмет" />
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете предмет" />
 
-        <ComboBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
+        <ComboBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
                   SelectedIndex="0" Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -49,7 +47,7 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <ComboBox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
+        <ComboBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
                   SelectedIndex="0" Items="{Binding Teachers}" SelectedItem="{Binding SelectedTeacher}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -58,7 +56,7 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <ComboBox Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
+        <ComboBox Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
                   SelectedIndex="0" Items="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -67,11 +65,25 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Center" Text="Часове седмично" />
-        <NumericUpDown Grid.Row="9" Grid.Column="0" HorizontalAlignment="Center" Width="280" Minimum="1" Maximum="12"
-                       Value="{Binding HoursAWeek}" />
+        <Grid Grid.Row="7" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Часове седмично" />
+            <NumericUpDown Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Width="180" Minimum="1" Maximum="12"
+                           Value="{Binding HoursAWeek}" />
+            
+            <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Лаборат." />
+            <CheckBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" IsChecked="{Binding RequireLaboratory}" />
+        </Grid>
 
-        <Grid Grid.Row="11" Grid.Column="0">
+        <Grid Grid.Row="9" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
