@@ -72,7 +72,6 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
         get => _darkMode;
         set => this.RaiseAndSetIfChanged(ref _darkMode, value);
     }
-
     #endregion
     
     public SubjectsViewModel(IScreen hostScreen)
@@ -82,17 +81,17 @@ public class SubjectsViewModel : ViewModelBase, IRoutableViewModel
         AddSubject = new Interaction<SubjectsDialogViewModel, SubjectModel?>();
         AddSubjectCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            SubjectModel? result = await AddSubject.Handle(new SubjectsDialogViewModel(DarkMode));
+            SubjectModel? result = await AddSubject.Handle(new SubjectsDialogViewModel(_darkMode));
 
             if (result != null)
             {
-                TimetableService.AddSubject(result);
+                ConfigurationService.Instance.AddSubject(result);
             }
         });
 
         DeleteSubjectCommand = ReactiveCommand.CreateFromTask((SubjectModel selectedSubject) =>
         {
-            TimetableService.RemoveSubject(selectedSubject);
+            ConfigurationService.Instance.RemoveSubject(selectedSubject);
             return Task.CompletedTask;
         });
     }
