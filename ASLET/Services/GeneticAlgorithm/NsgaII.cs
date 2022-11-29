@@ -196,10 +196,10 @@ public class NsgaII<T> where T : Chromosome<T>
     }
 
     // Starts and executes algorithm
-    public virtual void Run(int maxRepeat = 9999, double minFitness = 0.999)
+    public virtual int Run(int maxGenerations = 99999999, int maxRepeat = 9999, double minFitness = 0.999)
     {
         if (_prototype == null)
-            return;
+            return -1;
 
         var population = new List<T>();
         Initialize(population);
@@ -216,6 +216,7 @@ public class NsgaII<T> where T : Chromosome<T>
             {
                 var status = string.Format("\rFitness: {0:F6}\t Generation: {1}", best.Fitness, currentGeneration);
                 Console.Write(status);
+                if (currentGeneration > maxGenerations) return 0;
 
                 // algorithm has reached criteria?
                 if (best.Fitness > minFitness)
@@ -263,6 +264,8 @@ public class NsgaII<T> where T : Chromosome<T>
 
             ++currentGeneration;
         }
+
+        return 1;
     }
 
     public override string ToString()
