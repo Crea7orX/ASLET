@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ASLET.Models;
+using ASLET.Services;
+using ASLET.Views;
+using Avalonia.Controls;
+using MessageBox.Avalonia.Enums;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -13,6 +17,14 @@ public class ClassesDialogViewModel : ViewModelBase
 {
     private readonly string _alphabet = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦШЩЪЬЮЯ";
     public ReactiveCommand<Unit, StudentsGroupModel> AddClassCommand { get; }
+    
+    private bool _addClassEnabled;
+    public bool AddClassEnabled
+    {
+        get => _addClassEnabled;
+        private set => this.RaiseAndSetIfChanged(ref _addClassEnabled, value);
+    }
+
     public ReactiveCommand<Unit, StudentsGroupModel?> CancelCommand { get; }
 
     public ObservableCollection<byte> Grades { get; } = new();
@@ -22,16 +34,24 @@ public class ClassesDialogViewModel : ViewModelBase
     public byte SelectedGrade
     {
         get => _selectedGrade;
-        private set => this.RaiseAndSetIfChanged(ref _selectedGrade, value);
+        private set
+        {
+            this.RaiseAndSetIfChanged(ref _selectedGrade, value);
+            ValidateInput();
+        }
     }
 
     private char _selectedLetter;
     public char SelectedLetter
     {
         get => _selectedLetter;
-        private set => this.RaiseAndSetIfChanged(ref _selectedLetter, value);
+        private set
+        {
+            this.RaiseAndSetIfChanged(ref _selectedLetter, value);
+            ValidateInput();
+        }
     }
-    
+
     private int _classSize;
 
     public int ClassSize
@@ -52,7 +72,6 @@ public class ClassesDialogViewModel : ViewModelBase
 
     public ClassesDialogViewModel(bool darkMode)
     {
-        // TODO CHECKERS FOR VALID INPUT
         AddClassCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new StudentsGroupModel(_selectedGrade, _selectedLetter, _classSize)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<StudentsGroupModel?>(null));
@@ -63,6 +82,12 @@ public class ClassesDialogViewModel : ViewModelBase
         FillLetters();
 
         ClassSize = 26;
+    }
+
+    private void ValidateInput()
+    {
+        if (_selectedGrade != 0 && _selectedLetter != 0) AddClassEnabled = true;
+        else AddClassEnabled = false;
     }
 
     private void FillGrades()

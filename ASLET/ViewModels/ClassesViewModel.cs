@@ -93,7 +93,6 @@ public class ClassesViewModel : ViewModelBase, IRoutableViewModel
         DeleteClassCommand = ReactiveCommand.CreateFromTask((StudentsGroupModel selectedClass) =>
         {
             ConfigurationService.Instance.RemoveGroup(selectedClass);
-            // TimetableService.RemoveClass(selectedClass);
             return Task.CompletedTask;
         });
     }
