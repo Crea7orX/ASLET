@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ASLET.Models;
 using ASLET.Services;
+using ASLET.Views;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -80,6 +81,22 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
         AddHour = new Interaction<HoursDialogViewModel, SubjectClassModel?>();
         AddHourCommand = ReactiveCommand.CreateFromTask(async () =>
         {
+            if (ConfigurationService.Instance.GetGroups().Count == 0)
+            {
+                NotificationService.ShowError(MainWindow.Instance, "Въведете поне един клас!");
+                return;
+            }
+            if (ConfigurationService.Instance.GetTeachers().Count == 0)
+            {
+                NotificationService.ShowError(MainWindow.Instance, "Въведете поне един учител!");
+                return;
+            }
+            if (ConfigurationService.Instance.GetSubjects().Count == 0)
+            {
+                NotificationService.ShowError(MainWindow.Instance, "Въведете поне един предмет!");
+                return;
+            }
+
             SubjectClassModel? result = await AddHour.Handle(new HoursDialogViewModel(DarkMode));
 
             if (result != null)
@@ -91,7 +108,6 @@ public class HoursViewModel : ViewModelBase, IRoutableViewModel
         DeleteHourCommand = ReactiveCommand.CreateFromTask((SubjectClassModel selectedHour) =>
         {
             ConfigurationService.Instance.RemoveHour(selectedHour);
-            // TimetableService.RemoveHour(selectedHour);
             return Task.CompletedTask;
         });
     }

@@ -11,6 +11,14 @@ namespace ASLET.ViewModels;
 public class HoursDialogViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, SubjectClassModel> AddHourCommand { get; }
+    
+    private bool _addHourEnabled;
+    public bool AddHourEnabled
+    {
+        get => _addHourEnabled;
+        private set => this.RaiseAndSetIfChanged(ref _addHourEnabled, value);
+    }
+    
     public ReactiveCommand<Unit, SubjectClassModel?> CancelCommand { get; }
 
     public ObservableCollection<StudentsGroupModel> Classes { get; } = new();
@@ -22,7 +30,11 @@ public class HoursDialogViewModel : ViewModelBase
     public StudentsGroupModel SelectedClass
     {
         get => _selectedClass;
-        private set => this.RaiseAndSetIfChanged(ref _selectedClass, value);
+        private set
+        {
+            this.RaiseAndSetIfChanged(ref _selectedClass, value);
+            ValidateInput();
+        }
     }
 
     private ProfessorModel _selectedTeacher;
@@ -30,7 +42,11 @@ public class HoursDialogViewModel : ViewModelBase
     public ProfessorModel SelectedTeacher
     {
         get => _selectedTeacher;
-        private set => this.RaiseAndSetIfChanged(ref _selectedTeacher, value);
+        private set
+        {
+            this.RaiseAndSetIfChanged(ref _selectedTeacher, value);
+            ValidateInput();
+        }
     }
 
     private SubjectModel _selectedSubject;
@@ -38,7 +54,11 @@ public class HoursDialogViewModel : ViewModelBase
     public SubjectModel SelectedSubject
     {
         get => _selectedSubject;
-        private set => this.RaiseAndSetIfChanged(ref _selectedSubject, value);
+        private set
+        {
+            this.RaiseAndSetIfChanged(ref _selectedSubject, value);
+            ValidateInput();
+        }
     }
 
     private byte _hoursAWeek;
@@ -71,7 +91,6 @@ public class HoursDialogViewModel : ViewModelBase
     
     public HoursDialogViewModel(bool darkMode)
     {
-        // TODO CHECKERS FOR VALID INPUT
         AddHourCommand = ReactiveCommand.CreateFromTask(() =>
             Task.FromResult(new SubjectClassModel(_selectedTeacher, _selectedSubject, _requireLaboratory, _hoursAWeek, _selectedClass)));
 
@@ -86,6 +105,12 @@ public class HoursDialogViewModel : ViewModelBase
         HoursAWeek = 1;
     }
 
+    private void ValidateInput()
+    {
+        if (_selectedClass != null && _selectedTeacher != null && _selectedSubject != null) AddHourEnabled = true;
+        else AddHourEnabled = false;
+    }
+
     private void FillClasses()
     {
         foreach (StudentsGroupModel @class in ConfigurationService.Instance.GetGroups())
@@ -93,7 +118,7 @@ public class HoursDialogViewModel : ViewModelBase
             Classes.Add(@class);
         }
         
-        SelectedClass = Classes[0];
+        if (Classes[0] != null) SelectedClass = Classes[0];
     }
 
     private void FillTeachers()
@@ -103,7 +128,7 @@ public class HoursDialogViewModel : ViewModelBase
             Teachers.Add(teacher);
         }
         
-        SelectedTeacher = Teachers[0];
+        if (Teachers[0] != null) SelectedTeacher = Teachers[0];
     }
 
     private void FillSubjects()
@@ -112,7 +137,7 @@ public class HoursDialogViewModel : ViewModelBase
         {
             Subjects.Add(subject);
         }
-        
-        SelectedSubject = Subjects[0];
+
+        if (Subjects[0] != null) SelectedSubject = Subjects[0];
     }
 }

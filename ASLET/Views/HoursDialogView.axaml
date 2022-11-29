@@ -90,7 +90,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddHourCommand}">
+                    FontWeight="Bold" FontSize="18" Width="120" Command="{Binding AddHourCommand}" IsEnabled="{Binding AddHourEnabled}">
                     <TextBlock Text="Добавяне"/> 
             </Button>
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
