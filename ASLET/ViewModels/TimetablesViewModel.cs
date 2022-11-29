@@ -6,6 +6,7 @@ using System.Windows.Input;
 using ASLET.Models;
 using ASLET.Services;
 using ASLET.Services.GeneticAlgorithm;
+using ASLET.Views;
 using Avalonia;
 using ReactiveUI;
 
@@ -37,8 +38,6 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand GenerateTimetableCommand { get; }
 
-    private bool _hasGeneratedTimetable = false;
-
     public ObservableCollection<TimetableSelectorModel> Timetables { get; } = new();
 
     private TimetableSelectorModel _selectedTimetable;
@@ -61,36 +60,53 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         private set => this.RaiseAndSetIfChanged(ref _timetable, value);
     }
 
-    private Dictionary<int, List<TimetableSlotModel>> _roomsTimetable = new();
+    private readonly Dictionary<int, List<TimetableSlotModel>> _roomsTimetable = new();
     
     private void GenerateTimetable()
     {
+        if (ConfigurationService.Instance.GetHours().Count < 3)
+        {
+            NotificationService.ShowWarning(MainWindow.Instance, "Моля въведете поне 3 часа, за да се генерира учебна програма!");
+            return;
+        }
+        if (ConfigurationService.Instance.GetRooms().Count < 3)
+        {
+            NotificationService.ShowWarning(MainWindow.Instance, "Моля въведете поне 3 стаи, за да се генерира учебна програма!");
+            return;
+        }
+        
         Timetables.Clear();
         Timetable.Clear();
         _roomsTimetable.Clear();
+        SelectedTimetable = TimetableSelectorModel.Empty;
         
         Hgasso<Schedule> algorithm = new Hgasso<Schedule>(new Schedule(ConfigurationService.Instance));
-        algorithm.Run();
-        List<TimetableSlotModel> result = TimetableVisualizationService.GetResult(algorithm.Result);
+        int generatedStatus = algorithm.Run(10000);
+        List<TimetableSlotModel>? result = TimetableVisualizationService.GetResult(algorithm.Result);
 
+        if (generatedStatus == -1) NotificationService.ShowError(MainWindow.Instance, "Невъзможно генериране на учебна програма!");
+        else if (generatedStatus == 0) NotificationService.ShowWarning(MainWindow.Instance, "Учебната програма ИМА застъпвания на учители или не изпълнение на условия за стаите!");
+        else if (generatedStatus == 1) NotificationService.ShowSuccess(MainWindow.Instance, "Учебната програма Е ГЕНЕРИРАНА УСПЕШНО, без застъпвания на учители и с изпълнени всички условия за стаите!");
+        if (result == null) return;
+        
         ObservableCollection<StudentsGroupModel> classes = ConfigurationService.Instance.GetGroups();
         ObservableCollection<ProfessorModel> teachers = ConfigurationService.Instance.GetTeachers();
         ObservableCollection<RoomModel> rooms = ConfigurationService.Instance.GetRooms();
         
         foreach (StudentsGroupModel @class in classes)
         {
-            Timetables.Add(new TimetableSelectorModel(@class, @class.Name + " - " + @class.NumberOfStudents + " (" + @class.Id + ")"));
+            Timetables.Add(new TimetableSelectorModel(@class, @class.Name + " - " + @class.NumberOfStudents + " (" + (@class.Id + 1) + ")"));
         }
 
         foreach (ProfessorModel teacher in teachers)
         {
-            Timetables.Add(new TimetableSelectorModel(teacher, teacher.Name + " (" + teacher.Id + ")"));
+            Timetables.Add(new TimetableSelectorModel(teacher, teacher.Name + " (" + (teacher.Id + 1) + ")"));
         }
         
         foreach (RoomModel room in rooms)
         {
             _roomsTimetable.Add(room.Id, result.Where(slot => slot.Room.Id == room.Id).ToList());
-            Timetables.Add(new TimetableSelectorModel(room, room.Name + " - " + room.NumberOfSeats + " (" + room.Id + ")"));
+            Timetables.Add(new TimetableSelectorModel(room, room.Name + " - " + room.NumberOfSeats + " (" + (room.Id + 1) + ")"));
         }
 
         SelectedTimetable = Timetables[0];
@@ -173,6 +189,7 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         });
         
         if (Timetables.Count > 0) SelectedTimetable = Timetables[0];
+        
+        SelectedTimetable = TimetableSelectorModel.Empty;
     }
-    
 }
