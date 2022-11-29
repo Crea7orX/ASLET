@@ -1,6 +1,7 @@
 ﻿using System.Reactive;
 using System.Threading.Tasks;
 using ASLET.Models;
+using Microsoft.IdentityModel.Tokens;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -8,6 +9,14 @@ namespace ASLET.ViewModels;
 public class SubjectsDialogViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, SubjectModel> AddSubjectCommand { get; }
+            
+    private bool _addSubjectEnabled;
+    public bool AddSubjectEnabled
+    {
+        get => _addSubjectEnabled;
+        private set => this.RaiseAndSetIfChanged(ref _addSubjectEnabled, value);
+    }
+
     public ReactiveCommand<Unit, SubjectModel?> CancelCommand { get; }
 
     private string _subjectName;
@@ -15,9 +24,13 @@ public class SubjectsDialogViewModel : ViewModelBase
     public string SubjectName
     {
         get => _subjectName;
-        set => this.RaiseAndSetIfChanged(ref _subjectName, value);
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _subjectName, value);
+            ValidateInput();
+        }
     }
-    
+
     #region DarkMode
 
     private bool _darkMode;
@@ -30,7 +43,6 @@ public class SubjectsDialogViewModel : ViewModelBase
 
     public SubjectsDialogViewModel(bool darkMode)
     {
-        // TODO CHECKERS FOR VALID INPUT
         AddSubjectCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new SubjectModel(_subjectName)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<SubjectModel?>(null));
@@ -38,5 +50,10 @@ public class SubjectsDialogViewModel : ViewModelBase
         DarkMode = darkMode;
         
         SubjectName = "";
+    }
+
+    private void ValidateInput()
+    {
+        AddSubjectEnabled = !SubjectName.IsNullOrEmpty();
     }
 }
