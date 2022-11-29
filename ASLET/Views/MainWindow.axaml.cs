@@ -9,6 +9,8 @@ namespace ASLET.Views
 {
     public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
+        public static MainWindow Instance { get; private set; } = null!;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -17,6 +19,7 @@ namespace ASLET.Views
             this.WhenActivated(d => d(SubjectsViewModel.GetInstance(null).AddSubject.RegisterHandler(AddSubjectDialogAsync)));
             this.WhenActivated(d => d(HoursViewModel.GetInstance(null).AddHour.RegisterHandler(AddHourDialogAsync)));
             this.WhenActivated(d => d(RoomsViewModel.GetInstance(null).AddRoom.RegisterHandler(AddRoomDialogAsync)));
+            Instance = this;
         }
         
         private async Task AddClassDialogAsync(InteractionContext<ClassesDialogViewModel, StudentsGroupModel?> interaction)
