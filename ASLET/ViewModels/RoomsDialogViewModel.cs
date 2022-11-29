@@ -1,6 +1,7 @@
 ﻿using System.Reactive;
 using System.Threading.Tasks;
 using ASLET.Models;
+using Microsoft.IdentityModel.Tokens;
 using ReactiveUI;
 
 namespace ASLET.ViewModels;
@@ -8,6 +9,14 @@ namespace ASLET.ViewModels;
 public class RoomsDialogViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, RoomModel> AddRoomCommand { get; }
+        
+    private bool _addRoomEnabled;
+    public bool AddRoomEnabled
+    {
+        get => _addRoomEnabled;
+        private set => this.RaiseAndSetIfChanged(ref _addRoomEnabled, value);
+    }
+
     public ReactiveCommand<Unit, RoomModel?> CancelCommand { get; }
 
     private string _roomName;
@@ -15,9 +24,13 @@ public class RoomsDialogViewModel : ViewModelBase
     public string RoomName
     {
         get => _roomName;
-        private set => this.RaiseAndSetIfChanged(ref _roomName, value);
+        private set
+        {
+            this.RaiseAndSetIfChanged(ref _roomName, value);
+            ValidateInput();
+        }
     }
-    
+
     private bool _isLaboratory;
 
     public bool IsLaboratory
@@ -48,7 +61,6 @@ public class RoomsDialogViewModel : ViewModelBase
 
     public RoomsDialogViewModel(bool darkMode)
     {
-        // TODO CHECKERS FOR VALID INPUT
         AddRoomCommand = ReactiveCommand.CreateFromTask(() =>
             Task.FromResult(new RoomModel(_roomName, _isLaboratory, _roomSize)));
 
@@ -57,5 +69,10 @@ public class RoomsDialogViewModel : ViewModelBase
         DarkMode = darkMode;
 
         RoomSize = 26;
+    }
+
+    private void ValidateInput()
+    {
+        AddRoomEnabled = !_roomName.IsNullOrEmpty();
     }
 }
