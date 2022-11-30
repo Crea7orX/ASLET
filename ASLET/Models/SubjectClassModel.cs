@@ -9,11 +9,11 @@ public class SubjectClassModel : IComparable<SubjectClassModel>
     private static int _nextClassId = 0;
 
     // Initializes class object
-    public SubjectClassModel(ProfessorModel professorModel, SubjectModel subjectModel, bool requiresLab, int duration,
+    public SubjectClassModel(TeacherModel teacherModel, SubjectModel subjectModel, bool requiresLab, int duration,
         params StudentsGroupModel[] groups)
     {
         Id = _nextClassId++;
-        ProfessorModel = professorModel;
+        TeacherModel = teacherModel;
         SubjectModel = subjectModel;
         NumberOfSeats = 0;
         LabRequired = requiresLab;
@@ -21,7 +21,7 @@ public class SubjectClassModel : IComparable<SubjectClassModel>
         Groups = new List<StudentsGroupModel>();
 
         // bind teacher to class
-        ProfessorModel.AddCourseClass(this);
+        TeacherModel.AddCourseClass(this);
 
         // bind student groups to class
         foreach (StudentsGroupModel group in groups)
@@ -41,7 +41,7 @@ public class SubjectClassModel : IComparable<SubjectClassModel>
     // Returns TRUE if another class has same teacher.
     public bool ProfessorOverlaps(SubjectClassModel c)
     {
-        return ProfessorModel.Equals(c.ProfessorModel);
+        return TeacherModel.Equals(c.TeacherModel);
     }
 
     public int CompareTo(SubjectClassModel other)
@@ -55,7 +55,7 @@ public class SubjectClassModel : IComparable<SubjectClassModel>
     public int Id { get; set; }
 
     // Return pointer to teacher who teaches
-    public ProfessorModel ProfessorModel { get; set; }
+    public TeacherModel TeacherModel { get; set; }
 
     // Return pointer to course to which class belongs
     public SubjectModel SubjectModel { get; set; }

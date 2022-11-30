@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ASLET.Models;
 
-public class ProfessorModel
+public class TeacherModel
 {
     private static int _nextTeacherId = 0;
     // Initializes teacher data
-    public ProfessorModel(string name)
+    public TeacherModel(string name)
     {
         Id = _nextTeacherId++;
         Name = name;
@@ -22,7 +22,7 @@ public class ProfessorModel
 
     public override bool Equals(object obj)
     {
-        return obj is ProfessorModel teacher &&
+        return obj is TeacherModel teacher &&
                Id == teacher.Id;
     }
 

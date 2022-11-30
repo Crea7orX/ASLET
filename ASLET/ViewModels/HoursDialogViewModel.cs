@@ -22,7 +22,7 @@ public class HoursDialogViewModel : ViewModelBase
     public ReactiveCommand<Unit, SubjectClassModel?> CancelCommand { get; }
 
     public ObservableCollection<StudentsGroupModel> Classes { get; } = new();
-    public ObservableCollection<ProfessorModel> Teachers { get; } = new();
+    public ObservableCollection<TeacherModel> Teachers { get; } = new();
     public ObservableCollection<SubjectModel> Subjects { get; } = new();
 
     private StudentsGroupModel _selectedClass;
@@ -37,9 +37,9 @@ public class HoursDialogViewModel : ViewModelBase
         }
     }
 
-    private ProfessorModel _selectedTeacher;
+    private TeacherModel _selectedTeacher;
 
-    public ProfessorModel SelectedTeacher
+    public TeacherModel SelectedTeacher
     {
         get => _selectedTeacher;
         private set
@@ -123,7 +123,7 @@ public class HoursDialogViewModel : ViewModelBase
 
     private void FillTeachers()
     {
-        foreach (ProfessorModel teacher in ConfigurationService.Instance.GetTeachers())
+        foreach (TeacherModel teacher in ConfigurationService.Instance.GetTeachers())
         {
             Teachers.Add(teacher);
         }

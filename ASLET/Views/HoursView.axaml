@@ -39,9 +39,9 @@
                             </MultiBinding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Учител" MinWidth="180" Width="*" Binding="{Binding ProfessorModel.Name}"
+                    <DataGridTextColumn Header="Учител" MinWidth="180" Width="*" Binding="{Binding TeacherModel.Name}"
                                         CanUserSort="True" />
-                    <DataGridTextColumn Header="Предмет" MinWidth="180" Width="*" Binding="{Binding CourseModel.Name}"
+                    <DataGridTextColumn Header="Предмет" MinWidth="180" Width="*" Binding="{Binding SubjectModel.Name}"
                                         CanUserSort="True" />
                     <DataGridTextColumn Header="Часове" Width="100" Binding="{Binding Duration}"
                                         CanUserSort="True" />

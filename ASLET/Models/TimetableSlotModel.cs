@@ -3,13 +3,13 @@
 public class TimetableSlotModel
 {
     public string Class { get; set; }
-    public ProfessorModel Teacher { get; set; }
+    public TeacherModel Teacher { get; set; }
     public SubjectClassModel Subject { get; set; }
     public RoomModel Room { get; set; }
     public int Day { get; set; }
     public int Hour { get; set; }
 
-    public TimetableSlotModel(string @class, ProfessorModel teacher, SubjectClassModel subject)
+    public TimetableSlotModel(string @class, TeacherModel teacher, SubjectClassModel subject)
     {
         Class = @class;
         Teacher = teacher;

@@ -90,7 +90,7 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         if (result == null) return;
         
         ObservableCollection<StudentsGroupModel> classes = ConfigurationService.Instance.GetGroups();
-        ObservableCollection<ProfessorModel> teachers = ConfigurationService.Instance.GetTeachers();
+        ObservableCollection<TeacherModel> teachers = ConfigurationService.Instance.GetTeachers();
         ObservableCollection<RoomModel> rooms = ConfigurationService.Instance.GetRooms();
         
         foreach (StudentsGroupModel @class in classes)
@@ -98,7 +98,7 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
             Timetables.Add(new TimetableSelectorModel(@class, @class.Name + " - " + @class.NumberOfStudents + " (" + (@class.Id + 1) + ")"));
         }
 
-        foreach (ProfessorModel teacher in teachers)
+        foreach (TeacherModel teacher in teachers)
         {
             Timetables.Add(new TimetableSelectorModel(teacher, teacher.Name + " (" + (teacher.Id + 1) + ")"));
         }
@@ -134,9 +134,9 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
                     hoursDayLink[timetableSlotModel.Hour][timetableSlotModel.Day] = timetableSlotModel.ClassToString();
                 }
             }
-        } else if (selector.Model is ProfessorModel)
+        } else if (selector.Model is TeacherModel)
         {
-            ProfessorModel selectedTeacher = (ProfessorModel)selector.Model;
+            TeacherModel selectedTeacher = (TeacherModel)selector.Model;
             foreach (List<TimetableSlotModel> slotModels in _roomsTimetable.Values)
             {
                 foreach (TimetableSlotModel timetableSlotModel in slotModels.Where(slot => Equals(slot.Teacher, selectedTeacher)))

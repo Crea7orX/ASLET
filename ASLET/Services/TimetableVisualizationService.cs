@@ -52,7 +52,7 @@ public class TimetableVisualizationService
 
             roomSchedule[dayId] = new TimetableSlotModel(
                 string.Join(" / ", cc.Groups.Select(grp => grp.Name).ToArray()),
-                cc.ProfessorModel, cc);
+                cc.TeacherModel, cc);
         }
 
         return timeTable;

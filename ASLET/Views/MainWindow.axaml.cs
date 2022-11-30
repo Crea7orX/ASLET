@@ -33,14 +33,14 @@ namespace ASLET.Views
             interaction.SetOutput(result);
         }
         
-        private async Task AddTeacherDialogAsync(InteractionContext<TeachersDialogViewModel, ProfessorModel?> interaction)
+        private async Task AddTeacherDialogAsync(InteractionContext<TeachersDialogViewModel, TeacherModel?> interaction)
         {
             TeachersDialogWindow dialog = new TeachersDialogWindow()
             {
                 DataContext = interaction.Input
             };
 
-            ProfessorModel? result = await dialog.ShowDialog<ProfessorModel?>(this);
+            TeacherModel? result = await dialog.ShowDialog<TeacherModel?>(this);
             interaction.SetOutput(result);
         }
         

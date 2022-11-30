@@ -34,19 +34,19 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
 
     public ICommand AddTeacherCommand { get; }
 
-    public Interaction<TeachersDialogViewModel, ProfessorModel?> AddTeacher { get; }
+    public Interaction<TeachersDialogViewModel, TeacherModel?> AddTeacher { get; }
 
-    private ProfessorModel _selectedTeacher;
+    private TeacherModel _selectedTeacher;
 
-    public ProfessorModel SelectedTeacher
+    public TeacherModel SelectedTeacher
     {
         get => _selectedTeacher;
         private set => this.RaiseAndSetIfChanged(ref _selectedTeacher, value);
     }
 
-    private ObservableCollection<ProfessorModel> _teachers = new();
+    private ObservableCollection<TeacherModel> _teachers = new();
 
-    public ObservableCollection<ProfessorModel> Teachers
+    public ObservableCollection<TeacherModel> Teachers
     {
         get => _teachers;
         private set => this.RaiseAndSetIfChanged(ref _teachers, value);
@@ -77,10 +77,10 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
     {
         HostScreen = hostScreen;
         
-        AddTeacher = new Interaction<TeachersDialogViewModel, ProfessorModel?>();
+        AddTeacher = new Interaction<TeachersDialogViewModel, TeacherModel?>();
         AddTeacherCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            ProfessorModel? result = await AddTeacher.Handle(new TeachersDialogViewModel(DarkMode));
+            TeacherModel? result = await AddTeacher.Handle(new TeachersDialogViewModel(DarkMode));
 
             if (result != null)
             {
@@ -88,14 +88,14 @@ public class TeachersViewModel : ViewModelBase, IRoutableViewModel
             }
         });
 
-        DeleteTeacherCommand = ReactiveCommand.CreateFromTask((ProfessorModel selectedTeacher) =>
+        DeleteTeacherCommand = ReactiveCommand.CreateFromTask((TeacherModel selectedTeacher) =>
         {
             ConfigurationService.Instance.RemoveTeacher(selectedTeacher);
             return Task.CompletedTask;
         });
     }
 
-    public void UpdateTeachers(ref ObservableCollection<ProfessorModel> teachers)
+    public void UpdateTeachers(ref ObservableCollection<TeacherModel> teachers)
     {
         Teachers = teachers;
     }

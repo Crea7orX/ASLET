@@ -13,7 +13,7 @@ public class ConfigurationService
 {
     public static ConfigurationService Instance { get; } = new ConfigurationService();
     // Parsed professors
-    private readonly Dictionary<int, ProfessorModel> _professors;
+    private readonly Dictionary<int, TeacherModel> _professors;
 
     // Parsed student groups
     private readonly Dictionary<int, StudentsGroupModel> _studentGroups;
@@ -40,7 +40,7 @@ public class ConfigurationService
 
     // Returns teacher with specified ID
     // If there is no teacher with such ID method returns NULL
-    ProfessorModel GetProfessorById(int id)
+    TeacherModel GetProfessorById(int id)
     {
         if (!_professors.ContainsKey(id))
             return null;
@@ -94,10 +94,10 @@ public class ConfigurationService
     // Returns TRUE if configuration is not parsed yet
     public bool Empty { get; private set; }
 
-    public void AddTeacher(ProfessorModel teacher)
+    public void AddTeacher(TeacherModel teacher)
     {
         _professors.Add(teacher.Id, teacher);
-        ObservableCollection<ProfessorModel> teachers = new ObservableCollection<ProfessorModel>();
+        ObservableCollection<TeacherModel> teachers = new ObservableCollection<TeacherModel>();
         _professors.Values.ToList().ForEach(t => teachers.Add(t));
         TeachersViewModel.GetInstance(null).UpdateTeachers(ref teachers);
     }
@@ -135,10 +135,10 @@ public class ConfigurationService
         HoursViewModel.GetInstance(null).UpdateHours(ref hours);
     }
 
-    public void RemoveTeacher(ProfessorModel teacher)
+    public void RemoveTeacher(TeacherModel teacher)
     {
         _professors.Remove(teacher.Id);
-        ObservableCollection<ProfessorModel> teachers = new ObservableCollection<ProfessorModel>();
+        ObservableCollection<TeacherModel> teachers = new ObservableCollection<TeacherModel>();
         _professors.Values.ToList().ForEach(t => teachers.Add(t));
         TeachersViewModel.GetInstance(null).UpdateTeachers(ref teachers);
     }
@@ -175,9 +175,9 @@ public class ConfigurationService
         HoursViewModel.GetInstance(null).UpdateHours(ref hours);
     }
 
-    public ObservableCollection<ProfessorModel> GetTeachers()
+    public ObservableCollection<TeacherModel> GetTeachers()
     {
-        ObservableCollection<ProfessorModel> returnValue = new ObservableCollection<ProfessorModel>();
+        ObservableCollection<TeacherModel> returnValue = new ObservableCollection<TeacherModel>();
         _professors.Values.ToList().ForEach(p => returnValue.Add(p));
         return returnValue;
     }
