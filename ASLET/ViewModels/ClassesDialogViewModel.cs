@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,8 @@ public class ClassesDialogViewModel : ViewModelBase
         {
             this.RaiseAndSetIfChanged(ref _selectedGrade, value);
             ValidateInput();
+            Letters.Clear();
+            FillLetters();
         }
     }
 
@@ -102,9 +105,10 @@ public class ClassesDialogViewModel : ViewModelBase
 
     private void FillLetters()
     {
-        // TODO CHECK FOR EXISTING LETTERS IN CERTAIN GRADE
+        ObservableCollection<StudentsGroupModel> studentsGroups = ConfigurationService.Instance.GetGroups();
         foreach (char character in _alphabet)
         {
+            if (studentsGroups.Any(group => group.Grade == _selectedGrade && group.Letter == character)) continue;
             Letters.Add(character);
         }
 
