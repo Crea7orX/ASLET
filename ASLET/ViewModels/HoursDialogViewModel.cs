@@ -118,7 +118,7 @@ public class HoursDialogViewModel : ViewModelBase
             Classes.Add(@class);
         }
         
-        if (Classes[0] != null) SelectedClass = Classes[0];
+        if (Classes.Count > 0) SelectedClass = Classes[0];
     }
 
     private void FillTeachers()
@@ -128,7 +128,7 @@ public class HoursDialogViewModel : ViewModelBase
             Teachers.Add(teacher);
         }
         
-        if (Teachers[0] != null) SelectedTeacher = Teachers[0];
+        if (Teachers.Count > 0) SelectedTeacher = Teachers[0];
     }
 
     private void FillSubjects()
@@ -138,6 +138,6 @@ public class HoursDialogViewModel : ViewModelBase
             Subjects.Add(subject);
         }
 
-        if (Subjects[0] != null) SelectedSubject = Subjects[0];
+        if (Subjects.Count > 0) SelectedSubject = Subjects[0];
     }
 }
