@@ -29,7 +29,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете предмет" />
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="Въведете час" />
 
         <ComboBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Width="280" MaxDropDownHeight="100"
                   SelectedIndex="0" Items="{Binding Classes}" SelectedItem="{Binding SelectedClass}">
