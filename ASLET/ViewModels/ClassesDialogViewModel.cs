@@ -112,6 +112,6 @@ public class ClassesDialogViewModel : ViewModelBase
             Letters.Add(character);
         }
 
-        SelectedLetter = Letters[0];
+        if (Letters.Count > 0) SelectedLetter = Letters[0];
     }
 }
