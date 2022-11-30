@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
         x:Class="ASLET.Views.ClassesDialogWindow"
+        Icon="/Assets/ASLET.ico"
         xmlns:local="using:ASLET.Views"
         Title="Добавяне на клас"
         WindowStartupLocation="CenterOwner"
