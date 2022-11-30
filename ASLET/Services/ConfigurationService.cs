@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using ASLET.ViewModels;
+using ReactiveUI;
 
 namespace ASLET.Models;
 
@@ -141,6 +142,7 @@ public class ConfigurationService
         ObservableCollection<TeacherModel> teachers = new ObservableCollection<TeacherModel>();
         _professors.Values.ToList().ForEach(t => teachers.Add(t));
         TeachersViewModel.GetInstance(null).UpdateTeachers(ref teachers);
+        CheckToRemove(teacher);
     }
 
     public void RemoveSubject(SubjectModel subject)
@@ -149,6 +151,7 @@ public class ConfigurationService
         ObservableCollection<SubjectModel> subjects = new ObservableCollection<SubjectModel>();
         _courses.Values.ToList().ForEach(s => subjects.Add(s));
         SubjectsViewModel.GetInstance(null).UpdateSubjects(ref subjects);
+        CheckToRemove(subject);
     }
     
     public void RemoveRoom(RoomModel roomModel)
@@ -165,6 +168,7 @@ public class ConfigurationService
         ObservableCollection<StudentsGroupModel> groups = new ObservableCollection<StudentsGroupModel>();
         _studentGroups.Values.ToList().ForEach(g => groups.Add(g));
         ClassesViewModel.GetInstance(null).UpdateClasses(ref groups);
+        CheckToRemove(groupModel);
     }
 
     public void RemoveHour(SubjectClassModel hour)
@@ -208,6 +212,32 @@ public class ConfigurationService
         ObservableCollection<SubjectClassModel> returnValue = new ObservableCollection<SubjectClassModel>();
         CourseClasses.ToList().ForEach(h => returnValue.Add(h));
         return returnValue;
+    }
+
+    private void CheckToRemove<TModel>(TModel model)
+    {
+        if (model is TeacherModel teacher)
+        {
+            foreach(SubjectClassModel hour in CourseClasses.Where(hour => hour.TeacherModel.Equals(teacher)).ToList())
+            {
+                CourseClasses.Remove(hour);
+            }
+        } else if (model is SubjectModel subject)
+        {
+            foreach(SubjectClassModel hour in CourseClasses.Where(hour => hour.SubjectModel.Equals(subject)).ToList())
+            {
+                CourseClasses.Remove(hour);
+            }
+        } else if (model is StudentsGroupModel studentsGroup)
+        {
+            foreach(SubjectClassModel hour in CourseClasses.Where(hour => hour.Groups[0].Equals(studentsGroup)).ToList())
+            {
+                CourseClasses.Remove(hour);
+            }
+        }
+        ObservableCollection<SubjectClassModel> hours = new ObservableCollection<SubjectClassModel>();
+        CourseClasses.ToList().ForEach(h => hours.Add(h));
+        HoursViewModel.GetInstance(null).UpdateHours(ref hours);
     }
 
     public static int Rand()
