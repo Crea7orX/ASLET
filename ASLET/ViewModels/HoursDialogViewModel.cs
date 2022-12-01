@@ -92,7 +92,7 @@ public class HoursDialogViewModel : ViewModelBase
     public HoursDialogViewModel(bool darkMode)
     {
         AddHourCommand = ReactiveCommand.CreateFromTask(() =>
-            Task.FromResult(new SubjectClassModel(_selectedTeacher, _selectedSubject, _requireLaboratory, _hoursAWeek, _selectedClass)));
+            Task.FromResult(new SubjectClassModel(_selectedTeacher, _selectedSubject, _requireLaboratory, _hoursAWeek, "", _selectedClass)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<SubjectClassModel?>(null));
 
