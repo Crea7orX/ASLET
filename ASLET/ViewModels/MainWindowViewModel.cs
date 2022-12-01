@@ -123,6 +123,7 @@ namespace ASLET.ViewModels
             );
 
             Router.Navigate.Execute(HomeViewModel.GetInstance(this));
+            ConfigurationService.Instance.LoadData();
             // GoToClasses();
 
 
