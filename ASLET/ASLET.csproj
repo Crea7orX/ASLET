@@ -35,6 +35,10 @@
     <Compile Update="Views\TimetablesView.axaml.cs">
       <DependentUpon>TimetablesView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\HomeView.axaml.cs">
+      <DependentUpon>HomeView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AvaloniaXaml Update="Views\ClassesDialogView.axaml">

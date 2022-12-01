@@ -1,0 +1,55 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ASLET.Views.HomeView">
+
+    <UserControl.Styles>
+        <StyleInclude Source="/../Styles/BaseStyles.axaml" />
+        <StyleInclude Source="/../Styles/ClassesViewStyles.axaml" />
+    </UserControl.Styles>
+
+    <Border Classes="MainContainer" Classes.Dark="{Binding DarkMode}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="60" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                       Classes="Header" Text="ASLET" />
+
+            <Border Grid.Row="2" Grid.Column="1" Classes="MainContent">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="../Assets/ASLET.ico" />
+                    <Image Grid.Column="1" Source="../Assets/PGKMKS.png" />
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="3" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Classes="Header" Text="Hristiyan Dimitrov" />
+                <TextBlock Grid.Column="1" Classes="Header" Text="Ivaylo Kraev" />
+            </Grid>
+        </Grid>
+
+    </Border>
+
+</UserControl>

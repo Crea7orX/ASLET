@@ -3,6 +3,7 @@ using System.Reactive;
 using ASLET.Models;
 using ASLET.Services;
 using System;
+using ASLET.Views;
 using ReactiveUI;
 
 
@@ -91,6 +92,7 @@ namespace ASLET.ViewModels
             HoursViewModelChild!.DarkMode = DarkMode;
             RoomsViewModelChild!.DarkMode = DarkMode;
             TimetablesViewModelChild!.DarkMode = DarkMode;
+            HomeViewModelChild!.DarkMode = DarkMode;
         }
         
         #endregion
@@ -120,7 +122,8 @@ namespace ASLET.ViewModels
                 () => Router.Navigate.Execute(TimetablesViewModel.GetInstance(this))
             );
 
-            GoToClasses();
+            Router.Navigate.Execute(HomeViewModel.GetInstance(this));
+            // GoToClasses();
 
 
             // ClassModel class1 = new ClassModel(1, 'А');
@@ -168,6 +171,8 @@ namespace ASLET.ViewModels
         private HoursViewModel? _hoursViewModelChild;
         private RoomsViewModel? _roomsViewModelChild;
         private TimetablesViewModel? _timetablesViewModelChild;
+        private HomeViewModel? _homeViewModelChild;
+
 
         
         public void SetParents()
@@ -189,8 +194,15 @@ namespace ASLET.ViewModels
             HoursViewModelChild = HoursViewModel.GetInstance(this);
             RoomsViewModelChild = RoomsViewModel.GetInstance(this);
             TimetablesViewModelChild = TimetablesViewModel.GetInstance(this);
+            HomeViewModelChild = HomeViewModel.GetInstance(this);
         }
 
+        public HomeViewModel? HomeViewModelChild
+        {
+            get => _homeViewModelChild;
+            set => this.RaiseAndSetIfChanged(ref _homeViewModelChild, value);
+        } 
+        
         public ClassesViewModel? ClassesViewModelChild
         {
             get => _classesViewModelChild;
