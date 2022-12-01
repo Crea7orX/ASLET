@@ -7,8 +7,9 @@ public class TeacherModel
 {
     private static int _nextTeacherId = 0;
     // Initializes teacher data
-    public TeacherModel(string name)
+    public TeacherModel(string name, string uniqueId = "")
     {
+        UniqueId = uniqueId;
         Id = _nextTeacherId++;
         Name = name;
         CourseClasses = new List<SubjectClassModel>();
@@ -30,6 +31,8 @@ public class TeacherModel
     {
         return HashCode.Combine(Id);
     }
+
+    public string UniqueId { get; set; }
 
     // Returns teacher's ID
     public int Id { get; set; }

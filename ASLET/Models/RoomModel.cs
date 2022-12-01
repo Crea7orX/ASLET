@@ -6,14 +6,17 @@ public class RoomModel
     private static int _nextRoomId = 0;
 
     // Initializes room data and assign ID to room
-    public RoomModel(string name, bool lab, int numberOfSeats)
+    public RoomModel(string name, bool lab, int numberOfSeats, string uniqueId = "")
     {
+        UniqueId = uniqueId;
         Id = _nextRoomId++;
         Name = name;
         Lab = lab;
         NumberOfSeats = numberOfSeats;
     }
 
+    public string UniqueId { get; set; }
+    
     // Returns room ID - automatically assigned
     public int Id { get; set; }
 

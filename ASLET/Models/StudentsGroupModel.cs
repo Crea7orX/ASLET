@@ -7,8 +7,9 @@ public class StudentsGroupModel
 {
     private static int _nextClassId = 0;
     // Initializes student group data
-    public StudentsGroupModel(byte grade, char letter, int numberOfStudents)
+    public StudentsGroupModel(byte grade, char? letter, int numberOfStudents, string uniqueId = "")
     {
+        UniqueId = uniqueId;
         Id = _nextClassId++;
         Name = grade.ToString() + letter;
         Grade = grade;
@@ -33,6 +34,8 @@ public class StudentsGroupModel
     {
         return HashCode.Combine(Id);
     }
+
+    public string UniqueId { get; set; }
 
     // Returns student group ID
     public int Id { get; set; }

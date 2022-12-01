@@ -9,9 +9,9 @@ public class SubjectClassModel : IComparable<SubjectClassModel>
     private static int _nextClassId = 0;
 
     // Initializes class object
-    public SubjectClassModel(TeacherModel teacherModel, SubjectModel subjectModel, bool requiresLab, int duration,
-        params StudentsGroupModel[] groups)
+    public SubjectClassModel(TeacherModel teacherModel, SubjectModel subjectModel, bool requiresLab, int duration, string uniqueId = "", params StudentsGroupModel[] groups)
     {
+        UniqueId = uniqueId;
         Id = _nextClassId++;
         TeacherModel = teacherModel;
         SubjectModel = subjectModel;
@@ -50,6 +50,8 @@ public class SubjectClassModel : IComparable<SubjectClassModel>
             return -1;
         return other.Id - Id;
     }
+
+    public string UniqueId { get; set; }
 
     // Returns class ID - automatically assigned
     public int Id { get; set; }
