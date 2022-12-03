@@ -17,16 +17,16 @@ public class ConfigurationService
 {
     public static ConfigurationService Instance { get; } = new ConfigurationService();
     // Parsed professors
-    private readonly Dictionary<int, TeacherModel> _professors;
+    private Dictionary<int, TeacherModel> _professors;
 
     // Parsed student groups
-    private readonly Dictionary<int, StudentsGroupModel> _studentGroups;
+    private Dictionary<int, StudentsGroupModel> _studentGroups;
 
     // Parsed courses
-    private readonly Dictionary<int, SubjectModel> _courses;
+    private Dictionary<int, SubjectModel> _courses;
 
     // Parsed rooms
-    private readonly Dictionary<int, RoomModel> _rooms;
+    private Dictionary<int, RoomModel> _rooms;
 
     // Generate a random number  
     private static Random _random = new(DateTime.Now.Millisecond);
@@ -90,7 +90,7 @@ public class ConfigurationService
     public int NumberOfRooms => _rooms.Count;
 
     // Returns reference to list of parsed classes
-    public List<SubjectClassModel> CourseClasses { get; }
+    public List<SubjectClassModel> CourseClasses { get; set; }
 
     // Returns number of parsed classes
     public int NumberOfCourseClasses => CourseClasses.Count;
@@ -101,48 +101,87 @@ public class ConfigurationService
     public async void AddTeacher(TeacherModel teacher, bool addToDatabase = true)
     {
         _professors.Add(teacher.Id, teacher);
+        _professors = new Dictionary<int, TeacherModel>(_professors.OrderBy(t => t.Value.Name));
         ObservableCollection<TeacherModel> teachers = new ObservableCollection<TeacherModel>();
         _professors.Values.ToList().ForEach(t => teachers.Add(t));
         TeachersViewModel.GetInstance(null).UpdateTeachers(ref teachers);
-        if (addToDatabase) await DatabaseService.Instance.CreateTeacher(new TeacherModelDb(teacher.UniqueId, teacher.Name));
+        if (addToDatabase)
+        {
+            (Task, string) returnedValue =
+                DatabaseService.Instance.CreateTeacher(new TeacherModelDb(teacher.UniqueId, teacher.Name));
+            await returnedValue.Item1;
+            teacher.UniqueId = returnedValue.Item2;
+        }
     }
 
     public async void AddSubject(SubjectModel subject, bool addToDatabase = true)
     {
         _courses.Add(subject.Id, subject);
+        _courses = new Dictionary<int, SubjectModel>(_courses.OrderBy(s => s.Value.Name));
         ObservableCollection<SubjectModel> subjects = new ObservableCollection<SubjectModel>();
         _courses.Values.ToList().ForEach(s => subjects.Add(s));
         SubjectsViewModel.GetInstance(null).UpdateSubjects(ref subjects);
-        if (addToDatabase) await DatabaseService.Instance.CreateSubject(new SubjectModelDb(subject.UniqueId, subject.Name));
+        if (addToDatabase)
+        {
+            (Task, string) returnedValue =
+                DatabaseService.Instance.CreateSubject(new SubjectModelDb(subject.UniqueId, subject.Name));
+            await returnedValue.Item1;
+            subject.UniqueId = returnedValue.Item2;
+        }
     }
 
     public async void AddRoom(RoomModel roomModel, bool addToDatabase = true)
     {
         _rooms.Add(roomModel.Id, roomModel);
+        _rooms = new Dictionary<int, RoomModel>(_rooms.OrderBy(r => r.Value.Name));
         ObservableCollection<RoomModel> rooms = new ObservableCollection<RoomModel>();
         _rooms.Values.ToList().ForEach(r => rooms.Add(r));
         RoomsViewModel.GetInstance(null).UpdateRooms(ref rooms);
-        if (addToDatabase) await DatabaseService.Instance.CreateRoom(new RoomModelDb(roomModel.UniqueId, roomModel.Name, roomModel.Lab, roomModel.NumberOfSeats));
+        if (addToDatabase)
+        {
+            (Task, string) returnedValue = DatabaseService.Instance.CreateRoom(new RoomModelDb(roomModel.UniqueId,
+                roomModel.Name, roomModel.Lab, roomModel.NumberOfSeats));
+            await returnedValue.Item1;
+            roomModel.UniqueId = returnedValue.Item2;
+        }
     }
 
     public async void AddGroup(StudentsGroupModel groupModel, bool addToDatabase = true)
     {
         _studentGroups.Add(groupModel.Id, groupModel);
+        _studentGroups = new Dictionary<int, StudentsGroupModel>(_studentGroups.OrderBy(g => g.Value.Name));
         ObservableCollection<StudentsGroupModel> groups = new ObservableCollection<StudentsGroupModel>();
         _studentGroups.Values.ToList().ForEach(g => groups.Add(g));
         ClassesViewModel.GetInstance(null).UpdateClasses(ref groups);
-        if (addToDatabase) await DatabaseService.Instance.CreateClass(new ClassModelDb(groupModel.UniqueId, groupModel.Name, groupModel.Grade, groupModel.Letter,
-            groupModel.NumberOfStudents));
+        if (addToDatabase)
+        {
+            (Task, string) returnedValue = DatabaseService.Instance.CreateClass(new ClassModelDb(groupModel.UniqueId,
+                groupModel.Name, groupModel.Grade, groupModel.Letter,
+                groupModel.NumberOfStudents));
+            await returnedValue.Item1;
+            groupModel.UniqueId = returnedValue.Item2;
+        }
     }
 
     public async void AddHour(SubjectClassModel hour, bool addToDatabase = true)
     {
         CourseClasses.Add(hour);
+        CourseClasses = new List<SubjectClassModel>(CourseClasses.OrderBy(h => h.Groups[0].Name));
         Empty = false;
         ObservableCollection<SubjectClassModel> hours = new ObservableCollection<SubjectClassModel>();
         CourseClasses.ToList().ForEach(h => hours.Add(h));
         HoursViewModel.GetInstance(null).UpdateHours(ref hours);
-        if (addToDatabase) await DatabaseService.Instance.CreateHour(new HourModelDb(hour.UniqueId, hour.NumberOfSeats, hour.LabRequired, hour.Duration, new TeacherModelDb(hour.TeacherModel.UniqueId, hour.TeacherModel.Name), new SubjectModelDb(hour.SubjectModel.UniqueId, hour.SubjectModel.Name), new ClassModelDb(hour.Groups[0].UniqueId, hour.Groups[0].Name, hour.Groups[0].Grade, hour.Groups[0].Letter, hour.Groups[0].NumberOfStudents)));
+        if (addToDatabase)
+        {
+            (Task, string) returnedValue = DatabaseService.Instance.CreateHour(new HourModelDb(hour.UniqueId,
+                hour.NumberOfSeats, hour.LabRequired, hour.Duration,
+                new TeacherModelDb(hour.TeacherModel.UniqueId, hour.TeacherModel.Name),
+                new SubjectModelDb(hour.SubjectModel.UniqueId, hour.SubjectModel.Name),
+                new ClassModelDb(hour.Groups[0].UniqueId, hour.Groups[0].Name, hour.Groups[0].Grade,
+                    hour.Groups[0].Letter, hour.Groups[0].NumberOfStudents)));
+            await returnedValue.Item1;
+            hour.UniqueId = returnedValue.Item2;
+        }
     }
 
     public async void RemoveTeacher(TeacherModel teacher)
@@ -258,7 +297,6 @@ public class ConfigurationService
         HoursViewModel.GetInstance(null).UpdateHours(ref hours);
     }
 
-    // TODO DISABLE INCREMENT IDS WHEN LOADING DATA IMPORTANT
     public async void LoadData()
     {
         List<ClassModelDb> classes = await DatabaseService.Instance.GetAllClasses();
@@ -267,32 +305,44 @@ public class ConfigurationService
         List<HourModelDb> hours = await DatabaseService.Instance.GetAllHours();
         List<RoomModelDb> rooms = await DatabaseService.Instance.GetAllRooms();
         List<TimetableHourModelDb> timetable = await DatabaseService.Instance.GetAllTimetable();
+
+        Dictionary<string, StudentsGroupModel> addedClasses = new Dictionary<string, StudentsGroupModel>();
+        Dictionary<string, TeacherModel> addedTeachers = new Dictionary<string, TeacherModel>();
+        Dictionary<string, SubjectModel> addedSubjects = new Dictionary<string, SubjectModel>();
+
         foreach (ClassModelDb @class in classes)
         {
-            AddGroup(new StudentsGroupModel(@class.Grade, @class.Letter, @class.NumberOfStudents, @class.Id), false);
+            StudentsGroupModel newClass =
+                new StudentsGroupModel(@class.Grade, @class.Letter, @class.NumberOfStudents, true, @class.Id);
+            addedClasses.Add(newClass.UniqueId, newClass);
+            AddGroup(newClass, false);
         }
 
         foreach (TeacherModelDb teacher in teachers)
         {
-            AddTeacher(new TeacherModel(teacher.Name, teacher.Id), false);
+            TeacherModel newTeacher = new TeacherModel(teacher.Name, true, teacher.Id);
+            addedTeachers.Add(newTeacher.UniqueId, newTeacher);
+            AddTeacher(newTeacher, false);
         }
 
         foreach (SubjectModelDb subject in subjects)
         {
-            AddSubject(new SubjectModel(subject.Name, subject.Id), false);
+            SubjectModel newSubject = new SubjectModel(subject.Name, true, subject.Id);
+            addedSubjects.Add(newSubject.UniqueId, newSubject);
+            AddSubject(newSubject, false);
         }
 
         foreach (HourModelDb hour in hours)
         {
             StudentsGroupModel[] studentsGroupModels = {
-                new(hour.Class.Grade, hour.Class.Letter, hour.Class.NumberOfStudents, hour.Class.Id)
+                addedClasses[hour.Class.Id]
             };
-            AddHour(new SubjectClassModel(new TeacherModel(hour.Teacher.Name, hour.Teacher.Id), new SubjectModel(hour.Subject.Name, hour.Subject.Id), hour.LabRequired, hour.HoursAWeek, hour.Id, studentsGroupModels), false);
+            AddHour(new SubjectClassModel(addedTeachers[hour.Teacher.Id], addedSubjects[hour.Subject.Id], hour.LabRequired, hour.HoursAWeek, true, hour.Id, studentsGroupModels), false);
         }
 
         foreach (RoomModelDb room in rooms)
         {
-            AddRoom(new RoomModel(room.Name, room.Lab, room.NumberOfSeats, room.Id), false);
+            AddRoom(new RoomModel(room.Name, room.Lab, room.NumberOfSeats, true, room.Id), false);
         }
     }
 

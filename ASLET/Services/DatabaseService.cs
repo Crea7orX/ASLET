@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ASLET.Models;
 using ASLET.Models.Database;
@@ -30,35 +31,45 @@ public class DatabaseService
     {
         IMongoCollection<ClassModelDb> classesCollection = ConnectToMongo<ClassModelDb>(ClassesCollection);
         IAsyncCursor<ClassModelDb> results = await classesCollection.FindAsync(_ => true);
-        return results.ToList();
+        List<ClassModelDb> returnValue = results.ToList();
+        returnValue.Sort((g1, g2) => String.Compare(g1.Name, g2.Name, StringComparison.Ordinal));
+        return returnValue;
     }
     
     public async Task<List<TeacherModelDb>> GetAllTeachers()
     {
         IMongoCollection<TeacherModelDb> teachersCollection = ConnectToMongo<TeacherModelDb>(TeachersCollection);
         IAsyncCursor<TeacherModelDb> results = await teachersCollection.FindAsync(_ => true);
-        return results.ToList();
+        List<TeacherModelDb> returnValue = results.ToList();
+        returnValue.Sort((t1, t2) => String.Compare(t1.Name, t2.Name, StringComparison.Ordinal));
+        return returnValue;
     }
     
     public async Task<List<SubjectModelDb>> GetAllSubjects()
     {
         IMongoCollection<SubjectModelDb> subjectsCollection = ConnectToMongo<SubjectModelDb>(SubjectsCollection);
         IAsyncCursor<SubjectModelDb> results = await subjectsCollection.FindAsync(_ => true);
-        return results.ToList();
+        List<SubjectModelDb> returnValue = results.ToList();
+        returnValue.Sort((s1, s2) => String.Compare(s1.Name, s2.Name, StringComparison.Ordinal));
+        return returnValue;
     }
     
     public async Task<List<HourModelDb>> GetAllHours()
     {
         IMongoCollection<HourModelDb> hoursCollection = ConnectToMongo<HourModelDb>(HoursCollection);
         IAsyncCursor<HourModelDb> results = await hoursCollection.FindAsync(_ => true);
-        return results.ToList();
+        List<HourModelDb> returnValue = results.ToList();
+        returnValue.Sort((h1, h2) => String.Compare(h1.Class.Name, h2.Class.Name, StringComparison.Ordinal));
+        return returnValue;
     }
     
     public async Task<List<RoomModelDb>> GetAllRooms()
     {
         IMongoCollection<RoomModelDb> roomsCollection = ConnectToMongo<RoomModelDb>(RoomsCollection);
         IAsyncCursor<RoomModelDb> results = await roomsCollection.FindAsync(_ => true);
-        return results.ToList();
+        List<RoomModelDb> returnValue = results.ToList();
+        returnValue.Sort((r1, r2) => String.Compare(r1.Name, r2.Name, StringComparison.Ordinal));
+        return returnValue;
     }
     
     public async Task<List<TimetableHourModelDb>> GetAllTimetable()
@@ -68,40 +79,40 @@ public class DatabaseService
         return results.ToList();
     }
 
-    public Task CreateClass(ClassModelDb @class)
+    public (Task, string) CreateClass(ClassModelDb @class)
     {
         IMongoCollection<ClassModelDb> classesCollection = ConnectToMongo<ClassModelDb>(ClassesCollection);
-        return classesCollection.InsertOneAsync(@class);
+        return (classesCollection.InsertOneAsync(@class), @class.Id);
     }
     
-    public Task CreateTeacher(TeacherModelDb teacher)
+    public (Task, string) CreateTeacher(TeacherModelDb teacher)
     {
         IMongoCollection<TeacherModelDb> teachersCollection = ConnectToMongo<TeacherModelDb>(TeachersCollection);
-        return teachersCollection.InsertOneAsync(teacher);
+        return (teachersCollection.InsertOneAsync(teacher), teacher.Id);
     }
     
-    public Task CreateSubject(SubjectModelDb subject)
+    public (Task, string) CreateSubject(SubjectModelDb subject)
     {
         IMongoCollection<SubjectModelDb> subjectsCollection = ConnectToMongo<SubjectModelDb>(SubjectsCollection);
-        return subjectsCollection.InsertOneAsync(subject);
+        return (subjectsCollection.InsertOneAsync(subject), subject.Id);
     }
     
-    public Task CreateHour(HourModelDb hour)
+    public (Task, string) CreateHour(HourModelDb hour)
     {
         IMongoCollection<HourModelDb> hoursCollection = ConnectToMongo<HourModelDb>(HoursCollection);
-        return hoursCollection.InsertOneAsync(hour);
+        return (hoursCollection.InsertOneAsync(hour), hour.Id);
     }
     
-    public Task CreateRoom(RoomModelDb room)
+    public (Task, string) CreateRoom(RoomModelDb room)
     {
         IMongoCollection<RoomModelDb> roomsCollection = ConnectToMongo<RoomModelDb>(RoomsCollection);
-        return roomsCollection.InsertOneAsync(room);
+        return (roomsCollection.InsertOneAsync(room), room.Id);
     }
     
-    public Task CreateTimetable(TimetableHourModelDb timetable)
+    public (Task, string) CreateTimetable(TimetableHourModelDb timetable)
     {
         IMongoCollection<TimetableHourModelDb> timetablesCollection = ConnectToMongo<TimetableHourModelDb>(TimetablesCollection);
-        return timetablesCollection.InsertOneAsync(timetable);
+        return (timetablesCollection.InsertOneAsync(timetable), timetable.Id);
     }
     
     public Task DeleteClass(ClassModelDb @class)
