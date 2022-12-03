@@ -75,7 +75,7 @@ public class ClassesDialogViewModel : ViewModelBase
 
     public ClassesDialogViewModel(bool darkMode)
     {
-        AddClassCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new StudentsGroupModel(_selectedGrade, _selectedLetter, _classSize)));
+        AddClassCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new StudentsGroupModel(_selectedGrade, _selectedLetter, _classSize, true)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<StudentsGroupModel?>(null));
 

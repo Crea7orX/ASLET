@@ -43,7 +43,7 @@ public class SubjectsDialogViewModel : ViewModelBase
 
     public SubjectsDialogViewModel(bool darkMode)
     {
-        AddSubjectCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new SubjectModel(_subjectName)));
+        AddSubjectCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new SubjectModel(_subjectName, true)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<SubjectModel?>(null));
         

@@ -44,7 +44,7 @@ public class TeachersDialogViewModel : ViewModelBase
 
     public TeachersDialogViewModel(bool darkMode)
     {
-        AddTeacherCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new TeacherModel(_teacherName)));
+        AddTeacherCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult(new TeacherModel(_teacherName, true)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<TeacherModel?>(null));
 

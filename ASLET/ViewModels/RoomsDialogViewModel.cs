@@ -62,7 +62,7 @@ public class RoomsDialogViewModel : ViewModelBase
     public RoomsDialogViewModel(bool darkMode)
     {
         AddRoomCommand = ReactiveCommand.CreateFromTask(() =>
-            Task.FromResult(new RoomModel(_roomName, _isLaboratory, _roomSize)));
+            Task.FromResult(new RoomModel(_roomName, _isLaboratory, _roomSize, true)));
 
         CancelCommand = ReactiveCommand.CreateFromTask(() => Task.FromResult<RoomModel?>(null));
 

@@ -60,6 +60,22 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         private set => this.RaiseAndSetIfChanged(ref _timetable, value);
     }
 
+    private int _generatingProgress;
+
+    public int GeneratingProgress
+    {
+        get => _generatingProgress;
+        private set => this.RaiseAndSetIfChanged(ref _generatingProgress, value);
+    }
+
+    private bool _isGenerating;
+
+    public bool IsGenerating
+    {
+        get => _isGenerating;
+        private set => this.RaiseAndSetIfChanged(ref _isGenerating, value);
+    }
+
     private readonly Dictionary<int, List<TimetableSlotModel>> _roomsTimetable = new();
     
     private void GenerateTimetable()
@@ -81,7 +97,7 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         SelectedTimetable = TimetableSelectorModel.Empty;
         
         Hgasso<Schedule> algorithm = new Hgasso<Schedule>(new Schedule(ConfigurationService.Instance));
-        int generatedStatus = algorithm.Run(10000);
+        int generatedStatus = algorithm.Run(10000); //10000
         List<TimetableSlotModel>? result = TimetableVisualizationService.GetResult(algorithm.Result);
 
         if (generatedStatus == -1) NotificationService.ShowError(MainWindow.Instance, "Невъзможно генериране на учебна програма!");
@@ -115,6 +131,7 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
     private void UpdateTimetable(TimetableSelectorModel selector)
     {
         Timetable.Clear();
+        if (selector == null) return;
         Dictionary<int, Dictionary<int, string>> hoursDayLink = new Dictionary<int, Dictionary<int, string>>();
         for (int i = 1; i <= Constants.DAY_HOURS; i++)
         {
@@ -129,7 +146,8 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
             StudentsGroupModel selectedClass = (StudentsGroupModel)selector.Model;
             foreach (List<TimetableSlotModel> slotModels in _roomsTimetable.Values)
             {
-                foreach (TimetableSlotModel timetableSlotModel in slotModels.Where(slot => Equals(slot.Subject.Groups[0], selectedClass)))
+                var testtest = slotModels.Where(slot => Equals(slot.Subject.Groups[0], selectedClass)).ToList();
+                foreach (TimetableSlotModel timetableSlotModel in testtest)
                 {
                     hoursDayLink[timetableSlotModel.Hour][timetableSlotModel.Day] = timetableSlotModel.ClassToString();
                 }
@@ -191,5 +209,15 @@ public class TimetablesViewModel : ViewModelBase, IRoutableViewModel
         if (Timetables.Count > 0) SelectedTimetable = Timetables[0];
         
         SelectedTimetable = TimetableSelectorModel.Empty;
+    }
+
+    public void UpdateGeneratingProgress(int progress)
+    {
+        GeneratingProgress = progress;
+    }
+
+    public void UpdateIsGenerating(bool isGenerating)
+    {
+        IsGenerating = isGenerating;
     }
 }
