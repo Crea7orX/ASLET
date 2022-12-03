@@ -39,13 +39,14 @@
         <Setter Property="CanUserSortColumns" Value="True" />
         <Setter Property="CanUserResizeColumns" Value="False" />
         <Setter Property="CanUserReorderColumns" Value="False" />
+        <Setter Property="RowHeight" Value="60" />
     </Style>
     <Style Selector="DataGridColumnHeader">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
     </Style>
-    <Style Selector="DataGridRow">
-        <Setter Property="Height" Value="60" />
+    <Style Selector="DataGrid.TimetablesGrid > DataGridRow">
+        <Setter Property="Height" Value="160" />
     </Style>
     
     <!--Dark Mode-->
