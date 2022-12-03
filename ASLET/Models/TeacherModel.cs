@@ -5,12 +5,13 @@ namespace ASLET.Models;
 
 public class TeacherModel
 {
-    private static int _nextTeacherId = 0;
+    private static int _nextTeacherId = -1;
     // Initializes teacher data
-    public TeacherModel(string name, string uniqueId = "")
+    public TeacherModel(string name, bool updateId = false, string uniqueId = "")
     {
+        if (updateId) _nextTeacherId++;
         UniqueId = uniqueId;
-        Id = _nextTeacherId++;
+        Id = _nextTeacherId;
         Name = name;
         CourseClasses = new List<SubjectClassModel>();
     }

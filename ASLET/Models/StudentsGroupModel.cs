@@ -5,12 +5,13 @@ namespace ASLET.Models;
 
 public class StudentsGroupModel
 {
-    private static int _nextClassId = 0;
+    private static int _nextClassId = -1;
     // Initializes student group data
-    public StudentsGroupModel(byte grade, char? letter, int numberOfStudents, string uniqueId = "")
+    public StudentsGroupModel(byte grade, char? letter, int numberOfStudents, bool updateId = false, string uniqueId = "")
     {
+        if (updateId) _nextClassId++;
         UniqueId = uniqueId;
-        Id = _nextClassId++;
+        Id = _nextClassId;
         Name = grade.ToString() + letter;
         Grade = grade;
         Letter = letter;

@@ -3,13 +3,14 @@
 public class RoomModel
 {
     // ID counter used to assign IDs automatically
-    private static int _nextRoomId = 0;
+    private static int _nextRoomId = -1;
 
     // Initializes room data and assign ID to room
-    public RoomModel(string name, bool lab, int numberOfSeats, string uniqueId = "")
+    public RoomModel(string name, bool lab, int numberOfSeats, bool updateId = false, string uniqueId = "")
     {
+        if (updateId) _nextRoomId++;
         UniqueId = uniqueId;
-        Id = _nextRoomId++;
+        Id = _nextRoomId;
         Name = name;
         Lab = lab;
         NumberOfSeats = numberOfSeats;

@@ -6,13 +6,14 @@ namespace ASLET.Models;
 
 public class SubjectClassModel : IComparable<SubjectClassModel>
 {
-    private static int _nextClassId = 0;
+    private static int _nextClassId = -1;
 
     // Initializes class object
-    public SubjectClassModel(TeacherModel teacherModel, SubjectModel subjectModel, bool requiresLab, int duration, string uniqueId = "", params StudentsGroupModel[] groups)
+    public SubjectClassModel(TeacherModel teacherModel, SubjectModel subjectModel, bool requiresLab, int duration, bool updateId = false, string uniqueId = "", params StudentsGroupModel[] groups)
     {
+        if (updateId) _nextClassId++;
         UniqueId = uniqueId;
-        Id = _nextClassId++;
+        Id = _nextClassId;
         TeacherModel = teacherModel;
         SubjectModel = subjectModel;
         NumberOfSeats = 0;

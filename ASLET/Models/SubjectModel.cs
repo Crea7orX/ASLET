@@ -2,12 +2,13 @@
 
 public class SubjectModel
 {
-    private static int _nextSubjectId = 0;
+    private static int _nextSubjectId = -1;
     // Initializes course
-    public SubjectModel(string name, string uniqueId = "")
+    public SubjectModel(string name, bool updateId = false, string uniqueId = "")
     {
+        if (updateId) _nextSubjectId++;
         UniqueId = uniqueId;
-        Id = _nextSubjectId++;
+        Id = _nextSubjectId;
         Name = name;
     }
 
